@@ -1,0 +1,36 @@
+﻿{
+  "@@locale": "en",
+
+  "appTitle": "Build4All Manager",
+
+  "authLoginTitle": "Super Admin Login",
+  "authUsername": "Username or Email",
+  "authPassword": "Password",
+  "authSignIn": "Sign in",
+  "authSigning": "Signing in…",
+  "authError": "Login failed",
+
+  "shellTabDashboard": "Dashboard",
+  "shellTabProjects": "Projects",
+  "shellTabThemes": "Themes",
+
+  "signInTitle": "Sign in to Super Admin",
+  "signInSubtitle": "Manage projects, themes & clients",
+  "termsNotice": "By continuing you agree to our Terms & Privacy Policy",
+  "lblEmail": "Email",
+  "hintEmail": "example@gmail.com",
+  "lblPassword": "Password",
+  "hintPassword": "•••••••••••",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "btnSignIn": "Sign In",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "errEmailRequired": "Email is required",
+  "errEmailInvalid": "Enter a valid email",
+  "errPasswordRequired": "Password is required",
+  "errPasswordMin": "Minimum 6 characters",
+  "showPasswordLabel": "Show password",
+  "hidePasswordLabel": "Hide password"
+
+}
