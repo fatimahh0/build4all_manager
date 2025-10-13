@@ -1,0 +1,97 @@
+{
+  "appTitle": "Build4All",
+  "@appTitle": { "description": "Nom de l’application affiché dans l’en-tête de connexion" },
+
+  "signInGeneralTitle": "Connectez-vous à votre compte",
+  "@signInGeneralTitle": { "description": "Titre générique de connexion (non spécifique à un rôle)" },
+
+  "signInGeneralSubtitle": "Saisissez vos informations pour continuer",
+  "@signInGeneralSubtitle": { "description": "Sous-titre générique sous le titre" },
+
+  "termsNotice": "En continuant, vous acceptez nos Conditions et notre Politique de confidentialité",
+  "@termsNotice": { "description": "Mention légale sous le formulaire" },
+
+  "lblIdentifier": "E-mail / Téléphone / Nom d’utilisateur",
+  "@lblIdentifier": { "description": "Libellé du champ identifiant générique" },
+
+  "hintIdentifier": "you@example.com ou +961xxxxxxxx ou nom d’utilisateur",
+  "@hintIdentifier": { "description": "Exemple d’identifiant" },
+
+  "lblPassword": "Mot de passe",
+  "@lblPassword": { "description": "Libellé du champ mot de passe" },
+
+  "hintPassword": "•••••••••••",
+  "@hintPassword": { "description": "Indication du champ mot de passe" },
+
+  "rememberMe": "Se souvenir de moi",
+  "@rememberMe": { "description": "Case à cocher Se souvenir de moi" },
+
+  "forgotPassword": "Mot de passe oublié ?",
+  "@forgotPassword": { "description": "Lien mot de passe oublié" },
+
+  "btnSignIn": "Se connecter",
+  "@btnSignIn": { "description": "Libellé du bouton de connexion" },
+
+  "noAccount": "Vous n’avez pas de compte ?",
+  "@noAccount": { "description": "Texte précédant le lien d’inscription" },
+
+  "signUp": "S’inscrire",
+  "@signUp": { "description": "Lien d’inscription" },
+
+  "errIdentifierRequired": "L’identifiant est requis",
+  "@errIdentifierRequired": { "description": "Validation : identifiant vide" },
+
+  "errPasswordRequired": "Le mot de passe est requis",
+  "@errPasswordRequired": { "description": "Validation : mot de passe vide" },
+
+  "errPasswordMin": "6 caractères minimum",
+  "@errPasswordMin": { "description": "Validation : mot de passe trop court" },
+
+  "showPasswordLabel": "Afficher le mot de passe",
+  "@showPasswordLabel": { "description": "Accessibilité : bouton afficher le mot de passe" },
+
+  "hidePasswordLabel": "Masquer le mot de passe",
+  "@hidePasswordLabel": { "description": "Accessibilité : bouton masquer le mot de passe" },
+  "nav_super_admin": "Super Admin",
+  "nav_dashboard": "Tableau de bord",
+  "nav_themes": "Thèmes",
+  "nav_profile": "Profil",
+
+  "dashboard_title": "Tableau de bord administrateur",
+  "dashboard_welcome": "Bienvenue sur Build4All Manager",
+  "dashboard_hint": "Utilisez la navigation à gauche pour gérer les thèmes et votre profil.",
+
+  "themes_title": "Gestion des thèmes",
+  "themes_add": "Ajouter un thème",
+  "themes_name": "Nom du thème",
+  "themes_menuType": "Type de menu",
+  "themes_setActive": "Définir comme actif",
+  "themes_active": "Actif",
+  "themes_deactivate_all": "Désactiver tous les thèmes",
+  "themes_empty": "Aucun thème pour le moment. Créez-en un.",
+
+  "profile_title": "Mon profil",
+  "profile_firstName": "Prénom",
+  "profile_lastName": "Nom",
+  "profile_username": "Nom d'utilisateur",
+  "profile_email": "E-mail",
+  "profile_updated": "Profil mis à jour avec succès.",
+  "profile_changePassword": "Changer le mot de passe",
+  "profile_currentPassword": "Mot de passe actuel",
+  "profile_newPassword": "Nouveau mot de passe",
+  "profile_updatePassword": "Mettre à jour le mot de passe",
+  "password_updated": "Mot de passe mis à jour avec succès.",
+
+  "common_save": "Enregistrer",
+  "common_edit": "Modifier",
+  "common_delete": "Supprimer",
+  "common_cancel": "Annuler",
+   "dash_total_projects": "Projets au total",
+  "dash_active_projects": "Projets actifs",
+  "dash_inactive_projects": "Projets inactifs",
+  "dash_recent_projects": "Projets récents",
+  "dash_no_recent": "Aucun projet récent pour le moment.",
+   "themes_confirm_delete": "Supprimer ce thème ? Cette action est irréversible.",
+  "themes_colors_section": "Couleurs",
+  "err_required": "Ce champ est obligatoire"
+}

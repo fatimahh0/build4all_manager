@@ -1,36 +1,107 @@
 ﻿{
-  "@@locale": "en",
+  "appTitle": "Build4All",
+  "@appTitle": { "description": "App name shown in the login header" },
 
-  "appTitle": "Build4All Manager",
+  "signInGeneralTitle": "Sign in to your account",
+  "@signInGeneralTitle": { "description": "Generic login title (not role-specific)" },
+  "errEmailInvalid": "Invalid email format",
+  "@errEmailInvalid": { "description": "Validation: invalid email format" },
+  "errEmailRequired"  : "Email is required",
+  "@errEmailRequired": { "description": "Validation: empty email" },
+ "lblEmail": "Email",
+  "@lblEmail": { "description": "Email label" },
+   "hintEmail" : "email",
 
-  "authLoginTitle": "Super Admin Login",
-  "authUsername": "Username or Email",
-  "authPassword": "Password",
-  "authSignIn": "Sign in",
-  "authSigning": "Signing in…",
-  "authError": "Login failed",
+  "signInGeneralSubtitle": "Enter your details to continue",
+  "@signInGeneralSubtitle": { "description": "Generic subtitle under the login title" },
 
-  "shellTabDashboard": "Dashboard",
-  "shellTabProjects": "Projects",
-  "shellTabThemes": "Themes",
-
-  "signInTitle": "Sign in to Super Admin",
-  "signInSubtitle": "Manage projects, themes & clients",
   "termsNotice": "By continuing you agree to our Terms & Privacy Policy",
-  "lblEmail": "Email",
-  "hintEmail": "example@gmail.com",
-  "lblPassword": "Password",
-  "hintPassword": "•••••••••••",
-  "rememberMe": "Remember me",
-  "forgotPassword": "Forgot password?",
-  "btnSignIn": "Sign In",
-  "noAccount": "Don't have an account?",
-  "signUp": "Sign Up",
-  "errEmailRequired": "Email is required",
-  "errEmailInvalid": "Enter a valid email",
-  "errPasswordRequired": "Password is required",
-  "errPasswordMin": "Minimum 6 characters",
-  "showPasswordLabel": "Show password",
-  "hidePasswordLabel": "Hide password"
+  "@termsNotice": { "description": "Legal notice under the form" },
 
+  "lblIdentifier": "Email / Phone / Username",
+  "@lblIdentifier": { "description": "Generic identifier label" },
+
+  "hintIdentifier": "you@example.com or +961xxxxxxxx or username",
+  "@hintIdentifier": { "description": "Generic identifier hint" },
+
+  "lblPassword": "Password",
+  "@lblPassword": { "description": "Password label" },
+
+  "hintPassword": "•••••••••••",
+  "@hintPassword": { "description": "Password hint text" },
+
+  "rememberMe": "Remember me",
+  "@rememberMe": { "description": "Remember me checkbox label" },
+
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": { "description": "Forgot password action link" },
+
+  "btnSignIn": "Sign In",
+  "@btnSignIn": { "description": "Primary sign-in button label" },
+
+  "noAccount": "Don't have an account?",
+  "@noAccount": { "description": "Text before the Sign Up link" },
+
+  "signUp": "Sign Up",
+  "@signUp": { "description": "Sign up action link" },
+
+  "errIdentifierRequired": "Identifier is required",
+  "@errIdentifierRequired": { "description": "Validation: empty identifier" },
+
+  "errPasswordRequired": "Password is required",
+  "@errPasswordRequired": { "description": "Validation: empty password" },
+
+  "errPasswordMin": "Minimum 6 characters",
+  "@errPasswordMin": { "description": "Validation: password too short" },
+
+  "showPasswordLabel": "Show password",
+  "@showPasswordLabel": { "description": "Accessibility label for toggling password visibility (show)" },
+
+  "hidePasswordLabel": "Hide password",
+  "@hidePasswordLabel": { "description": "Accessibility label for toggling password visibility (hide)" },
+   "nav_super_admin": "Super Admin",
+  "nav_dashboard": "Dashboard",
+  "nav_themes": "Themes",
+  "nav_profile": "Profile",
+
+  "dashboard_title": "Admin Dashboard",
+  "dashboard_welcome": "Welcome to Build4All Manager",
+  "dashboard_hint": "Use the navigation on the left to manage themes and your profile.",
+
+  "themes_title": "Theme Management",
+  "themes_add": "Add Theme",
+  "themes_name": "Theme Name",
+  "themes_menuType": "Menu Type",
+  "themes_setActive": "Set Active",
+  "themes_active": "Active",
+  "themes_deactivate_all": "Deactivate All Themes",
+  "themes_empty": "No themes yet. Create one.",
+
+  "profile_title": "My Profile",
+  "profile_firstName": "First Name",
+  "profile_lastName": "Last Name",
+  "profile_username": "Username",
+  "profile_email": "Email",
+  "profile_updated": "Profile updated successfully.",
+  "profile_changePassword": "Change Password",
+  "profile_currentPassword": "Current Password",
+  "profile_newPassword": "New Password",
+  "profile_updatePassword": "Update Password",
+  "password_updated": "Password updated successfully.",
+
+  "common_save": "Save",
+  "common_edit": "Edit",
+  "common_delete": "Delete",
+  "common_cancel": "Cancel",
+   "dash_total_projects": "Total Projects",
+  "dash_active_projects": "Active Projects",
+  "dash_inactive_projects": "Inactive Projects",
+  "dash_recent_projects": "Recent Projects",
+  "dash_no_recent": "No recent projects yet.",
+  "dash_welcome": "Welcome to Build4All Manager",
+   "themes_confirm_delete": "Delete this theme? This cannot be undone.",
+  "themes_colors_section": "Colors",
+  "err_required": "This field is required",
+  "common_more" : "More",
+  "common_retry": "Retry"
 }

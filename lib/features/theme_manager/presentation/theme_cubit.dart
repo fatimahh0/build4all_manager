@@ -1,5 +1,5 @@
-import 'package:build4all_manager/core/themes/app_theme.dart';
-import 'package:build4all_manager/core/themes/theme_palette.dart';
+import 'package:build4all_manager/shared/themes/app_theme.dart';
+import 'package:build4all_manager/shared/themes/theme_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

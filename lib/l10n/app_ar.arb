@@ -1,0 +1,98 @@
+{
+  "appTitle": "Build4All",
+  "@appTitle": { "description": "اسم التطبيق الظاهر في ترويسة تسجيل الدخول" },
+
+  "signInGeneralTitle": "سجّل الدخول إلى حسابك",
+  "@signInGeneralTitle": { "description": "عنوان عام لصفحة تسجيل الدخول (غير مخصص لدور معيّن)" },
+
+  "signInGeneralSubtitle": "أدخل بياناتك للمتابعة",
+  "@signInGeneralSubtitle": { "description": "نص توضيحي تحت العنوان" },
+
+  "termsNotice": "بمتابعتك أنت توافق على الشروط وسياسة الخصوصية",
+  "@termsNotice": { "description": "ملاحظة قانونية أسفل النموذج" },
+
+  "lblIdentifier": "البريد / الهاتف / اسم المستخدم",
+  "@lblIdentifier": { "description": "حقل مُعرّف عام" },
+
+  "hintIdentifier": "you@example.com أو ‎+961xxxxxxxx‎ أو اسم المستخدم",
+  "@hintIdentifier": { "description": "تلميح لحقل المعرّف" },
+
+  "lblPassword": "كلمة المرور",
+  "@lblPassword": { "description": "تسمية حقل كلمة المرور" },
+
+  "hintPassword": "•••••••••••",
+  "@hintPassword": { "description": "تلميح لحقل كلمة المرور" },
+
+  "rememberMe": "تذكّرني",
+  "@rememberMe": { "description": "خانة اختيار تذكّرني" },
+
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "@forgotPassword": { "description": "رابط استعادة كلمة المرور" },
+
+  "btnSignIn": "تسجيل الدخول",
+  "@btnSignIn": { "description": "زر تسجيل الدخول الرئيسي" },
+
+  "noAccount": "ليس لديك حساب؟",
+  "@noAccount": { "description": "نص قبل رابط إنشاء الحساب" },
+
+  "signUp": "إنشاء حساب",
+  "@signUp": { "description": "رابط إنشاء الحساب" },
+
+  "errIdentifierRequired": "الرجاء إدخال المُعرّف",
+  "@errIdentifierRequired": { "description": "تحقق: المعرّف فارغ" },
+
+  "errPasswordRequired": "الرجاء إدخال كلمة المرور",
+  "@errPasswordRequired": { "description": "تحقق: كلمة المرور فارغة" },
+
+  "errPasswordMin": "الحد الأدنى 6 أحرف",
+  "@errPasswordMin": { "description": "تحقق: كلمة المرور قصيرة" },
+
+  "showPasswordLabel": "إظهار كلمة المرور",
+  "@showPasswordLabel": { "description": "وصف إمكانية الوصول لزر إظهار كلمة المرور" },
+
+  "hidePasswordLabel": "إخفاء كلمة المرور",
+  "@hidePasswordLabel": { "description": "وصف إمكانية الوصول لزر إخفاء كلمة المرور" },
+
+  "nav_super_admin": "المشرف العام",
+  "nav_dashboard": "لوحة التحكم",
+  "nav_themes": "السمات",
+  "nav_profile": "الملف الشخصي",
+
+  "dashboard_title": "لوحة تحكم المشرف",
+  "dashboard_welcome": "مرحبًا بك في Build4All Manager",
+  "dashboard_hint": "استخدم التنقل على اليسار لإدارة السمات وملفك.",
+
+  "themes_title": "إدارة السمات",
+  "themes_add": "إضافة سمة",
+  "themes_name": "اسم السمة",
+  "themes_menuType": "نوع القائمة",
+  "themes_setActive": "تعيين كـ نشطة",
+  "themes_active": "نشطة",
+  "themes_deactivate_all": "تعطيل جميع السمات",
+  "themes_empty": "لا توجد سمات بعد. أنشئ واحدة.",
+
+  "profile_title": "ملفي الشخصي",
+  "profile_firstName": "الاسم الأول",
+  "profile_lastName": "اسم العائلة",
+  "profile_username": "اسم المستخدم",
+  "profile_email": "البريد الإلكتروني",
+  "profile_updated": "تم تحديث الملف الشخصي بنجاح.",
+  "profile_changePassword": "تغيير كلمة المرور",
+  "profile_currentPassword": "كلمة المرور الحالية",
+  "profile_newPassword": "كلمة المرور الجديدة",
+  "profile_updatePassword": "تحديث كلمة المرور",
+  "password_updated": "تم تحديث كلمة المرور بنجاح.",
+
+  "common_save": "حفظ",
+  "common_edit": "تعديل",
+  "common_delete": "حذف",
+  "common_cancel": "إلغاء",
+   "dash_total_projects": "إجمالي المشاريع",
+  "dash_active_projects": "المشاريع النشطة",
+  "dash_inactive_projects": "المشاريع غير النشطة",
+  "dash_recent_projects": "أحدث المشاريع",
+  "dash_no_recent": "لا توجد مشاريع حديثة بعد.",
+   "themes_confirm_delete": "هل تريد حذف هذه السمة؟ لا يمكن التراجع.",
+  "themes_colors_section": "الألوان",
+  "err_required": "هذا الحقل مطلوب"
+}

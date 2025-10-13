@@ -5,7 +5,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fr.dart';
 
 // ignore_for_file: type=lint
 
@@ -90,88 +92,36 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en')
+    Locale('ar'),
+    Locale('en'),
+    Locale('fr')
   ];
 
-  /// No description provided for @appTitle.
+  /// App name shown in the login header
   ///
   /// In en, this message translates to:
-  /// **'Build4All Manager'**
+  /// **'Build4All'**
   String get appTitle;
 
-  /// No description provided for @authLoginTitle.
+  /// Generic login title (not role-specific)
   ///
   /// In en, this message translates to:
-  /// **'Super Admin Login'**
-  String get authLoginTitle;
+  /// **'Sign in to your account'**
+  String get signInGeneralTitle;
 
-  /// No description provided for @authUsername.
+  /// Validation: invalid email format
   ///
   /// In en, this message translates to:
-  /// **'Username or Email'**
-  String get authUsername;
+  /// **'Invalid email format'**
+  String get errEmailInvalid;
 
-  /// No description provided for @authPassword.
+  /// Validation: empty email
   ///
   /// In en, this message translates to:
-  /// **'Password'**
-  String get authPassword;
+  /// **'Email is required'**
+  String get errEmailRequired;
 
-  /// No description provided for @authSignIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in'**
-  String get authSignIn;
-
-  /// No description provided for @authSigning.
-  ///
-  /// In en, this message translates to:
-  /// **'Signing in…'**
-  String get authSigning;
-
-  /// No description provided for @authError.
-  ///
-  /// In en, this message translates to:
-  /// **'Login failed'**
-  String get authError;
-
-  /// No description provided for @shellTabDashboard.
-  ///
-  /// In en, this message translates to:
-  /// **'Dashboard'**
-  String get shellTabDashboard;
-
-  /// No description provided for @shellTabProjects.
-  ///
-  /// In en, this message translates to:
-  /// **'Projects'**
-  String get shellTabProjects;
-
-  /// No description provided for @shellTabThemes.
-  ///
-  /// In en, this message translates to:
-  /// **'Themes'**
-  String get shellTabThemes;
-
-  /// No description provided for @signInTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in to Super Admin'**
-  String get signInTitle;
-
-  /// No description provided for @signInSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage projects, themes & clients'**
-  String get signInSubtitle;
-
-  /// No description provided for @termsNotice.
-  ///
-  /// In en, this message translates to:
-  /// **'By continuing you agree to our Terms & Privacy Policy'**
-  String get termsNotice;
-
-  /// No description provided for @lblEmail.
+  /// Email label
   ///
   /// In en, this message translates to:
   /// **'Email'**
@@ -180,86 +130,350 @@ abstract class AppLocalizations {
   /// No description provided for @hintEmail.
   ///
   /// In en, this message translates to:
-  /// **'example@gmail.com'**
+  /// **'email'**
   String get hintEmail;
 
-  /// No description provided for @lblPassword.
+  /// Generic subtitle under the login title
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your details to continue'**
+  String get signInGeneralSubtitle;
+
+  /// Legal notice under the form
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing you agree to our Terms & Privacy Policy'**
+  String get termsNotice;
+
+  /// Generic identifier label
+  ///
+  /// In en, this message translates to:
+  /// **'Email / Phone / Username'**
+  String get lblIdentifier;
+
+  /// Generic identifier hint
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com or +961xxxxxxxx or username'**
+  String get hintIdentifier;
+
+  /// Password label
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get lblPassword;
 
-  /// No description provided for @hintPassword.
+  /// Password hint text
   ///
   /// In en, this message translates to:
   /// **'•••••••••••'**
   String get hintPassword;
 
-  /// No description provided for @rememberMe.
+  /// Remember me checkbox label
   ///
   /// In en, this message translates to:
   /// **'Remember me'**
   String get rememberMe;
 
-  /// No description provided for @forgotPassword.
+  /// Forgot password action link
   ///
   /// In en, this message translates to:
   /// **'Forgot password?'**
   String get forgotPassword;
 
-  /// No description provided for @btnSignIn.
+  /// Primary sign-in button label
   ///
   /// In en, this message translates to:
   /// **'Sign In'**
   String get btnSignIn;
 
-  /// No description provided for @noAccount.
+  /// Text before the Sign Up link
   ///
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
   String get noAccount;
 
-  /// No description provided for @signUp.
+  /// Sign up action link
   ///
   /// In en, this message translates to:
   /// **'Sign Up'**
   String get signUp;
 
-  /// No description provided for @errEmailRequired.
+  /// Validation: empty identifier
   ///
   /// In en, this message translates to:
-  /// **'Email is required'**
-  String get errEmailRequired;
+  /// **'Identifier is required'**
+  String get errIdentifierRequired;
 
-  /// No description provided for @errEmailInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a valid email'**
-  String get errEmailInvalid;
-
-  /// No description provided for @errPasswordRequired.
+  /// Validation: empty password
   ///
   /// In en, this message translates to:
   /// **'Password is required'**
   String get errPasswordRequired;
 
-  /// No description provided for @errPasswordMin.
+  /// Validation: password too short
   ///
   /// In en, this message translates to:
   /// **'Minimum 6 characters'**
   String get errPasswordMin;
 
-  /// No description provided for @showPasswordLabel.
+  /// Accessibility label for toggling password visibility (show)
   ///
   /// In en, this message translates to:
   /// **'Show password'**
   String get showPasswordLabel;
 
-  /// No description provided for @hidePasswordLabel.
+  /// Accessibility label for toggling password visibility (hide)
   ///
   /// In en, this message translates to:
   /// **'Hide password'**
   String get hidePasswordLabel;
+
+  /// No description provided for @nav_super_admin.
+  ///
+  /// In en, this message translates to:
+  /// **'Super Admin'**
+  String get nav_super_admin;
+
+  /// No description provided for @nav_dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get nav_dashboard;
+
+  /// No description provided for @nav_themes.
+  ///
+  /// In en, this message translates to:
+  /// **'Themes'**
+  String get nav_themes;
+
+  /// No description provided for @nav_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get nav_profile;
+
+  /// No description provided for @dashboard_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Dashboard'**
+  String get dashboard_title;
+
+  /// No description provided for @dashboard_welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Build4All Manager'**
+  String get dashboard_welcome;
+
+  /// No description provided for @dashboard_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the navigation on the left to manage themes and your profile.'**
+  String get dashboard_hint;
+
+  /// No description provided for @themes_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Management'**
+  String get themes_title;
+
+  /// No description provided for @themes_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Theme'**
+  String get themes_add;
+
+  /// No description provided for @themes_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Name'**
+  String get themes_name;
+
+  /// No description provided for @themes_menuType.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu Type'**
+  String get themes_menuType;
+
+  /// No description provided for @themes_setActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Active'**
+  String get themes_setActive;
+
+  /// No description provided for @themes_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get themes_active;
+
+  /// No description provided for @themes_deactivate_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Deactivate All Themes'**
+  String get themes_deactivate_all;
+
+  /// No description provided for @themes_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No themes yet. Create one.'**
+  String get themes_empty;
+
+  /// No description provided for @profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get profile_title;
+
+  /// No description provided for @profile_firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get profile_firstName;
+
+  /// No description provided for @profile_lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get profile_lastName;
+
+  /// No description provided for @profile_username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get profile_username;
+
+  /// No description provided for @profile_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profile_email;
+
+  /// No description provided for @profile_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully.'**
+  String get profile_updated;
+
+  /// No description provided for @profile_changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get profile_changePassword;
+
+  /// No description provided for @profile_currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get profile_currentPassword;
+
+  /// No description provided for @profile_newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get profile_newPassword;
+
+  /// No description provided for @profile_updatePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get profile_updatePassword;
+
+  /// No description provided for @password_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated successfully.'**
+  String get password_updated;
+
+  /// No description provided for @common_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get common_save;
+
+  /// No description provided for @common_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get common_edit;
+
+  /// No description provided for @common_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get common_delete;
+
+  /// No description provided for @common_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get common_cancel;
+
+  /// No description provided for @dash_total_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Projects'**
+  String get dash_total_projects;
+
+  /// No description provided for @dash_active_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Projects'**
+  String get dash_active_projects;
+
+  /// No description provided for @dash_inactive_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive Projects'**
+  String get dash_inactive_projects;
+
+  /// No description provided for @dash_recent_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Projects'**
+  String get dash_recent_projects;
+
+  /// No description provided for @dash_no_recent.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent projects yet.'**
+  String get dash_no_recent;
+
+  /// No description provided for @dash_welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Build4All Manager'**
+  String get dash_welcome;
+
+  /// No description provided for @themes_confirm_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this theme? This cannot be undone.'**
+  String get themes_confirm_delete;
+
+  /// No description provided for @themes_colors_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors'**
+  String get themes_colors_section;
+
+  /// No description provided for @err_required.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get err_required;
+
+  /// No description provided for @common_more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get common_more;
+
+  /// No description provided for @common_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get common_retry;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -271,7 +485,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['ar', 'en', 'fr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -282,7 +496,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar': return AppLocalizationsAr();
     case 'en': return AppLocalizationsEn();
+    case 'fr': return AppLocalizationsFr();
   }
 
   throw FlutterError(
