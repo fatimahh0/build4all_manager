@@ -474,6 +474,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get common_retry;
+
+  /// No description provided for @profile_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile details'**
+  String get profile_details;
+
+  /// No description provided for @profile_first_name.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get profile_first_name;
+
+  /// No description provided for @profile_first_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter first name'**
+  String get profile_first_name_hint;
+
+  /// No description provided for @profile_last_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get profile_last_name;
+
+  /// No description provided for @profile_last_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter last name'**
+  String get profile_last_name_hint;
+
+  /// No description provided for @profile_username_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter username'**
+  String get profile_username_hint;
+
+  /// No description provided for @profile_email_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email'**
+  String get profile_email_hint;
+
+  /// No description provided for @profile_save_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get profile_save_changes;
+
+  /// No description provided for @profile_change_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get profile_change_password;
+
+  /// No description provided for @profile_current_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get profile_current_password;
+
+  /// No description provided for @profile_new_password.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get profile_new_password;
+
+  /// No description provided for @profile_confirm_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get profile_confirm_password;
+
+  /// No description provided for @profile_password_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated successfully'**
+  String get profile_password_updated;
+
+  /// No description provided for @profile_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'For your security, use a strong unique password.'**
+  String get profile_password_hint;
+
+  /// No description provided for @profile_update_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Update password'**
+  String get profile_update_password;
+
+  /// No description provided for @profile_update_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get profile_update_notifications;
+
+  /// No description provided for @profile_notify_items.
+  ///
+  /// In en, this message translates to:
+  /// **'Item updates'**
+  String get profile_notify_items;
+
+  /// No description provided for @profile_notify_items_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive notifications when businesses update their items'**
+  String get profile_notify_items_sub;
+
+  /// No description provided for @profile_notify_feedback.
+  ///
+  /// In en, this message translates to:
+  /// **'User feedback'**
+  String get profile_notify_feedback;
+
+  /// No description provided for @profile_notify_feedback_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when users submit new feedback'**
+  String get profile_notify_feedback_sub;
+
+  /// No description provided for @common_security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get common_security;
+
+  /// No description provided for @common_sign_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get common_sign_out;
+
+  /// No description provided for @common_sign_out_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'End your current session'**
+  String get common_sign_out_hint;
+
+  /// No description provided for @common_sign_out_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get common_sign_out_confirm;
+
+  /// No description provided for @common_signed_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed out'**
+  String get common_signed_out;
+
+  /// No description provided for @err_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get err_email;
+
+  /// No description provided for @errPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get errPasswordMismatch;
+
+  /// No description provided for @err_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get err_unknown;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -94,5 +94,10 @@
   "dash_no_recent": "لا توجد مشاريع حديثة بعد.",
    "themes_confirm_delete": "هل تريد حذف هذه السمة؟ لا يمكن التراجع.",
   "themes_colors_section": "الألوان",
-  "err_required": "هذا الحقل مطلوب"
+  "err_required": "هذا الحقل مطلوب",
+   "common_security": "الأمان",
+  "common_sign_out": "تسجيل الخروج",
+  "common_sign_out_hint": "إنهاء الجلسة الحالية",
+  "common_sign_out_confirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "common_signed_out": "تم تسجيل الخروج"
 }

@@ -196,4 +196,88 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get common_retry => 'Retry';
+
+  @override
+  String get profile_details => 'Profile details';
+
+  @override
+  String get profile_first_name => 'First name';
+
+  @override
+  String get profile_first_name_hint => 'Enter first name';
+
+  @override
+  String get profile_last_name => 'Last name';
+
+  @override
+  String get profile_last_name_hint => 'Enter last name';
+
+  @override
+  String get profile_username_hint => 'Enter username';
+
+  @override
+  String get profile_email_hint => 'Enter email';
+
+  @override
+  String get profile_save_changes => 'Save changes';
+
+  @override
+  String get profile_change_password => 'Change password';
+
+  @override
+  String get profile_current_password => 'Current password';
+
+  @override
+  String get profile_new_password => 'New password';
+
+  @override
+  String get profile_confirm_password => 'Confirm password';
+
+  @override
+  String get profile_password_updated => 'Password updated successfully';
+
+  @override
+  String get profile_password_hint => 'For your security, use a strong unique password.';
+
+  @override
+  String get profile_update_password => 'Update password';
+
+  @override
+  String get profile_update_notifications => 'Update';
+
+  @override
+  String get profile_notify_items => 'Item updates';
+
+  @override
+  String get profile_notify_items_sub => 'Receive notifications when businesses update their items';
+
+  @override
+  String get profile_notify_feedback => 'User feedback';
+
+  @override
+  String get profile_notify_feedback_sub => 'Get notified when users submit new feedback';
+
+  @override
+  String get common_security => 'الأمان';
+
+  @override
+  String get common_sign_out => 'تسجيل الخروج';
+
+  @override
+  String get common_sign_out_hint => 'إنهاء الجلسة الحالية';
+
+  @override
+  String get common_sign_out_confirm => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get common_signed_out => 'تم تسجيل الخروج';
+
+  @override
+  String get err_email => 'Please enter a valid email';
+
+  @override
+  String get errPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get err_unknown => 'Something went wrong';
 }

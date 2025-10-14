@@ -93,5 +93,10 @@
   "dash_no_recent": "Aucun projet récent pour le moment.",
    "themes_confirm_delete": "Supprimer ce thème ? Cette action est irréversible.",
   "themes_colors_section": "Couleurs",
-  "err_required": "Ce champ est obligatoire"
+  "err_required": "Ce champ est obligatoire",
+  "common_security": "Sécurité",
+  "common_sign_out": "Se déconnecter",
+  "common_sign_out_hint": "Terminer votre session actuelle",
+  "common_sign_out_confirm": "Voulez-vous vraiment vous déconnecter ?",
+  "common_signed_out": "Déconnexion réussie"
 }

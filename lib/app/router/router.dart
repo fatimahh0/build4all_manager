@@ -1,3 +1,4 @@
+import 'package:build4all_manager/app/splash_gate.dart';
 import 'package:build4all_manager/features/auth/presentation/screens/super_admin_home_screen.dart';
 import 'package:build4all_manager/features/manager/homescreen/presentation/screens/manager_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,8 @@ final router = GoRouter(
     GoRoute(path: '/login', builder: (_, __) => const AppLoginScreen()),
     GoRoute(path: '/manager', builder: (_, __) => const SuperAdminHomeScreen()),
     GoRoute(path: '/home', builder: (_, __) => const ManagerHomeScreen()),
-    GoRoute(path: '/', builder: (_, __) => const AppLoginScreen()),
+    GoRoute(path: '/loginScreen', builder: (_, __) => const AppLoginScreen()),
+    GoRoute(path: '/', builder: (_, __) => const SplashGate()),
   ],
   redirect: _authRedirect,
 );

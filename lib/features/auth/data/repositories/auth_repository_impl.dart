@@ -1,3 +1,5 @@
+import 'package:build4all_manager/core/network/dio_client.dart';
+
 import '../../domain/entities/app_user.dart';
 import '../../domain/entities/auth_token.dart';
 import '../../domain/repositories/i_auth_repository.dart';
@@ -11,7 +13,7 @@ class AuthRepositoryImpl implements IAuthRepository {
   final JwtLocalDataSource jwtStore;
   AuthRepositoryImpl({required this.api, required this.jwtStore});
 
-  @override
+   @override
   Future<(AuthToken, AppUser)> login({
     required String identifier,
     required String password,
@@ -33,8 +35,13 @@ class AuthRepositoryImpl implements IAuthRepository {
     );
 
     await jwtStore.save(token: dto.token, role: role);
+
+    // make every future Dio request carry the bearer
+    DioClient.setToken(dto.token);
+
     return (AuthToken(dto.token), user);
   }
+
 
   @override
   Future<void> logout() => jwtStore.clear();

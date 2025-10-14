@@ -1,3 +1,5 @@
+// lib/presentation/screens/themes_screen.dart
+import 'package:build4all_manager/features/superadmin/themes/presentation/widgets/theme_editor_sheet.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +8,6 @@ import '../bloc/theme_bloc.dart';
 import '../bloc/theme_event.dart';
 import '../bloc/theme_state.dart';
 import '../widgets/theme_card.dart';
-import '../widgets/theme_editor_sheet.dart';
 import '../../domain/entities/theme_entity.dart';
 
 class ThemesScreen extends StatelessWidget {
@@ -121,9 +122,23 @@ class ThemesScreen extends StatelessWidget {
               cols = 1;
             }
 
-            // card height scales slightly with textScale to avoid overflow
-            final ts = MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.3);
-            final cardHeight = (220 * ts).clamp(208.0, 260.0);
+            // NEW: adaptive heights to prevent bottom overflow
+            final ts = MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.4);
+            double baseHeight;
+            switch (cols) {
+              case 1:
+                baseHeight = 360; // phone: most vertical pressure
+                break;
+              case 2:
+                baseHeight = 320; // narrow tablet
+                break;
+              case 3:
+                baseHeight = 280; // desktop mid
+                break;
+              default:
+                baseHeight = 260; // wide desktop
+            }
+            final cardHeight = baseHeight + (ts - 1.0) * 60;
 
             return RefreshIndicator.adaptive(
               onRefresh: () async =>
@@ -242,7 +257,7 @@ class ThemesScreen extends StatelessWidget {
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: cols,
-                          mainAxisExtent: cardHeight,
+                          mainAxisExtent: cardHeight, // <-- adaptive height
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
                         ),
@@ -256,7 +271,7 @@ class ThemesScreen extends StatelessWidget {
           },
         );
 
-        // Scaffold-level FAB for compact layouts to avoid action overflow
+        // Scaffold-level FAB for compact layouts
         return Scaffold(
           body: SafeArea(top: false, child: body),
           floatingActionButton: showFab
