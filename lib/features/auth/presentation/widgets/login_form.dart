@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:build4all_manager/shared/widgets/app_text_field.dart';
 import 'package:build4all_manager/shared/widgets/app_button.dart';
 
-import '../bloc/auth_bloc.dart';
-import '../bloc/auth_event.dart';
-import '../bloc/auth_state.dart';
+import '../bloc/login/auth_bloc.dart';
+import '../bloc/login/auth_event.dart';
+import '../bloc/login/auth_state.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

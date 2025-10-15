@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInGeneralTitle => 'Sign in to your account';
 
   @override
-  String get errEmailInvalid => 'Invalid email format';
+  String get errEmailInvalid => 'Invalid email';
 
   @override
   String get errEmailRequired => 'Email is required';
@@ -24,7 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lblEmail => 'Email';
 
   @override
-  String get hintEmail => 'email';
+  String get hintEmail => 'you@example.com';
 
   @override
   String get signInGeneralSubtitle => 'Enter your details to continue';
@@ -42,7 +42,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lblPassword => 'Password';
 
   @override
-  String get hintPassword => '•••••••••••';
+  String get hintPassword => 'Your password';
 
   @override
   String get rememberMe => 'Remember me';
@@ -66,7 +66,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errPasswordRequired => 'Password is required';
 
   @override
-  String get errPasswordMin => 'Minimum 6 characters';
+  String get errPasswordMin => 'Password must be at least 6 characters';
 
   @override
   String get showPasswordLabel => 'Show password';
@@ -280,4 +280,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get err_unknown => 'Something went wrong';
+
+  @override
+  String get signUpOwnerTitle => 'Owner Sign Up';
+
+  @override
+  String get verifyCode => 'Verify Code';
+
+  @override
+  String get completeProfile => 'Complete Profile';
+
+  @override
+  String get lblUsername => 'Username';
+
+  @override
+  String get hintUsername => 'your.unique.name';
+
+  @override
+  String get lblFirstName => 'First name';
+
+  @override
+  String get hintFirstName => 'John';
+
+  @override
+  String get lblLastName => 'Last name';
+
+  @override
+  String get hintLastName => 'Doe';
+
+  @override
+  String get btnSendCode => 'Send Code';
+
+  @override
+  String get btnVerify => 'Verify';
+
+  @override
+  String get btnCreateAccount => 'Create account';
+
+  @override
+  String get errCodeSixDigits => 'Enter the 6-digit code';
+
+  @override
+  String get errUsernameRequired => 'Username is required';
+
+  @override
+  String get errFirstNameRequired => 'First name is required';
+
+  @override
+  String get errLastNameRequired => 'Last name is required';
+
+  @override
+  String get msgCodeSent => 'Verification code sent';
+
+  @override
+  String get msgWeWillSendCodeEmail => 'We will send a 6-digit code to your email.';
+
+  @override
+  String msgEnterCodeForEmail(Object email) {
+    return 'Enter the 6-digit code sent to $email';
+  }
+
+  @override
+  String get msgOwnerRegistered => 'Owner registered successfully';
 }

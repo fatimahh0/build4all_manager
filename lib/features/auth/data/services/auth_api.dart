@@ -5,15 +5,45 @@ import '../models/login_request_dto.dart';
 class AuthApi {
   final Dio _dio = DioClient.ensure();
 
-  // Use the universal endpoint (backend should accept any role here)
+  /// ✅ unified admin login for SUPER_ADMIN / OWNER / MANAGER
   Future<Response> login(LoginRequestDto body) {
-    return _dio.post('/auth/superadmin/login', data: body.toJson());
+    return _dio.post('/auth/admin/login', data: body.toJson());
   }
 
-  // (Optional) If your backend still has a super-admin only endpoint,
-  // you can keep it as a fallback:
-  Future<Response> superAdminLogin(LoginRequestDto body) {
-    // IMPORTANT: no leading spaces!
-    return _dio.post('/auth/superadmin/login', data: body.toJson());
+  /// ✅ OWNER email-OTP registration (3 steps)
+  Future<Response> ownerSendOtp({
+    required String email,
+    required String password, // temporarily passed to backend step 2
+  }) {
+    return _dio.post('/auth/owner/send-verification-email', queryParameters: {
+      'email': email,
+      'password': password,
+    });
+  }
+
+  Future<Response> ownerVerifyOtp({
+    required String email,
+    required String password,
+    required String code,
+  }) {
+    return _dio.post('/auth/owner/verify-email-code', data: {
+      'email': email,
+      'password': password,
+      'code': code,
+    });
+  }
+
+  Future<Response> ownerCompleteProfile({
+    required String registrationToken,
+    required String username,
+    required String firstName,
+    required String lastName,
+  }) {
+    return _dio.post('/auth/owner/complete-profile', data: {
+      'registrationToken': registrationToken,
+      'username': username,
+      'firstName': firstName,
+      'lastName': lastName,
+    });
   }
 }

@@ -112,7 +112,7 @@ abstract class AppLocalizations {
   /// Validation: invalid email format
   ///
   /// In en, this message translates to:
-  /// **'Invalid email format'**
+  /// **'Invalid email'**
   String get errEmailInvalid;
 
   /// Validation: empty email
@@ -130,7 +130,7 @@ abstract class AppLocalizations {
   /// No description provided for @hintEmail.
   ///
   /// In en, this message translates to:
-  /// **'email'**
+  /// **'you@example.com'**
   String get hintEmail;
 
   /// Generic subtitle under the login title
@@ -166,7 +166,7 @@ abstract class AppLocalizations {
   /// Password hint text
   ///
   /// In en, this message translates to:
-  /// **'•••••••••••'**
+  /// **'Your password'**
   String get hintPassword;
 
   /// Remember me checkbox label
@@ -214,7 +214,7 @@ abstract class AppLocalizations {
   /// Validation: password too short
   ///
   /// In en, this message translates to:
-  /// **'Minimum 6 characters'**
+  /// **'Password must be at least 6 characters'**
   String get errPasswordMin;
 
   /// Accessibility label for toggling password visibility (show)
@@ -642,6 +642,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong'**
   String get err_unknown;
+
+  /// No description provided for @signUpOwnerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner Sign Up'**
+  String get signUpOwnerTitle;
+
+  /// No description provided for @verifyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCode;
+
+  /// No description provided for @completeProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Profile'**
+  String get completeProfile;
+
+  /// No description provided for @lblUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get lblUsername;
+
+  /// No description provided for @hintUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'your.unique.name'**
+  String get hintUsername;
+
+  /// No description provided for @lblFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get lblFirstName;
+
+  /// No description provided for @hintFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'John'**
+  String get hintFirstName;
+
+  /// No description provided for @lblLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lblLastName;
+
+  /// No description provided for @hintLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Doe'**
+  String get hintLastName;
+
+  /// No description provided for @btnSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Code'**
+  String get btnSendCode;
+
+  /// No description provided for @btnVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get btnVerify;
+
+  /// No description provided for @btnCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get btnCreateAccount;
+
+  /// No description provided for @errCodeSixDigits.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code'**
+  String get errCodeSixDigits;
+
+  /// No description provided for @errUsernameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Username is required'**
+  String get errUsernameRequired;
+
+  /// No description provided for @errFirstNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required'**
+  String get errFirstNameRequired;
+
+  /// No description provided for @errLastNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required'**
+  String get errLastNameRequired;
+
+  /// No description provided for @msgCodeSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent'**
+  String get msgCodeSent;
+
+  /// No description provided for @msgWeWillSendCodeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'We will send a 6-digit code to your email.'**
+  String get msgWeWillSendCodeEmail;
+
+  /// No description provided for @msgEnterCodeForEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code sent to {email}'**
+  String msgEnterCodeForEmail(Object email);
+
+  /// No description provided for @msgOwnerRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner registered successfully'**
+  String get msgOwnerRegistered;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

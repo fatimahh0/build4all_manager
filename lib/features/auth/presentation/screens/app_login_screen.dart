@@ -10,9 +10,9 @@ import '../../data/repositories/auth_repository_impl.dart';
 import '../../../auth/data/datasources/jwt_local_datasource.dart';
 import '../../../auth/data/services/auth_api.dart';
 import '../../domain/repositories/i_auth_repository.dart';
-import '../bloc/auth_bloc.dart';
-import '../bloc/auth_event.dart';
-import '../bloc/auth_state.dart';
+import '../bloc/login/auth_bloc.dart';
+import '../bloc/login/auth_event.dart';
+import '../bloc/login/auth_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
@@ -41,9 +41,9 @@ class AppLoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state.role != null &&
               state.role!.toUpperCase() == 'SUPER_ADMIN') {
-            context.go('/manager'); // manager home
+            context.go('/manager');
           } else if (state.role != null && state.role!.isNotEmpty) {
-            context.go('/home'); // build4all home
+            context.go('/home');
           } else if (state.error != null) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error!)));
@@ -57,7 +57,7 @@ class AppLoginScreen extends StatelessWidget {
               final cardMaxWidth = isWide ? 560.0 : 480.0;
 
               return Stack(children: [
-                _Header(title: l10n.appTitle), // unchanged key
+                _Header(title: l10n.appTitle),
                 Align(
                   alignment: Alignment.topCenter,
                   child: SingleChildScrollView(
@@ -76,28 +76,29 @@ class AppLoginScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Hero(
-                                      tag: 'brand',
-                                      child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor:
-                                            cs.primary.withOpacity(.12),
-                                        child: Text(
-                                          'B4',
-                                          style: TextStyle(
-                                            color: cs.primary,
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 18,
-                                          ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Hero(
+                                    tag: 'brand',
+                                    child: CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor:
+                                          cs.primary.withOpacity(.12),
+                                      child: Text(
+                                        'B4',
+                                        style: TextStyle(
+                                          color: cs.primary,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 18,
                                         ),
                                       ),
                                     ),
-                                  ]),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 12),
                               Text(
-                                l10n.signInGeneralTitle, // ‹— generic key
+                                l10n.signInGeneralTitle,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge
@@ -105,7 +106,7 @@ class AppLoginScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                l10n.signInGeneralSubtitle, // ‹— generic key
+                                l10n.signInGeneralSubtitle,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
@@ -116,9 +117,40 @@ class AppLoginScreen extends StatelessWidget {
                               const Divider(height: 1),
                               const SizedBox(height: 20),
                               const _LoginForm(),
+                              const SizedBox(height: 16),
+
+                              // ⤵: “Don’t have an account? Sign up”
+                              TextButton(
+                                onPressed: () {
+                                  // change '/register' to your register route, e.g. '/owner-register'
+                                  context.go('/owner/register');
+                                },
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: l10n.noAccount,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(color: cs.outline),
+                                      ),
+                                      TextSpan(
+                                        text: ' ${l10n.signUp}',
+                                        style: TextStyle(
+                                          color: cs.primary,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+
                               const SizedBox(height: 8),
                               Text(
-                                l10n.termsNotice, // unchanged key
+                                l10n.termsNotice,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
@@ -203,8 +235,8 @@ class _LoginFormState extends State<_LoginForm> {
               AppTextField(
                 controller: _identifier,
                 focusNode: _idNode,
-                label: l10n.lblIdentifier, // ‹— generic key
-                hint: l10n.hintIdentifier, // ‹— generic key
+                label: l10n.lblIdentifier,
+                hint: l10n.hintIdentifier,
                 prefix: const Icon(Icons.alternate_email),
                 textInputAction: TextInputAction.next,
                 validator: (v) => _idValidator(v, l10n),
@@ -214,8 +246,8 @@ class _LoginFormState extends State<_LoginForm> {
               AppPasswordField(
                 controller: _password,
                 focusNode: _pwNode,
-                label: l10n.lblPassword, // existing key
-                hint: l10n.hintPassword, // existing key
+                label: l10n.lblPassword,
+                hint: l10n.hintPassword,
                 prefix: const Icon(Icons.lock_outline),
                 textInputAction: TextInputAction.done,
                 validator: (v) => _pwValidator(v, l10n),
@@ -223,7 +255,7 @@ class _LoginFormState extends State<_LoginForm> {
               ),
               const SizedBox(height: 14),
               AppButton(
-                label: l10n.btnSignIn, // existing key
+                label: l10n.btnSignIn,
                 expand: true,
                 isBusy: state.loading,
                 trailing: const Icon(Icons.login_rounded),
@@ -237,7 +269,9 @@ class _LoginFormState extends State<_LoginForm> {
                         state.error!,
                         key: ValueKey(state.error),
                         style: TextStyle(
-                            color: cs.error, fontWeight: FontWeight.w600),
+                          color: cs.error,
+                          fontWeight: FontWeight.w600,
+                        ),
                       )
                     : const SizedBox.shrink(),
               ),
@@ -316,7 +350,7 @@ class _Blob extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: color.withOpacity(.4), blurRadius: 24, spreadRadius: 2)
+                color: color.withOpacity(.4), blurRadius: 24, spreadRadius: 2),
           ],
         ),
       );
@@ -340,7 +374,7 @@ class _FrostedCard extends StatelessWidget {
               BoxShadow(
                   color: Color(0x14000000),
                   blurRadius: 24,
-                  offset: Offset(0, 10))
+                  offset: Offset(0, 10)),
             ],
             border: Border.all(color: cs.outlineVariant.withOpacity(.5)),
           ),

@@ -137,5 +137,37 @@
  
   "errPasswordMismatch": "Passwords do not match",
  
-  "err_unknown": "Something went wrong"
+  "err_unknown": "Something went wrong",
+   "signUpOwnerTitle": "Owner Sign Up",
+  "verifyCode": "Verify Code",
+  "completeProfile": "Complete Profile",
+
+  "lblEmail": "Email",
+  "hintEmail": "you@example.com",
+  "lblPassword": "Password",
+  "hintPassword": "Your password",
+  "lblUsername": "Username",
+  "hintUsername": "your.unique.name",
+  "lblFirstName": "First name",
+  "hintFirstName": "John",
+  "lblLastName": "Last name",
+  "hintLastName": "Doe",
+
+  "btnSendCode": "Send Code",
+  "btnVerify": "Verify",
+  "btnCreateAccount": "Create account",
+
+  "errEmailRequired": "Email is required",
+  "errEmailInvalid": "Invalid email",
+  "errPasswordRequired": "Password is required",
+  "errPasswordMin": "Password must be at least 6 characters",
+  "errCodeSixDigits": "Enter the 6-digit code",
+  "errUsernameRequired": "Username is required",
+  "errFirstNameRequired": "First name is required",
+  "errLastNameRequired": "Last name is required",
+
+  "msgCodeSent": "Verification code sent",
+  "msgWeWillSendCodeEmail": "We will send a 6-digit code to your email.",
+  "msgEnterCodeForEmail": "Enter the 6-digit code sent to {email}",
+  "msgOwnerRegistered": "Owner registered successfully"
 }
