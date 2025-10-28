@@ -762,6 +762,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Owner registered successfully'**
   String get msgOwnerRegistered;
+
+  /// No description provided for @owner_nav_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get owner_nav_title;
+
+  /// No description provided for @owner_nav_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get owner_nav_home;
+
+  /// No description provided for @owner_nav_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects'**
+  String get owner_nav_projects;
+
+  /// No description provided for @owner_nav_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get owner_nav_requests;
+
+  /// No description provided for @owner_nav_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get owner_nav_profile;
+
+  /// No description provided for @owner_home_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner Home'**
+  String get owner_home_title;
+
+  /// No description provided for @owner_projects_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects'**
+  String get owner_projects_title;
+
+  /// No description provided for @owner_requests_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get owner_requests_title;
+
+  /// No description provided for @owner_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get owner_profile_title;
+
+  /// No description provided for @owner_home_hello.
+  ///
+  /// In en, this message translates to:
+  /// **'👋 Hi, Owner'**
+  String get owner_home_hello;
+
+  /// No description provided for @owner_home_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your apps easily'**
+  String get owner_home_subtitle;
+
+  /// No description provided for @owner_home_requestApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Request My App'**
+  String get owner_home_requestApp;
+
+  /// No description provided for @owner_home_myProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'My Active Projects'**
+  String get owner_home_myProjects;
+
+  /// No description provided for @owner_home_recentRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Requests'**
+  String get owner_home_recentRequests;
+
+  /// No description provided for @owner_home_noRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent requests'**
+  String get owner_home_noRecent;
+
+  /// No description provided for @owner_home_viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get owner_home_viewAll;
+
+  /// No description provided for @tutorial_step1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request your app'**
+  String get tutorial_step1_title;
+
+  /// No description provided for @tutorial_step1_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a project, name your app, add notes, and submit the request.'**
+  String get tutorial_step1_body;
+
+  /// No description provided for @tutorial_step2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Track approval'**
+  String get tutorial_step2_title;
+
+  /// No description provided for @tutorial_step2_body.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll notify you when your request is approved or needs changes.'**
+  String get tutorial_step2_body;
+
+  /// No description provided for @tutorial_step3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the APK'**
+  String get tutorial_step3_title;
+
+  /// No description provided for @tutorial_step3_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Once built, grab your APK directly from your dashboard.'**
+  String get tutorial_step3_body;
+
+  /// No description provided for @owner_projects_searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search name or slug…'**
+  String get owner_projects_searchHint;
+
+  /// No description provided for @owner_projects_onlyReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Only APK ready'**
+  String get owner_projects_onlyReady;
+
+  /// No description provided for @owner_projects_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No projects yet'**
+  String get owner_projects_emptyTitle;
+
+  /// No description provided for @owner_projects_emptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You don’t have any projects. Request your first app and we’ll build it for you.'**
+  String get owner_projects_emptyBody;
+
+  /// No description provided for @owner_projects_building.
+  ///
+  /// In en, this message translates to:
+  /// **'Building…'**
+  String get owner_projects_building;
+
+  /// No description provided for @owner_projects_ready.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get owner_projects_ready;
+
+  /// No description provided for @owner_projects_openInBrowser.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get owner_projects_openInBrowser;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

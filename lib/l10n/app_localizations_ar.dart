@@ -342,4 +342,91 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get msgOwnerRegistered => 'Owner registered successfully';
+
+  @override
+  String get owner_nav_title => 'المالك';
+
+  @override
+  String get owner_nav_home => 'الرئيسية';
+
+  @override
+  String get owner_nav_projects => 'المشاريع';
+
+  @override
+  String get owner_nav_requests => 'الطلبات';
+
+  @override
+  String get owner_nav_profile => 'الملف الشخصي';
+
+  @override
+  String get owner_home_title => 'واجهة المالك';
+
+  @override
+  String get owner_projects_title => 'المشاريع';
+
+  @override
+  String get owner_requests_title => 'الطلبات';
+
+  @override
+  String get owner_profile_title => 'الملف الشخصي';
+
+  @override
+  String get owner_home_hello => '👋 أهلاً، صاحب التطبيق';
+
+  @override
+  String get owner_home_subtitle => 'إدارة تطبيقاتك بسهولة';
+
+  @override
+  String get owner_home_requestApp => 'اطلب تطبيقي';
+
+  @override
+  String get owner_home_myProjects => 'مشاريعي النشطة';
+
+  @override
+  String get owner_home_recentRequests => 'الطلبات الأخيرة';
+
+  @override
+  String get owner_home_noRecent => 'لا توجد طلبات حديثة';
+
+  @override
+  String get owner_home_viewAll => 'عرض الكل';
+
+  @override
+  String get tutorial_step1_title => 'اطلب تطبيقك';
+
+  @override
+  String get tutorial_step1_body => 'اختر المشروع، سمِّ التطبيق، أضف ملاحظات، ثم أرسل الطلب.';
+
+  @override
+  String get tutorial_step2_title => 'تابع الموافقة';
+
+  @override
+  String get tutorial_step2_body => 'سنعلمك عند الموافقة أو إذا كانت هناك تعديلات مطلوبة.';
+
+  @override
+  String get tutorial_step3_title => 'حمّل ملف APK';
+
+  @override
+  String get tutorial_step3_body => 'بعد البناء، نزّل الـ APK مباشرةً من لوحة التحكم.';
+
+  @override
+  String get owner_projects_searchHint => 'ابحث بالاسم أو المعرّف…';
+
+  @override
+  String get owner_projects_onlyReady => 'فقط الجاهزة (APK)';
+
+  @override
+  String get owner_projects_emptyTitle => 'لا توجد مشاريع بعد';
+
+  @override
+  String get owner_projects_emptyBody => 'ليس لديك أي مشاريع حالياً. اطلب تطبيقك الأول وسنقوم ببنائه لك.';
+
+  @override
+  String get owner_projects_building => 'جارٍ الإنشاء…';
+
+  @override
+  String get owner_projects_ready => 'جاهز';
+
+  @override
+  String get owner_projects_openInBrowser => 'فتح';
 }

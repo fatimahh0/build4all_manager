@@ -1,73 +1,96 @@
 ﻿{
   "appTitle": "Build4All",
-  "@appTitle": { "description": "App name shown in the login header" },
-
+  "@appTitle": {
+    "description": "App name shown in the login header"
+  },
   "signInGeneralTitle": "Sign in to your account",
-  "@signInGeneralTitle": { "description": "Generic login title (not role-specific)" },
+  "@signInGeneralTitle": {
+    "description": "Generic login title (not role-specific)"
+  },
   "errEmailInvalid": "Invalid email format",
-  "@errEmailInvalid": { "description": "Validation: invalid email format" },
-  "errEmailRequired"  : "Email is required",
-  "@errEmailRequired": { "description": "Validation: empty email" },
- "lblEmail": "Email",
-  "@lblEmail": { "description": "Email label" },
-   "hintEmail" : "email",
-
+  "@errEmailInvalid": {
+    "description": "Validation: invalid email format"
+  },
+  "errEmailRequired": "Email is required",
+  "@errEmailRequired": {
+    "description": "Validation: empty email"
+  },
+  "lblEmail": "Email",
+  "@lblEmail": {
+    "description": "Email label"
+  },
+  "hintEmail": "email",
   "signInGeneralSubtitle": "Enter your details to continue",
-  "@signInGeneralSubtitle": { "description": "Generic subtitle under the login title" },
-
+  "@signInGeneralSubtitle": {
+    "description": "Generic subtitle under the login title"
+  },
   "termsNotice": "By continuing you agree to our Terms & Privacy Policy",
-  "@termsNotice": { "description": "Legal notice under the form" },
-
+  "@termsNotice": {
+    "description": "Legal notice under the form"
+  },
   "lblIdentifier": "Email / Phone / Username",
-  "@lblIdentifier": { "description": "Generic identifier label" },
-
+  "@lblIdentifier": {
+    "description": "Generic identifier label"
+  },
   "hintIdentifier": "you@example.com or +961xxxxxxxx or username",
-  "@hintIdentifier": { "description": "Generic identifier hint" },
-
+  "@hintIdentifier": {
+    "description": "Generic identifier hint"
+  },
   "lblPassword": "Password",
-  "@lblPassword": { "description": "Password label" },
-
+  "@lblPassword": {
+    "description": "Password label"
+  },
   "hintPassword": "•••••••••••",
-  "@hintPassword": { "description": "Password hint text" },
-
+  "@hintPassword": {
+    "description": "Password hint text"
+  },
   "rememberMe": "Remember me",
-  "@rememberMe": { "description": "Remember me checkbox label" },
-
+  "@rememberMe": {
+    "description": "Remember me checkbox label"
+  },
   "forgotPassword": "Forgot password?",
-  "@forgotPassword": { "description": "Forgot password action link" },
-
+  "@forgotPassword": {
+    "description": "Forgot password action link"
+  },
   "btnSignIn": "Sign In",
-  "@btnSignIn": { "description": "Primary sign-in button label" },
-
+  "@btnSignIn": {
+    "description": "Primary sign-in button label"
+  },
   "noAccount": "Don't have an account?",
-  "@noAccount": { "description": "Text before the Sign Up link" },
-
+  "@noAccount": {
+    "description": "Text before the Sign Up link"
+  },
   "signUp": "Sign Up",
-  "@signUp": { "description": "Sign up action link" },
-
+  "@signUp": {
+    "description": "Sign up action link"
+  },
   "errIdentifierRequired": "Identifier is required",
-  "@errIdentifierRequired": { "description": "Validation: empty identifier" },
-
+  "@errIdentifierRequired": {
+    "description": "Validation: empty identifier"
+  },
   "errPasswordRequired": "Password is required",
-  "@errPasswordRequired": { "description": "Validation: empty password" },
-
+  "@errPasswordRequired": {
+    "description": "Validation: empty password"
+  },
   "errPasswordMin": "Minimum 6 characters",
-  "@errPasswordMin": { "description": "Validation: password too short" },
-
+  "@errPasswordMin": {
+    "description": "Validation: password too short"
+  },
   "showPasswordLabel": "Show password",
-  "@showPasswordLabel": { "description": "Accessibility label for toggling password visibility (show)" },
-
+  "@showPasswordLabel": {
+    "description": "Accessibility label for toggling password visibility (show)"
+  },
   "hidePasswordLabel": "Hide password",
-  "@hidePasswordLabel": { "description": "Accessibility label for toggling password visibility (hide)" },
-   "nav_super_admin": "Super Admin",
+  "@hidePasswordLabel": {
+    "description": "Accessibility label for toggling password visibility (hide)"
+  },
+  "nav_super_admin": "Super Admin",
   "nav_dashboard": "Dashboard",
   "nav_themes": "Themes",
   "nav_profile": "Profile",
-
   "dashboard_title": "Admin Dashboard",
   "dashboard_welcome": "Welcome to Build4All Manager",
   "dashboard_hint": "Use the navigation on the left to manage themes and your profile.",
-
   "themes_title": "Theme Management",
   "themes_add": "Add Theme",
   "themes_name": "Theme Name",
@@ -76,7 +99,6 @@
   "themes_active": "Active",
   "themes_deactivate_all": "Deactivate All Themes",
   "themes_empty": "No themes yet. Create one.",
-
   "profile_title": "My Profile",
   "profile_firstName": "First Name",
   "profile_lastName": "Last Name",
@@ -88,21 +110,20 @@
   "profile_newPassword": "New Password",
   "profile_updatePassword": "Update Password",
   "password_updated": "Password updated successfully.",
-
   "common_save": "Save",
   "common_edit": "Edit",
   "common_delete": "Delete",
   "common_cancel": "Cancel",
-   "dash_total_projects": "Total Projects",
+  "dash_total_projects": "Total Projects",
   "dash_active_projects": "Active Projects",
   "dash_inactive_projects": "Inactive Projects",
   "dash_recent_projects": "Recent Projects",
   "dash_no_recent": "No recent projects yet.",
   "dash_welcome": "Welcome to Build4All Manager",
-   "themes_confirm_delete": "Delete this theme? This cannot be undone.",
+  "themes_confirm_delete": "Delete this theme? This cannot be undone.",
   "themes_colors_section": "Colors",
   "err_required": "This field is required",
-  "common_more" : "More",
+  "common_more": "More",
   "common_retry": "Retry",
   "nav_profile": "Profile",
   "profile_details": "Profile details",
@@ -127,21 +148,17 @@
   "profile_notify_items_sub": "Receive notifications when businesses update their items",
   "profile_notify_feedback": "User feedback",
   "profile_notify_feedback_sub": "Get notified when users submit new feedback",
-   "common_security": "Security",
+  "common_security": "Security",
   "common_sign_out": "Sign out",
   "common_sign_out_hint": "End your current session",
   "common_sign_out_confirm": "Are you sure you want to sign out?",
   "common_signed_out": "Signed out",
- 
   "err_email": "Please enter a valid email",
- 
   "errPasswordMismatch": "Passwords do not match",
- 
   "err_unknown": "Something went wrong",
-   "signUpOwnerTitle": "Owner Sign Up",
+  "signUpOwnerTitle": "Owner Sign Up",
   "verifyCode": "Verify Code",
   "completeProfile": "Complete Profile",
-
   "lblEmail": "Email",
   "hintEmail": "you@example.com",
   "lblPassword": "Password",
@@ -152,11 +169,9 @@
   "hintFirstName": "John",
   "lblLastName": "Last name",
   "hintLastName": "Doe",
-
   "btnSendCode": "Send Code",
   "btnVerify": "Verify",
   "btnCreateAccount": "Create account",
-
   "errEmailRequired": "Email is required",
   "errEmailInvalid": "Invalid email",
   "errPasswordRequired": "Password is required",
@@ -165,9 +180,43 @@
   "errUsernameRequired": "Username is required",
   "errFirstNameRequired": "First name is required",
   "errLastNameRequired": "Last name is required",
-
   "msgCodeSent": "Verification code sent",
   "msgWeWillSendCodeEmail": "We will send a 6-digit code to your email.",
   "msgEnterCodeForEmail": "Enter the 6-digit code sent to {email}",
-  "msgOwnerRegistered": "Owner registered successfully"
+  "msgOwnerRegistered": "Owner registered successfully",
+  "owner_nav_title": "Owner",
+  "owner_nav_home": "Home",
+  "owner_nav_projects": "Projects",
+  "owner_nav_requests": "Requests",
+  "owner_nav_profile": "Profile",
+  "owner_home_title": "Owner Home",
+  "owner_projects_title": "Projects",
+  "owner_requests_title": "Requests",
+  "owner_profile_title": "Profile",
+   "owner_home_hello": "👋 Hi, Owner",
+  "owner_home_subtitle": "Manage your apps easily",
+  "owner_home_requestApp": "Request My App",
+  "owner_home_myProjects": "My Active Projects",
+  "owner_home_recentRequests": "Recent Requests",
+  "owner_home_noRecent": "No recent requests",
+  "owner_home_viewAll": "View all",
+  "tutorial_step1_title": "Request your app",
+  "tutorial_step1_body": "Pick a project, name your app, add notes, and submit the request.",
+  "tutorial_step2_title": "Track approval",
+  "tutorial_step2_body": "We’ll notify you when your request is approved or needs changes.",
+  "tutorial_step3_title": "Download the APK",
+  "tutorial_step3_body": "Once built, grab your APK directly from your dashboard.",
+   "owner_nav_title": "Owner",
+  "owner_nav_home": "Home",
+  "owner_nav_projects": "Projects",
+  "owner_nav_requests": "Requests",
+  "owner_nav_profile": "Profile",
+   "owner_projects_title": "Projects",
+  "owner_projects_searchHint": "Search name or slug…",
+  "owner_projects_onlyReady": "Only APK ready",
+  "owner_projects_emptyTitle": "No projects yet",
+  "owner_projects_emptyBody": "You don’t have any projects. Request your first app and we’ll build it for you.",
+  "owner_projects_building": "Building…",
+  "owner_projects_ready": "Ready",
+  "owner_projects_openInBrowser": "Open"
 }

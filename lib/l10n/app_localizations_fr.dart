@@ -342,4 +342,91 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get msgOwnerRegistered => 'Owner registered successfully';
+
+  @override
+  String get owner_nav_title => 'Propriétaire';
+
+  @override
+  String get owner_nav_home => 'Accueil';
+
+  @override
+  String get owner_nav_projects => 'Projets';
+
+  @override
+  String get owner_nav_requests => 'Demandes';
+
+  @override
+  String get owner_nav_profile => 'Profil';
+
+  @override
+  String get owner_home_title => 'Accueil Propriétaire';
+
+  @override
+  String get owner_projects_title => 'Projets';
+
+  @override
+  String get owner_requests_title => 'Demandes';
+
+  @override
+  String get owner_profile_title => 'Profil';
+
+  @override
+  String get owner_home_hello => '👋 Salut, Propriétaire';
+
+  @override
+  String get owner_home_subtitle => 'Gérez vos apps facilement';
+
+  @override
+  String get owner_home_requestApp => 'Demander mon app';
+
+  @override
+  String get owner_home_myProjects => 'Mes projets actifs';
+
+  @override
+  String get owner_home_recentRequests => 'Demandes récentes';
+
+  @override
+  String get owner_home_noRecent => 'Aucune demande récente';
+
+  @override
+  String get owner_home_viewAll => 'Tout voir';
+
+  @override
+  String get tutorial_step1_title => 'Demandez votre app';
+
+  @override
+  String get tutorial_step1_body => 'Choisissez un projet, nommez l’app, ajoutez des notes et envoyez.';
+
+  @override
+  String get tutorial_step2_title => 'Suivez l’approbation';
+
+  @override
+  String get tutorial_step2_body => 'Nous vous prévenons dès que c’est approuvé ou s’il faut corriger.';
+
+  @override
+  String get tutorial_step3_title => 'Téléchargez l’APK';
+
+  @override
+  String get tutorial_step3_body => 'Une fois construit, récupérez l’APK depuis votre tableau de bord.';
+
+  @override
+  String get owner_projects_searchHint => 'Rechercher nom ou slug…';
+
+  @override
+  String get owner_projects_onlyReady => 'APK uniquement prête';
+
+  @override
+  String get owner_projects_emptyTitle => 'Aucun projet';
+
+  @override
+  String get owner_projects_emptyBody => 'Vous n’avez pas encore de projets. Demandez votre première app et nous la construirons pour vous.';
+
+  @override
+  String get owner_projects_building => 'Compilation…';
+
+  @override
+  String get owner_projects_ready => 'Prêt';
+
+  @override
+  String get owner_projects_openInBrowser => 'Ouvrir';
 }

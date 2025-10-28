@@ -99,5 +99,41 @@
   "common_sign_out": "تسجيل الخروج",
   "common_sign_out_hint": "إنهاء الجلسة الحالية",
   "common_sign_out_confirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
-  "common_signed_out": "تم تسجيل الخروج"
+  "common_signed_out": "تم تسجيل الخروج",
+
+   "owner_nav_title": "المالك",
+  "owner_nav_home": "الرئيسية",
+  "owner_nav_projects": "المشاريع",
+  "owner_nav_requests": "الطلبات",
+  "owner_nav_profile": "الملف",
+  "owner_home_title": "واجهة المالك",
+  "owner_projects_title": "المشاريع",
+  "owner_requests_title": "الطلبات",
+  "owner_profile_title": "الملف الشخصي",
+  "owner_home_hello": "👋 أهلاً، صاحب التطبيق",
+  "owner_home_subtitle": "إدارة تطبيقاتك بسهولة",
+  "owner_home_requestApp": "اطلب تطبيقي",
+  "owner_home_myProjects": "مشاريعي النشطة",
+  "owner_home_recentRequests": "الطلبات الأخيرة",
+  "owner_home_noRecent": "لا توجد طلبات حديثة",
+  "owner_home_viewAll": "عرض الكل",
+    "tutorial_step1_title": "اطلب تطبيقك",
+  "tutorial_step1_body": "اختر المشروع، سمِّ التطبيق، أضف ملاحظات، ثم أرسل الطلب.",
+  "tutorial_step2_title": "تابع الموافقة",
+  "tutorial_step2_body": "سنعلمك عند الموافقة أو إذا كانت هناك تعديلات مطلوبة.",
+  "tutorial_step3_title": "حمّل ملف APK",
+  "tutorial_step3_body": "بعد البناء، نزّل الـ APK مباشرةً من لوحة التحكم.",
+    "owner_nav_title": "المالك",
+  "owner_nav_home": "الرئيسية",
+  "owner_nav_projects": "المشاريع",
+  "owner_nav_requests": "الطلبات",
+  "owner_nav_profile": "الملف الشخصي",
+  "owner_projects_title": "المشاريع",
+  "owner_projects_searchHint": "ابحث بالاسم أو المعرّف…",
+  "owner_projects_onlyReady": "فقط الجاهزة (APK)",
+  "owner_projects_emptyTitle": "لا توجد مشاريع بعد",
+  "owner_projects_emptyBody": "ليس لديك أي مشاريع حالياً. اطلب تطبيقك الأول وسنقوم ببنائه لك.",
+  "owner_projects_building": "جارٍ الإنشاء…",
+  "owner_projects_ready": "جاهز",
+  "owner_projects_openInBrowser": "فتح"
 }

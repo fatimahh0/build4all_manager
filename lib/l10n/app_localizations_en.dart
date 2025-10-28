@@ -342,4 +342,91 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msgOwnerRegistered => 'Owner registered successfully';
+
+  @override
+  String get owner_nav_title => 'Owner';
+
+  @override
+  String get owner_nav_home => 'Home';
+
+  @override
+  String get owner_nav_projects => 'Projects';
+
+  @override
+  String get owner_nav_requests => 'Requests';
+
+  @override
+  String get owner_nav_profile => 'Profile';
+
+  @override
+  String get owner_home_title => 'Owner Home';
+
+  @override
+  String get owner_projects_title => 'Projects';
+
+  @override
+  String get owner_requests_title => 'Requests';
+
+  @override
+  String get owner_profile_title => 'Profile';
+
+  @override
+  String get owner_home_hello => '👋 Hi, Owner';
+
+  @override
+  String get owner_home_subtitle => 'Manage your apps easily';
+
+  @override
+  String get owner_home_requestApp => 'Request My App';
+
+  @override
+  String get owner_home_myProjects => 'My Active Projects';
+
+  @override
+  String get owner_home_recentRequests => 'Recent Requests';
+
+  @override
+  String get owner_home_noRecent => 'No recent requests';
+
+  @override
+  String get owner_home_viewAll => 'View all';
+
+  @override
+  String get tutorial_step1_title => 'Request your app';
+
+  @override
+  String get tutorial_step1_body => 'Pick a project, name your app, add notes, and submit the request.';
+
+  @override
+  String get tutorial_step2_title => 'Track approval';
+
+  @override
+  String get tutorial_step2_body => 'We’ll notify you when your request is approved or needs changes.';
+
+  @override
+  String get tutorial_step3_title => 'Download the APK';
+
+  @override
+  String get tutorial_step3_body => 'Once built, grab your APK directly from your dashboard.';
+
+  @override
+  String get owner_projects_searchHint => 'Search name or slug…';
+
+  @override
+  String get owner_projects_onlyReady => 'Only APK ready';
+
+  @override
+  String get owner_projects_emptyTitle => 'No projects yet';
+
+  @override
+  String get owner_projects_emptyBody => 'You don’t have any projects. Request your first app and we’ll build it for you.';
+
+  @override
+  String get owner_projects_building => 'Building…';
+
+  @override
+  String get owner_projects_ready => 'Ready';
+
+  @override
+  String get owner_projects_openInBrowser => 'Open';
 }

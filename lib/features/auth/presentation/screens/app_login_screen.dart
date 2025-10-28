@@ -1,18 +1,19 @@
 import 'dart:ui';
+import 'package:build4all_manager/features/auth/data/datasources/jwt_local_datasource.dart';
+import 'package:build4all_manager/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:build4all_manager/features/auth/data/services/auth_api.dart';
+import 'package:build4all_manager/features/auth/domain/repositories/i_auth_repository.dart';
+import 'package:build4all_manager/features/auth/domain/usecases/get_role_usecase.dart';
+import 'package:build4all_manager/features/auth/domain/usecases/login_usecase.dart';
+import 'package:build4all_manager/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:build4all_manager/features/auth/presentation/bloc/login/auth_bloc.dart';
+import 'package:build4all_manager/features/auth/presentation/bloc/login/auth_event.dart';
+import 'package:build4all_manager/features/auth/presentation/bloc/login/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/usecases/login_usecase.dart';
-import '../../domain/usecases/logout_usecase.dart';
-import '../../domain/usecases/get_role_usecase.dart';
-import '../../data/repositories/auth_repository_impl.dart';
-import '../../../auth/data/datasources/jwt_local_datasource.dart';
-import '../../../auth/data/services/auth_api.dart';
-import '../../domain/repositories/i_auth_repository.dart';
-import '../bloc/login/auth_bloc.dart';
-import '../bloc/login/auth_event.dart';
-import '../bloc/login/auth_state.dart';
+
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/app_text_field.dart';
 import '../../../../shared/widgets/app_button.dart';
@@ -39,11 +40,12 @@ class AppLoginScreen extends StatelessWidget {
       child: BlocListener<AuthBloc, AuthState>(
         listenWhen: (p, c) => p.role != c.role || c.error != null,
         listener: (context, state) {
-          if (state.role != null &&
-              state.role!.toUpperCase() == 'SUPER_ADMIN') {
+          final role = (state.role ?? '').toUpperCase();
+          if (role == 'SUPER_ADMIN') {
             context.go('/manager');
-          } else if (state.role != null && state.role!.isNotEmpty) {
-            context.go('/home');
+          } else if (role.isNotEmpty) {
+            // OWNER / BUSINESS / MANAGER… → Owner shell with nav
+            context.go('/owner');
           } else if (state.error != null) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error!)));
@@ -118,13 +120,8 @@ class AppLoginScreen extends StatelessWidget {
                               const SizedBox(height: 20),
                               const _LoginForm(),
                               const SizedBox(height: 16),
-
-                              // ⤵: “Don’t have an account? Sign up”
                               TextButton(
-                                onPressed: () {
-                                  // change '/register' to your register route, e.g. '/owner-register'
-                                  context.go('/owner/register');
-                                },
+                                onPressed: () => context.go('/owner/register'),
                                 child: Text.rich(
                                   TextSpan(
                                     children: [
@@ -147,7 +144,6 @@ class AppLoginScreen extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-
                               const SizedBox(height: 8),
                               Text(
                                 l10n.termsNotice,
@@ -269,9 +265,7 @@ class _LoginFormState extends State<_LoginForm> {
                         state.error!,
                         key: ValueKey(state.error),
                         style: TextStyle(
-                          color: cs.error,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            color: cs.error, fontWeight: FontWeight.w600),
                       )
                     : const SizedBox.shrink(),
               ),
@@ -350,7 +344,7 @@ class _Blob extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: color.withOpacity(.4), blurRadius: 24, spreadRadius: 2),
+                color: color.withOpacity(.4), blurRadius: 24, spreadRadius: 2)
           ],
         ),
       );
@@ -374,7 +368,7 @@ class _FrostedCard extends StatelessWidget {
               BoxShadow(
                   color: Color(0x14000000),
                   blurRadius: 24,
-                  offset: Offset(0, 10)),
+                  offset: Offset(0, 10))
             ],
             border: Border.all(color: cs.outlineVariant.withOpacity(.5)),
           ),
