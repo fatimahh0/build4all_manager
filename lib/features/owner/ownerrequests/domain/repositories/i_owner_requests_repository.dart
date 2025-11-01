@@ -1,13 +1,23 @@
+// lib/features/owner/ownerrequests/domain/repositories/i_owner_requests_repository.dart
+import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
+
 import '../entities/app_request.dart';
 import '../entities/project.dart';
 
+
 abstract class IOwnerRequestsRepository {
   Future<List<Project>> getAvailableProjects();
-  Future<AppRequest> createAppRequest({
+  Future<List<AppRequest>> getMyRequests(int ownerId);
+
+  /// Themes shown in the picker
+  Future<List<ThemeLite>> getThemes();
+
+  /// Auto-approve endpoint: POST /owner/app-requests/auto?ownerId=...
+  Future<AppRequest> createAppRequestAuto({
     required int ownerId,
     required int projectId,
     required String appName,
-    String? notes, // use for theme info for now
+    int? themeId,
+    String? logoUrl,
   });
-  Future<List<AppRequest>> getMyRequests(int ownerId);
 }

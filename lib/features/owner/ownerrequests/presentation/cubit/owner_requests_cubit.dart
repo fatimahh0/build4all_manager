@@ -1,6 +1,8 @@
-
+// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_cubit.dart
+import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
 import '../../domain/repositories/i_owner_requests_repository.dart';
@@ -14,12 +16,18 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   OwnerRequestsCubit({required this.repo, required this.ownerId})
       : super(const OwnerRequestsState.initial());
 
-  Future<void> load() async {
+  Future<void> init() async {
     emit(state.copyWith(loading: true, error: null));
     try {
       final projects = await repo.getAvailableProjects();
       final reqs = await repo.getMyRequests(ownerId);
-      emit(state.copyWith(loading: false, projects: projects, myRequests: reqs));
+      final themes = await repo.getThemes();
+      emit(state.copyWith(
+        loading: false,
+        projects: projects,
+        myRequests: reqs,
+        themes: themes,
+      ));
     } catch (e) {
       emit(state.copyWith(loading: false, error: e.toString()));
     }
@@ -27,23 +35,27 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
 
   void selectProject(Project? p) => emit(state.copyWith(selected: p));
   void setAppName(String v) => emit(state.copyWith(appName: v));
-  void setThemeChoice(String? v) => emit(state.copyWith(themeChoice: v));
+  void setLogoUrl(String? v) => emit(state.copyWith(logoUrl: v));
+  void setThemeId(int? id) => emit(state.copyWith(selectedThemeId: id));
 
-  Future<void> submit() async {
-    if (state.selected == null || state.appName.trim().isEmpty) {
-      emit(state.copyWith(error: 'Select a project and enter an app name.'));
+  Future<void> submitAuto() async {
+    if (state.selected == null) {
+      emit(state.copyWith(error: '_ERR_NO_PROJECT_'));
       return;
     }
+    if (state.appName.trim().isEmpty) {
+      emit(state.copyWith(error: '_ERR_NO_APPNAME_'));
+      return;
+    }
+
     emit(state.copyWith(submitting: true, error: null));
     try {
-      final notes = (state.themeChoice ?? '').isEmpty
-          ? null
-          : 'theme=${state.themeChoice}';
-      final created = await repo.createAppRequest(
+      final created = await repo.createAppRequestAuto(
         ownerId: ownerId,
         projectId: state.selected!.id,
         appName: state.appName.trim(),
-        notes: notes,
+        themeId: state.selectedThemeId,
+        logoUrl: state.logoUrl,
       );
       final reqs = await repo.getMyRequests(ownerId);
       emit(state.copyWith(
@@ -52,7 +64,8 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
         lastCreated: created,
         selected: null,
         appName: '',
-        themeChoice: null,
+        logoUrl: null,
+        selectedThemeId: null,
       ));
     } catch (e) {
       emit(state.copyWith(submitting: false, error: e.toString()));

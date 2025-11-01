@@ -19,7 +19,7 @@ OwnerMenuType _parseOwnerMenu(String? s) {
 class OwnerDestination {
   final IconData icon;
   final IconData selectedIcon;
-  final String label; // localized
+  final String label;
   final Widget page;
   const OwnerDestination({
     required this.icon,
@@ -43,6 +43,7 @@ class OwnerNavShell extends StatefulWidget {
     this.initialIndex = 0,
   });
 
+  
   State<OwnerNavShell> createState() => _OwnerNavShellState();
 }
 
@@ -99,6 +100,9 @@ class _OwnerNavShellState extends State<OwnerNavShell>
   PreferredSizeWidget _appBar(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final label =
+        widget.destinations.isEmpty ? '' : widget.destinations[_index].label;
+
     return AppBar(
       titleSpacing: 8,
       title: Row(children: [
@@ -111,10 +115,8 @@ class _OwnerNavShellState extends State<OwnerNavShell>
             borderRadius: BorderRadius.circular(4),
           ),
         ),
-        Text(
-          l10n.owner_nav_title, // localized title
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        Text('${l10n.owner_nav_title} — $label',
+            style: Theme.of(context).textTheme.titleMedium),
       ]),
       bottom: _mode == OwnerMenuType.top
           ? TabBar(
@@ -151,9 +153,7 @@ class _OwnerNavShellState extends State<OwnerNavShell>
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: IndexedStack(
-              index: _index,
-              children: [for (final d in pages) d.page],
-            ),
+                index: _index, children: [for (final d in pages) d.page]),
           ),
         );
 
@@ -164,9 +164,7 @@ class _OwnerNavShellState extends State<OwnerNavShell>
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: IndexedStack(
-              index: _index,
-              children: [for (final d in pages) d.page],
-            ),
+                index: _index, children: [for (final d in pages) d.page]),
           ),
           bottomNavigationBar: NavigationBar(
             height: 64,
@@ -175,15 +173,13 @@ class _OwnerNavShellState extends State<OwnerNavShell>
             onDestinationSelected: (i) => setState(() => _index = i),
             indicatorColor:
                 Theme.of(context).colorScheme.primary.withOpacity(0.10),
-            // 👇 ensure labels appear under icons
-            labelBehavior:
-                NavigationDestinationLabelBehavior.alwaysShow, // <- important
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             destinations: [
               for (final d in pages)
                 NavigationDestination(
                   icon: Icon(d.icon),
                   selectedIcon: Icon(d.selectedIcon),
-                  label: d.label, // localized label under the icon
+                  label: d.label,
                 ),
             ],
           ),

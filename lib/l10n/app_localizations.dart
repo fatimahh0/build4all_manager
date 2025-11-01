@@ -936,6 +936,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open'**
   String get owner_projects_openInBrowser;
+
+  /// No description provided for @owner_request_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a New App'**
+  String get owner_request_title;
+
+  /// No description provided for @owner_request_project.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get owner_request_project;
+
+  /// No description provided for @owner_request_appName.
+  ///
+  /// In en, this message translates to:
+  /// **'App name'**
+  String get owner_request_appName;
+
+  /// No description provided for @owner_request_appName_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., My Coffee'**
+  String get owner_request_appName_hint;
+
+  /// No description provided for @owner_request_logo_url.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo URL (optional)'**
+  String get owner_request_logo_url;
+
+  /// No description provided for @owner_request_logo_url_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'https://example.com/logo.png'**
+  String get owner_request_logo_url_hint;
+
+  /// No description provided for @owner_request_theme_pref.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme (optional)'**
+  String get owner_request_theme_pref;
+
+  /// No description provided for @owner_request_theme_pref_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a theme'**
+  String get owner_request_theme_pref_hint;
+
+  /// No description provided for @owner_request_theme_default.
+  ///
+  /// In en, this message translates to:
+  /// **'Default theme'**
+  String get owner_request_theme_default;
+
+  /// No description provided for @owner_request_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit request'**
+  String get owner_request_submit;
+
+  /// No description provided for @owner_request_submitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting…'**
+  String get owner_request_submitting;
+
+  /// No description provided for @owner_request_submit_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request is auto-approved. The build will start shortly.'**
+  String get owner_request_submit_hint;
+
+  /// No description provided for @owner_request_my_requests.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get owner_request_my_requests;
+
+  /// No description provided for @owner_request_no_requests_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests yet.'**
+  String get owner_request_no_requests_yet;
+
+  /// No description provided for @owner_request_no_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'No available projects.'**
+  String get owner_request_no_projects;
+
+  /// No description provided for @owner_request_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Request created. Build will start soon.'**
+  String get owner_request_success;
+
+  /// No description provided for @owner_request_error_choose_project.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a project.'**
+  String get owner_request_error_choose_project;
+
+  /// No description provided for @owner_request_error_app_name.
+  ///
+  /// In en, this message translates to:
+  /// **'App name is required.'**
+  String get owner_request_error_app_name;
+
+  /// No description provided for @menuType.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu Type'**
+  String get menuType;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

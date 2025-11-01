@@ -429,4 +429,61 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get owner_projects_openInBrowser => 'Ouvrir';
+
+  @override
+  String get owner_request_title => 'Demander une nouvelle application';
+
+  @override
+  String get owner_request_project => 'Projet';
+
+  @override
+  String get owner_request_appName => 'Nom de l’application';
+
+  @override
+  String get owner_request_appName_hint => 'ex. Mon Café';
+
+  @override
+  String get owner_request_logo_url => 'URL du logo (optionnel)';
+
+  @override
+  String get owner_request_logo_url_hint => 'https://exemple.com/logo.png';
+
+  @override
+  String get owner_request_theme_pref => 'Thème (optionnel)';
+
+  @override
+  String get owner_request_theme_pref_hint => 'Choisissez un thème';
+
+  @override
+  String get owner_request_theme_default => 'Thème par défaut';
+
+  @override
+  String get owner_request_submit => 'Envoyer la demande';
+
+  @override
+  String get owner_request_submitting => 'Envoi…';
+
+  @override
+  String get owner_request_submit_hint => 'Votre demande est approuvée automatiquement. La compilation démarrera bientôt.';
+
+  @override
+  String get owner_request_my_requests => 'Mes demandes';
+
+  @override
+  String get owner_request_no_requests_yet => 'Aucune demande pour l’instant.';
+
+  @override
+  String get owner_request_no_projects => 'Aucun projet disponible.';
+
+  @override
+  String get owner_request_success => 'Demande créée. La compilation va bientôt démarrer.';
+
+  @override
+  String get owner_request_error_choose_project => 'Veuillez choisir un projet.';
+
+  @override
+  String get owner_request_error_app_name => 'Le nom de l’application est requis.';
+
+  @override
+  String get menuType => 'Menu Type';
 }

@@ -429,4 +429,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get owner_projects_openInBrowser => 'Open';
+
+  @override
+  String get owner_request_title => 'Request a New App';
+
+  @override
+  String get owner_request_project => 'Project';
+
+  @override
+  String get owner_request_appName => 'App name';
+
+  @override
+  String get owner_request_appName_hint => 'e.g., My Coffee';
+
+  @override
+  String get owner_request_logo_url => 'Logo URL (optional)';
+
+  @override
+  String get owner_request_logo_url_hint => 'https://example.com/logo.png';
+
+  @override
+  String get owner_request_theme_pref => 'Theme (optional)';
+
+  @override
+  String get owner_request_theme_pref_hint => 'Pick a theme';
+
+  @override
+  String get owner_request_theme_default => 'Default theme';
+
+  @override
+  String get owner_request_submit => 'Submit request';
+
+  @override
+  String get owner_request_submitting => 'Submitting…';
+
+  @override
+  String get owner_request_submit_hint => 'Your request is auto-approved. The build will start shortly.';
+
+  @override
+  String get owner_request_my_requests => 'My requests';
+
+  @override
+  String get owner_request_no_requests_yet => 'No requests yet.';
+
+  @override
+  String get owner_request_no_projects => 'No available projects.';
+
+  @override
+  String get owner_request_success => 'Request created. Build will start soon.';
+
+  @override
+  String get owner_request_error_choose_project => 'Please choose a project.';
+
+  @override
+  String get owner_request_error_app_name => 'App name is required.';
+
+  @override
+  String get menuType => 'Menu Type';
 }

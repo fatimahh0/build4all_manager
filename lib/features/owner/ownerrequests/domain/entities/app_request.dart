@@ -1,10 +1,11 @@
+// lib/features/owner/ownerrequests/domain/entities/app_request.dart
 class AppRequest {
   final int id;
   final int ownerId;
   final int projectId;
   final String appName;
   final String? notes;
-  final String status; // PENDING / APPROVED / REJECTED
+  final String status; // PENDING / APPROVED / REJECTED / STARTED
   final DateTime? createdAt;
 
   const AppRequest({

@@ -135,5 +135,18 @@
   "owner_projects_emptyBody": "ليس لديك أي مشاريع حالياً. اطلب تطبيقك الأول وسنقوم ببنائه لك.",
   "owner_projects_building": "جارٍ الإنشاء…",
   "owner_projects_ready": "جاهز",
-  "owner_projects_openInBrowser": "فتح"
+  "owner_projects_openInBrowser": "فتح",
+   "owner_request_title": "طلب إنشاء تطبيق جديد",
+  "owner_request_project": "المشروع",
+  "owner_request_appName": "اسم التطبيق",
+  "owner_request_appName_hint": "مثال: My Coffee",
+  "owner_request_theme_pref": "تفضيل السمة (اختياري)",
+  "owner_request_theme_pref_hint": "emerald / violet / amber ...",
+  "owner_request_submit": "إرسال الطلب",
+  "owner_request_submitting": "جارٍ الإرسال...",
+  "owner_request_error_choose_project": "رجاءً اختر مشروعاً",
+  "owner_request_error_app_name": "اسم التطبيق مطلوب",
+  "owner_request_success": "تم إنشاء الطلب. سيبدأ البناء قريباً.",
+  "owner_request_my_requests": "طلباتي",
+  "owner_request_no_requests_yet": "لا توجد طلبات بعد"
 }

@@ -1,13 +1,19 @@
+// lib/features/owner/ownerrequests/data/repositories/owner_requests_repository_impl.dart
+import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
+
+import '../../domain/repositories/i_owner_requests_repository.dart';
 import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
-import '../../domain/repositories/i_owner_requests_repository.dart';
 import '../models/app_request_dto.dart';
 import '../models/project_dto.dart';
+
 import '../services/owner_requests_api.dart';
+import '../services/themes_api.dart';
 
 class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
   final OwnerRequestsApi api;
-  OwnerRequestsRepositoryImpl(this.api);
+  final ThemesApi themesApi;
+  OwnerRequestsRepositoryImpl(this.api, this.themesApi);
 
   Project _mapProject(ProjectDto d) => Project(
         id: d.id,
@@ -33,24 +39,29 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
   }
 
   @override
-  Future<AppRequest> createAppRequest({
-    required int ownerId,
-    required int projectId,
-    required String appName,
-    String? notes,
-  }) async {
-    final dto = await api.createAppRequest(
-      ownerId: ownerId,
-      projectId: projectId,
-      appName: appName,
-      notes: notes,
-    );
-    return _mapReq(dto);
-  }
-
-  @override
   Future<List<AppRequest>> getMyRequests(int ownerId) async {
     final list = await api.getMyRequests(ownerId);
     return list.map(_mapReq).toList();
+  }
+
+  @override
+  Future<List<ThemeLite>> getThemes() => themesApi.getAll();
+
+  @override
+  Future<AppRequest> createAppRequestAuto({
+    required int ownerId,
+    required int projectId,
+    required String appName,
+    int? themeId,
+    String? logoUrl,
+  }) async {
+    final dto = await api.createAuto(
+      ownerId: ownerId,
+      projectId: projectId,
+      appName: appName,
+      themeId: themeId,
+      logoUrl: logoUrl,
+    );
+    return _mapReq(dto);
   }
 }

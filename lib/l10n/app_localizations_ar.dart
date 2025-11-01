@@ -429,4 +429,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get owner_projects_openInBrowser => 'فتح';
+
+  @override
+  String get owner_request_title => 'طلب إنشاء تطبيق جديد';
+
+  @override
+  String get owner_request_project => 'المشروع';
+
+  @override
+  String get owner_request_appName => 'اسم التطبيق';
+
+  @override
+  String get owner_request_appName_hint => 'مثال: My Coffee';
+
+  @override
+  String get owner_request_logo_url => 'Logo URL (optional)';
+
+  @override
+  String get owner_request_logo_url_hint => 'https://example.com/logo.png';
+
+  @override
+  String get owner_request_theme_pref => 'تفضيل السمة (اختياري)';
+
+  @override
+  String get owner_request_theme_pref_hint => 'emerald / violet / amber ...';
+
+  @override
+  String get owner_request_theme_default => 'Default theme';
+
+  @override
+  String get owner_request_submit => 'إرسال الطلب';
+
+  @override
+  String get owner_request_submitting => 'جارٍ الإرسال...';
+
+  @override
+  String get owner_request_submit_hint => 'Your request is auto-approved. The build will start shortly.';
+
+  @override
+  String get owner_request_my_requests => 'طلباتي';
+
+  @override
+  String get owner_request_no_requests_yet => 'لا توجد طلبات بعد';
+
+  @override
+  String get owner_request_no_projects => 'No available projects.';
+
+  @override
+  String get owner_request_success => 'تم إنشاء الطلب. سيبدأ البناء قريباً.';
+
+  @override
+  String get owner_request_error_choose_project => 'رجاءً اختر مشروعاً';
+
+  @override
+  String get owner_request_error_app_name => 'اسم التطبيق مطلوب';
+
+  @override
+  String get menuType => 'Menu Type';
 }

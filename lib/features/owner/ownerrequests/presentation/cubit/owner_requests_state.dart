@@ -1,3 +1,4 @@
+// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_state.dart
 part of 'owner_requests_cubit.dart';
 
 class OwnerRequestsState extends Equatable {
@@ -8,9 +9,12 @@ class OwnerRequestsState extends Equatable {
   final List<Project> projects;
   final List<AppRequest> myRequests;
 
+  final List<ThemeLite> themes; // ✅ ThemeLite list
+  final int? selectedThemeId; // ✅ selected theme id
+  final String? logoUrl; // ✅ optional logo
+
   final Project? selected;
   final String appName;
-  final String? themeChoice;
 
   final AppRequest? lastCreated;
 
@@ -20,9 +24,11 @@ class OwnerRequestsState extends Equatable {
     required this.error,
     required this.projects,
     required this.myRequests,
+    required this.themes,
+    required this.selectedThemeId,
+    required this.logoUrl,
     required this.selected,
     required this.appName,
-    required this.themeChoice,
     required this.lastCreated,
   });
 
@@ -32,9 +38,11 @@ class OwnerRequestsState extends Equatable {
         error = null,
         projects = const [],
         myRequests = const [],
+        themes = const [],
+        selectedThemeId = null,
+        logoUrl = null,
         selected = null,
         appName = '',
-        themeChoice = null,
         lastCreated = null;
 
   OwnerRequestsState copyWith({
@@ -43,9 +51,11 @@ class OwnerRequestsState extends Equatable {
     String? error,
     List<Project>? projects,
     List<AppRequest>? myRequests,
+    List<ThemeLite>? themes,
+    int? selectedThemeId,
+    String? logoUrl,
     Project? selected,
     String? appName,
-    String? themeChoice,
     AppRequest? lastCreated,
   }) {
     return OwnerRequestsState(
@@ -54,10 +64,12 @@ class OwnerRequestsState extends Equatable {
       error: error,
       projects: projects ?? this.projects,
       myRequests: myRequests ?? this.myRequests,
-      selected: selected,
+      themes: themes ?? this.themes,
+      selectedThemeId: selectedThemeId ?? this.selectedThemeId,
+      logoUrl: logoUrl ?? this.logoUrl,
+      selected: selected ?? this.selected,
       appName: appName ?? this.appName,
-      themeChoice: themeChoice,
-      lastCreated: lastCreated,
+      lastCreated: lastCreated ?? this.lastCreated,
     );
   }
 
@@ -68,9 +80,11 @@ class OwnerRequestsState extends Equatable {
         error,
         projects,
         myRequests,
+        themes,
+        selectedThemeId,
+        logoUrl,
         selected,
         appName,
-        themeChoice,
         lastCreated,
       ];
 }
