@@ -24,6 +24,12 @@ class OwnerProjectsScreen extends StatelessWidget {
 
     final repo = OwnerRepositoryImpl(OwnerApi(dio));
 
+    String _serverRootNoApi(Dio d) {
+      final base = d.options.baseUrl; // e.g. http://192.168.1.3:8080/api
+      return base.replaceFirst(
+          RegExp(r'/api/?$'), ''); // -> http://192.168.1.3:8080
+    }
+
     return BlocProvider(
       create: (_) => OwnerProjectsBloc(getMyApps: GetMyAppsUc(repo))
         ..add(OwnerProjectsStarted(ownerId)),
@@ -78,7 +84,11 @@ class OwnerProjectsScreen extends StatelessWidget {
                           mainAxisSpacing: 12,
                         ),
                         itemCount: items.length,
-                        itemBuilder: (_, i) => ProjectTile(project: items[i]),
+                        itemBuilder: (_, i) => ProjectTile(
+                          project: items[i],
+                          serverRootNoApi: _serverRootNoApi(
+                              dio), // 👈 pass base host without /api
+                        ),
                       );
                     },
                   ),
