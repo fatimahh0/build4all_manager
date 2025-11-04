@@ -368,7 +368,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_requests_title => 'Requests';
 
   @override
-  String get owner_profile_title => 'Profile';
+  String get owner_profile_title => 'Owner Profile';
 
   @override
   String get owner_home_hello => '👋 Hi, Owner';
@@ -486,4 +486,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuType => 'Menu Type';
+
+  @override
+  String get owner_request_upload_logo => 'Upload logo file';
+
+  @override
+  String get owner_profile_username => 'Username';
+
+  @override
+  String get owner_profile_name => 'Name';
+
+  @override
+  String get owner_profile_email => 'Email';
+
+  @override
+  String get owner_profile_business_id => 'Business ID';
+
+  @override
+  String get owner_profile_notify_items => 'Notify item updates';
+
+  @override
+  String get owner_profile_notify_feedback => 'Notify user feedback';
+
+  @override
+  String get owner_profile_not_set => 'Not set';
+
+  @override
+  String get owner_profile_tips => 'Keep your profile details up to date to personalize your experience.';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logout_confirm => 'Do you want to log out?';
+
+  @override
+  String get logged_out => 'Logged out';
+
+  @override
+  String get cancel => 'Cancel';
 }

@@ -1,9 +1,7 @@
-// lib/features/owner/ownerrequests/domain/repositories/i_owner_requests_repository.dart
 import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
 
 import '../entities/app_request.dart';
 import '../entities/project.dart';
-
 
 abstract class IOwnerRequestsRepository {
   Future<List<Project>> getAvailableProjects();
@@ -19,5 +17,6 @@ abstract class IOwnerRequestsRepository {
     required String appName,
     int? themeId,
     String? logoUrl,
+    String? slug, // 👈 ADD THIS
   });
 }

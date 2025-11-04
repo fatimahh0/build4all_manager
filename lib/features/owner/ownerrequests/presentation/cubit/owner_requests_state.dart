@@ -1,17 +1,17 @@
-// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_state.dart
 part of 'owner_requests_cubit.dart';
 
 class OwnerRequestsState extends Equatable {
   final bool loading;
   final bool submitting;
+  final bool uploadingLogo; // NEW
   final String? error;
 
   final List<Project> projects;
   final List<AppRequest> myRequests;
 
-  final List<ThemeLite> themes; // ✅ ThemeLite list
-  final int? selectedThemeId; // ✅ selected theme id
-  final String? logoUrl; // ✅ optional logo
+  final List<ThemeLite> themes;
+  final int? selectedThemeId;
+  final String? logoUrl;
 
   final Project? selected;
   final String appName;
@@ -21,6 +21,7 @@ class OwnerRequestsState extends Equatable {
   const OwnerRequestsState({
     required this.loading,
     required this.submitting,
+    required this.uploadingLogo, // NEW
     required this.error,
     required this.projects,
     required this.myRequests,
@@ -35,6 +36,7 @@ class OwnerRequestsState extends Equatable {
   const OwnerRequestsState.initial()
       : loading = false,
         submitting = false,
+        uploadingLogo = false, // NEW
         error = null,
         projects = const [],
         myRequests = const [],
@@ -48,6 +50,7 @@ class OwnerRequestsState extends Equatable {
   OwnerRequestsState copyWith({
     bool? loading,
     bool? submitting,
+    bool? uploadingLogo, // NEW
     String? error,
     List<Project>? projects,
     List<AppRequest>? myRequests,
@@ -61,6 +64,7 @@ class OwnerRequestsState extends Equatable {
     return OwnerRequestsState(
       loading: loading ?? this.loading,
       submitting: submitting ?? this.submitting,
+      uploadingLogo: uploadingLogo ?? this.uploadingLogo, // NEW
       error: error,
       projects: projects ?? this.projects,
       myRequests: myRequests ?? this.myRequests,
@@ -77,6 +81,7 @@ class OwnerRequestsState extends Equatable {
   List<Object?> get props => [
         loading,
         submitting,
+        uploadingLogo, // NEW
         error,
         projects,
         myRequests,

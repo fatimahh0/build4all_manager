@@ -13,6 +13,7 @@ import 'package:build4all_manager/features/owner/ownernav/presentation/screens/o
 import 'package:build4all_manager/features/owner/ownerhome/presentation/screens/owner_home_screen.dart';
 import 'package:build4all_manager/features/owner/ownerprojects/presentation/screens/owner_projects_screen.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
+import 'package:build4all_manager/features/owner/ownerprofile/presentation/screens/owner_profile_screen.dart';
 
 // l10n
 import 'package:build4all_manager/l10n/app_localizations.dart';
@@ -73,10 +74,16 @@ final router = GoRouter(
     // OWNER shell – ownerId resolved from JWT
     GoRoute(path: '/owner', builder: (_, __) => const _OwnerEntryLoader()),
 
-    // Deep links under OWNER (also resolve ownerId from JWT)
+    // Deep links under OWNER
     GoRoute(
       path: '/owner/projects',
       builder: (_, __) => const _OwnerProjectsBuilder(),
+    ),
+
+    // 🔥 Profile deep-link — opens shell on the Profile tab
+    GoRoute(
+      path: '/owner/profile',
+      builder: (_, __) => const _OwnerEntryLoader(initialIndex: 3),
     ),
 
     // Register flow
@@ -142,7 +149,7 @@ Future<int?> _loadOwnerIdFromJwt() async {
     if (token.isEmpty) return null;
 
     final claims = JwtClaims.decode(token);
-    // Your sample payload: {"id":1,"role":"OWNER", ...}
+    // Your payload style: {"id":1,"role":"OWNER", ...}
     final id =
         JwtClaims.extractInt(claims, ['id', 'ownerId', 'adminId', 'sub']);
     return id;
@@ -153,7 +160,8 @@ Future<int?> _loadOwnerIdFromJwt() async {
 
 /// Loads ownerId then mounts OwnerEntry
 class _OwnerEntryLoader extends StatelessWidget {
-  const _OwnerEntryLoader({super.key});
+  final int initialIndex; // 👈 NEW
+  const _OwnerEntryLoader({super.key, this.initialIndex = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -177,13 +185,14 @@ class _OwnerEntryLoader extends StatelessWidget {
           ownerId: ownerId,
           dio: dio,
           backendMenuType: 'bottom',
+          initialIndex: initialIndex, // 👈 pass it down
         );
       },
     );
   }
 }
 
-/// Builds OwnerProjectsScreen with ownerId from JWT
+/// Builds OwnerProjectsScreen with ownerId from JWT (direct link support)
 class _OwnerProjectsBuilder extends StatelessWidget {
   const _OwnerProjectsBuilder({super.key});
   @override
@@ -209,17 +218,19 @@ class _OwnerProjectsBuilder extends StatelessWidget {
   }
 }
 
-// OwnerEntry with direct "Requests" screen (no button)
+// OwnerEntry with the real Profile screen + deep-linking index
 class OwnerEntry extends StatelessWidget {
   final String? backendMenuType; // "bottom" | "top" | "drawer"
   final int ownerId;
   final Dio dio;
+  final int initialIndex; // 👈 NEW
 
   const OwnerEntry({
     super.key,
     required this.ownerId,
     required this.dio,
     this.backendMenuType,
+    this.initialIndex = 0,
   });
 
   @override
@@ -243,29 +254,22 @@ class OwnerEntry extends StatelessWidget {
         icon: Icons.receipt_long_outlined,
         selectedIcon: Icons.receipt_long_rounded,
         label: l10n.owner_nav_requests,
-        // ⬇️ Directly open the professional request form
         page: OwnerRequestScreen(ownerId: ownerId),
       ),
+      // in router.dart, inside OwnerEntry.build()
       OwnerDestination(
         icon: Icons.person_outline,
         selectedIcon: Icons.person,
         label: l10n.owner_nav_profile,
-        page: const _Placeholder('Profile'),
+        page: OwnerProfileScreen(ownerId: ownerId, dio: dio),
       ),
+
     ];
 
     return OwnerNavShell(
       destinations: destinations,
       backendMenuType: backendMenuType ?? 'bottom',
-      initialIndex: 0,
+      initialIndex: initialIndex, // 👈 respect deep-link index
     );
   }
-}
-
-class _Placeholder extends StatelessWidget {
-  final String text;
-  const _Placeholder(this.text, {super.key});
-  @override
-  Widget build(BuildContext context) =>
-      Scaffold(body: Center(child: Text(text)));
 }

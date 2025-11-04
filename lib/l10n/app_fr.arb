@@ -165,5 +165,23 @@
   "owner_request_no_projects": "Aucun projet disponible.",
   "owner_request_success": "Demande créée. La compilation va bientôt démarrer.",
   "owner_request_error_choose_project": "Veuillez choisir un projet.",
-  "owner_request_error_app_name": "Le nom de l’application est requis."
+  "owner_request_error_app_name": "Le nom de l’application est requis.",
+  "owner_request_upload_logo": "Télécharger le fichier logo",
+  "logout": "Se déconnecter",
+  "logout_confirm": "Voulez-vous vous déconnecter ?",
+  "logged_out": "Déconnexion réussie",
+  "cancel": "Annuler",
+   "owner_profile_title": "Profil du propriétaire",
+  "owner_profile_username": "Nom d'utilisateur",
+  "owner_profile_name": "Nom",
+  "owner_profile_email": "E-mail",
+  "owner_profile_business_id": "Identifiant de l'entreprise",
+  "owner_profile_notify_items": "Notifier les mises à jour des articles",
+  "owner_profile_notify_feedback": "Notifier les retours des utilisateurs",
+  "owner_profile_not_set": "Non défini",
+  "owner_profile_tips": "Gardez les informations de votre profil à jour pour personnaliser votre expérience.",
+  "yes": "Oui",
+  "no": "Non",
+  "refresh": "Actualiser"
+
 }

@@ -368,7 +368,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get owner_requests_title => 'الطلبات';
 
   @override
-  String get owner_profile_title => 'الملف الشخصي';
+  String get owner_profile_title => 'ملف المالك';
 
   @override
   String get owner_home_hello => '👋 أهلاً، صاحب التطبيق';
@@ -486,4 +486,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get menuType => 'Menu Type';
+
+  @override
+  String get owner_request_upload_logo => 'تحميل ملف الشعار';
+
+  @override
+  String get owner_profile_username => 'اسم المستخدم';
+
+  @override
+  String get owner_profile_name => 'الاسم';
+
+  @override
+  String get owner_profile_email => 'البريد الإلكتروني';
+
+  @override
+  String get owner_profile_business_id => 'معرّف النشاط التجاري';
+
+  @override
+  String get owner_profile_notify_items => 'إشعار بتحديثات العناصر';
+
+  @override
+  String get owner_profile_notify_feedback => 'إشعار بتعليقات المستخدمين';
+
+  @override
+  String get owner_profile_not_set => 'غير محدد';
+
+  @override
+  String get owner_profile_tips => 'احرص على تحديث معلومات ملفك الشخصي لتخصيص تجربتك.';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get logout_confirm => 'هل تريد تسجيل الخروج؟';
+
+  @override
+  String get logged_out => 'تم تسجيل الخروج';
+
+  @override
+  String get cancel => 'إلغاء';
 }

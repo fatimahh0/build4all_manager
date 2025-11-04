@@ -1,4 +1,3 @@
-// lib/features/owner/ownerrequests/data/repositories/owner_requests_repository_impl.dart
 import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
 
 import '../../domain/repositories/i_owner_requests_repository.dart';
@@ -54,6 +53,7 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
     required String appName,
     int? themeId,
     String? logoUrl,
+    String? slug, // 👈 ADD THIS
   }) async {
     final dto = await api.createAuto(
       ownerId: ownerId,
@@ -61,6 +61,7 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
       appName: appName,
       themeId: themeId,
       logoUrl: logoUrl,
+      slug: slug, // 👈 FORWARD TO API
     );
     return _mapReq(dto);
   }

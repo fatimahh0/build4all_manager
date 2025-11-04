@@ -148,5 +148,22 @@
   "owner_request_error_app_name": "اسم التطبيق مطلوب",
   "owner_request_success": "تم إنشاء الطلب. سيبدأ البناء قريباً.",
   "owner_request_my_requests": "طلباتي",
-  "owner_request_no_requests_yet": "لا توجد طلبات بعد"
+  "owner_request_no_requests_yet": "لا توجد طلبات بعد",
+  "owner_request_upload_logo": "تحميل ملف الشعار",
+  "logout": "تسجيل الخروج",
+  "logout_confirm": "هل تريد تسجيل الخروج؟",
+  "logged_out": "تم تسجيل الخروج",
+  "cancel": "إلغاء",
+    "owner_profile_title": "ملف المالك",
+  "owner_profile_username": "اسم المستخدم",
+  "owner_profile_name": "الاسم",
+  "owner_profile_email": "البريد الإلكتروني",
+  "owner_profile_business_id": "معرّف النشاط التجاري",
+  "owner_profile_notify_items": "إشعار بتحديثات العناصر",
+  "owner_profile_notify_feedback": "إشعار بتعليقات المستخدمين",
+  "owner_profile_not_set": "غير محدد",
+  "owner_profile_tips": "احرص على تحديث معلومات ملفك الشخصي لتخصيص تجربتك.",
+  "yes": "نعم",
+  "no": "لا",
+  "refresh": "تحديث"
 }

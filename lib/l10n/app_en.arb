@@ -257,7 +257,24 @@
   "owner_request_success": "Request created. Build will start soon.",
   "owner_request_error_choose_project": "Please choose a project.",
   "owner_request_error_app_name": "App name is required.",
-  "menuType": "Menu Type"
+  "menuType": "Menu Type",
+  "owner_request_upload_logo": "Upload logo file",
+   "owner_profile_title": "Owner Profile",
+  "owner_profile_username": "Username",
+  "owner_profile_name": "Name",
+  "owner_profile_email": "Email",
+  "owner_profile_business_id": "Business ID",
+  "owner_profile_notify_items": "Notify item updates",
+  "owner_profile_notify_feedback": "Notify user feedback",
+  "owner_profile_not_set": "Not set",
+  "owner_profile_tips": "Keep your profile details up to date to personalize your experience.",
+  "yes": "Yes",
+  "no": "No",
+  "refresh": "Refresh",
+  "logout": "Logout",
+  "logout_confirm": "Do you want to log out?",
+  "logged_out": "Logged out",
+  "cancel": "Cancel"
   
   
 }

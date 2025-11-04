@@ -368,7 +368,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get owner_requests_title => 'Demandes';
 
   @override
-  String get owner_profile_title => 'Profil';
+  String get owner_profile_title => 'Profil du propriétaire';
 
   @override
   String get owner_home_hello => '👋 Salut, Propriétaire';
@@ -486,4 +486,52 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get menuType => 'Menu Type';
+
+  @override
+  String get owner_request_upload_logo => 'Télécharger le fichier logo';
+
+  @override
+  String get owner_profile_username => 'Nom d\'utilisateur';
+
+  @override
+  String get owner_profile_name => 'Nom';
+
+  @override
+  String get owner_profile_email => 'E-mail';
+
+  @override
+  String get owner_profile_business_id => 'Identifiant de l\'entreprise';
+
+  @override
+  String get owner_profile_notify_items => 'Notifier les mises à jour des articles';
+
+  @override
+  String get owner_profile_notify_feedback => 'Notifier les retours des utilisateurs';
+
+  @override
+  String get owner_profile_not_set => 'Non défini';
+
+  @override
+  String get owner_profile_tips => 'Gardez les informations de votre profil à jour pour personnaliser votre expérience.';
+
+  @override
+  String get yes => 'Oui';
+
+  @override
+  String get no => 'Non';
+
+  @override
+  String get refresh => 'Actualiser';
+
+  @override
+  String get logout => 'Se déconnecter';
+
+  @override
+  String get logout_confirm => 'Voulez-vous vous déconnecter ?';
+
+  @override
+  String get logged_out => 'Déconnexion réussie';
+
+  @override
+  String get cancel => 'Annuler';
 }

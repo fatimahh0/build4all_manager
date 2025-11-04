@@ -814,7 +814,7 @@ abstract class AppLocalizations {
   /// No description provided for @owner_profile_title.
   ///
   /// In en, this message translates to:
-  /// **'Profile'**
+  /// **'Owner Profile'**
   String get owner_profile_title;
 
   /// No description provided for @owner_home_hello.
@@ -1050,6 +1050,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Menu Type'**
   String get menuType;
+
+  /// No description provided for @owner_request_upload_logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload logo file'**
+  String get owner_request_upload_logo;
+
+  /// No description provided for @owner_profile_username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get owner_profile_username;
+
+  /// No description provided for @owner_profile_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get owner_profile_name;
+
+  /// No description provided for @owner_profile_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get owner_profile_email;
+
+  /// No description provided for @owner_profile_business_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Business ID'**
+  String get owner_profile_business_id;
+
+  /// No description provided for @owner_profile_notify_items.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify item updates'**
+  String get owner_profile_notify_items;
+
+  /// No description provided for @owner_profile_notify_feedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify user feedback'**
+  String get owner_profile_notify_feedback;
+
+  /// No description provided for @owner_profile_not_set.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get owner_profile_not_set;
+
+  /// No description provided for @owner_profile_tips.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your profile details up to date to personalize your experience.'**
+  String get owner_profile_tips;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @logout_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to log out?'**
+  String get logout_confirm;
+
+  /// No description provided for @logged_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out'**
+  String get logged_out;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

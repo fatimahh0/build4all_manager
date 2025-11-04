@@ -24,7 +24,13 @@ class OwnerRequestScreen extends StatelessWidget {
     );
 
     return BlocProvider(
-      create: (_) => OwnerRequestsCubit(repo: repo, ownerId: ownerId)..init(),
+      create: (_) {
+        final cubit = OwnerRequestsCubit(repo: repo, ownerId: ownerId);
+        // Wire the concrete API so the cubit can call multipart upload
+        cubit.setConcreteApi(OwnerRequestsApi(dio));
+        cubit.init();
+        return cubit;
+      },
       child: const _OwnerRequestView(),
     );
   }
@@ -130,6 +136,45 @@ class _OwnerRequestView extends StatelessWidget {
                                   onChanged: (v) => cubit.setLogoUrl(
                                       v.trim().isEmpty ? null : v.trim()),
                                   prefixIcon: const Icon(Icons.image_outlined),
+                                ),
+                                const SizedBox(height: 8),
+
+                                // NEW: Upload file button + preview of the saved URL
+                                Row(
+                                  children: [
+                                    OutlinedButton.icon(
+                                      onPressed: s.uploadingLogo
+                                          ? null
+                                          : () => cubit.pickAndUploadLogo(),
+                                      icon: s.uploadingLogo
+                                          ? const SizedBox(
+                                              width: 16,
+                                              height: 16,
+                                              child: CircularProgressIndicator(
+                                                  strokeWidth: 2),
+                                            )
+                                          : const Icon(Icons.upload_file),
+                                      label: Text(
+                                        // Add this key to your l10n files
+                                        l10n.owner_request_upload_logo,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    if ((s.logoUrl ?? '').isNotEmpty)
+                                      Expanded(
+                                        child: Tooltip(
+                                          message: s.logoUrl!,
+                                          child: Text(
+                                            s.logoUrl!,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                                 const SizedBox(height: 12),
 
