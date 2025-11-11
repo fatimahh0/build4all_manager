@@ -21,13 +21,19 @@ class OwnerProjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
-
     final repo = OwnerRepositoryImpl(OwnerApi(dio));
 
     String _serverRootNoApi(Dio d) {
       final base = d.options.baseUrl; // e.g. http://192.168.1.3:8080/api
       return base.replaceFirst(
           RegExp(r'/api/?$'), ''); // -> http://192.168.1.3:8080
+    }
+
+    Future<void> _refresh(BuildContext ctx) async {
+      // Re-trigger your initial load
+      ctx.read<OwnerProjectsBloc>().add(OwnerProjectsStarted(ownerId));
+      // Optional tiny delay so the indicator doesn’t instantly snap back
+      await Future.delayed(const Duration(milliseconds: 400));
     }
 
     return BlocProvider(
@@ -57,37 +63,21 @@ class OwnerProjectsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 _SearchField(l10n: l10n),
-
                 const SizedBox(height: 12),
+
+                // === MAIN AREA WITH REFRESH INDICATOR ===
                 Expanded(
                   child: BlocBuilder<OwnerProjectsBloc, OwnerProjectsState>(
                     builder: (context, state) {
-                      if (state.loading) {
-                        return const _GridSkeleton();
-                      }
-                      if (state.error != null) {
-                        return Center(
-                            child: Text(state.error!,
-                                style: TextStyle(color: cs.error)));
-                      }
-                      final items = state.filtered;
-                      if (items.isEmpty) {
-                        return _EmptyProjects(l10n: l10n);
-                      }
-                      return GridView.builder(
-                        padding: const EdgeInsets.only(top: 4),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 1.28,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
-                        itemCount: items.length,
-                        itemBuilder: (_, i) => ProjectTile(
-                          project: items[i],
-                          serverRootNoApi: _serverRootNoApi(
-                              dio), // 👈 pass base host without /api
+                      // Wrap *every* branch in a RefreshIndicator + an always-scrollable child
+                      return RefreshIndicator(
+                        onRefresh: () => _refresh(context),
+                        child: _buildScrollableBody(
+                          context: context,
+                          state: state,
+                          l10n: l10n,
+                          cs: cs,
+                          serverRootNoApi: _serverRootNoApi(dio),
                         ),
                       );
                     },
@@ -97,6 +87,62 @@ class OwnerProjectsScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  /// Ensures pull-to-refresh works even when the UI isn't naturally scrollable
+  Widget _buildScrollableBody({
+    required BuildContext context,
+    required OwnerProjectsState state,
+    required AppLocalizations l10n,
+    required ColorScheme cs,
+    required String serverRootNoApi,
+  }) {
+    if (state.loading) {
+      // Make the skeleton scrollable so the indicator can appear
+      return const _GridSkeleton(alwaysScrollable: true);
+    }
+
+    if (state.error != null) {
+      // Wrap error UI with a SingleChildScrollView + AlwaysScrollable
+      return SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * .6,
+          child: Center(
+            child: Text(state.error!, style: TextStyle(color: cs.error)),
+          ),
+        ),
+      );
+    }
+
+    final items = state.filtered;
+    if (items.isEmpty) {
+      // Same trick for empty UI
+      return SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * .6,
+          child: _EmptyProjects(l10n: l10n),
+        ),
+      );
+    }
+
+    // Normal grid with AlwaysScrollable so pull works at top as well
+    return GridView.builder(
+      padding: const EdgeInsets.only(top: 4),
+      physics: const AlwaysScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.28,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
+      itemCount: items.length,
+      itemBuilder: (_, i) => ProjectTile(
+        project: items[i],
+        serverRootNoApi: serverRootNoApi,
       ),
     );
   }
@@ -158,11 +204,13 @@ class _EmptyProjects extends StatelessWidget {
       children: [
         Icon(Icons.widgets_outlined, size: 56, color: cs.outline),
         const SizedBox(height: 10),
-        Text(l10n.owner_projects_emptyTitle,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.w700)),
+        Text(
+          l10n.owner_projects_emptyTitle,
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(fontWeight: FontWeight.w700),
+        ),
         const SizedBox(height: 4),
         Text(
           l10n.owner_projects_emptyBody,
@@ -185,18 +233,21 @@ class _EmptyProjects extends StatelessWidget {
 }
 
 class _GridSkeleton extends StatelessWidget {
-  const _GridSkeleton();
+  final bool alwaysScrollable;
+  const _GridSkeleton({this.alwaysScrollable = false});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return GridView.builder(
+    final grid = GridView.builder(
       padding: EdgeInsets.zero,
+      physics: alwaysScrollable ? const AlwaysScrollableScrollPhysics() : null,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.28,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12),
+        crossAxisCount: 2,
+        childAspectRatio: 1.28,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
       itemCount: 6,
       itemBuilder: (_, __) => Container(
         decoration: BoxDecoration(
@@ -205,5 +256,7 @@ class _GridSkeleton extends StatelessWidget {
         ),
       ),
     );
+
+    return grid;
   }
 }
