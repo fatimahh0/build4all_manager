@@ -940,8 +940,14 @@ abstract class AppLocalizations {
   /// No description provided for @owner_request_title.
   ///
   /// In en, this message translates to:
-  /// **'Request a New App'**
+  /// **'Request Your App'**
   String get owner_request_title;
+
+  /// No description provided for @owner_request_submit_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a project, name your app, add a logo (optional), choose a theme, then submit to build.'**
+  String get owner_request_submit_hint;
 
   /// No description provided for @owner_request_project.
   ///
@@ -958,7 +964,7 @@ abstract class AppLocalizations {
   /// No description provided for @owner_request_appName_hint.
   ///
   /// In en, this message translates to:
-  /// **'e.g., My Coffee'**
+  /// **'e.g. My Owner App'**
   String get owner_request_appName_hint;
 
   /// No description provided for @owner_request_logo_url.
@@ -970,31 +976,31 @@ abstract class AppLocalizations {
   /// No description provided for @owner_request_logo_url_hint.
   ///
   /// In en, this message translates to:
-  /// **'https://example.com/logo.png'**
+  /// **'Paste a public URL or use Upload'**
   String get owner_request_logo_url_hint;
+
+  /// No description provided for @owner_request_upload_logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload logo file'**
+  String get owner_request_upload_logo;
 
   /// No description provided for @owner_request_theme_pref.
   ///
   /// In en, this message translates to:
-  /// **'Theme (optional)'**
+  /// **'Theme'**
   String get owner_request_theme_pref;
-
-  /// No description provided for @owner_request_theme_pref_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick a theme'**
-  String get owner_request_theme_pref_hint;
 
   /// No description provided for @owner_request_theme_default.
   ///
   /// In en, this message translates to:
-  /// **'Default theme'**
+  /// **'Use default theme'**
   String get owner_request_theme_default;
 
   /// No description provided for @owner_request_submit.
   ///
   /// In en, this message translates to:
-  /// **'Submit request'**
+  /// **'Submit'**
   String get owner_request_submit;
 
   /// No description provided for @owner_request_submitting.
@@ -1003,17 +1009,29 @@ abstract class AppLocalizations {
   /// **'Submitting…'**
   String get owner_request_submitting;
 
-  /// No description provided for @owner_request_submit_hint.
+  /// No description provided for @owner_request_submit_and_build.
   ///
   /// In en, this message translates to:
-  /// **'Your request is auto-approved. The build will start shortly.'**
-  String get owner_request_submit_hint;
+  /// **'Submit & Build APK'**
+  String get owner_request_submit_and_build;
 
-  /// No description provided for @owner_request_my_requests.
+  /// No description provided for @owner_request_building.
   ///
   /// In en, this message translates to:
-  /// **'My requests'**
-  String get owner_request_my_requests;
+  /// **'Building APK…'**
+  String get owner_request_building;
+
+  /// No description provided for @owner_request_build_done.
+  ///
+  /// In en, this message translates to:
+  /// **'APK build completed.'**
+  String get owner_request_build_done;
+
+  /// No description provided for @owner_request_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Request submitted successfully.'**
+  String get owner_request_success;
 
   /// No description provided for @owner_request_no_requests_yet.
   ///
@@ -1021,17 +1039,11 @@ abstract class AppLocalizations {
   /// **'No requests yet.'**
   String get owner_request_no_requests_yet;
 
-  /// No description provided for @owner_request_no_projects.
+  /// No description provided for @owner_request_my_requests.
   ///
   /// In en, this message translates to:
-  /// **'No available projects.'**
-  String get owner_request_no_projects;
-
-  /// No description provided for @owner_request_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Request created. Build will start soon.'**
-  String get owner_request_success;
+  /// **'My Requests'**
+  String get owner_request_my_requests;
 
   /// No description provided for @owner_request_error_choose_project.
   ///
@@ -1042,20 +1054,26 @@ abstract class AppLocalizations {
   /// No description provided for @owner_request_error_app_name.
   ///
   /// In en, this message translates to:
-  /// **'App name is required.'**
+  /// **'Please enter an app name.'**
   String get owner_request_error_app_name;
+
+  /// No description provided for @common_download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get common_download;
+
+  /// No description provided for @common_download_apk.
+  ///
+  /// In en, this message translates to:
+  /// **'Download APK'**
+  String get common_download_apk;
 
   /// No description provided for @menuType.
   ///
   /// In en, this message translates to:
   /// **'Menu Type'**
   String get menuType;
-
-  /// No description provided for @owner_request_upload_logo.
-  ///
-  /// In en, this message translates to:
-  /// **'Upload logo file'**
-  String get owner_request_upload_logo;
 
   /// No description provided for @owner_profile_username.
   ///

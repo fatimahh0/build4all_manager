@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+
 import '../models/project_dto.dart';
 import '../models/app_request_dto.dart';
 
@@ -19,56 +20,52 @@ class OwnerRequestsApi {
     return AppRequestDto.list(res.data);
   }
 
-  /// NEW: upload a logo file to the admin apps logo endpoint (multipart)
-  /// Backend controller: /api/admin-users/{adminId}/projects/{projectId}/apps/{slug}/logo
-  Future<Map<String, String>> uploadLogo({
-    required int adminId, // == ownerId in your app
-    required int projectId,
-    required String slug,
-    required String filePath,
-  }) async {
-    final form = FormData.fromMap({
-      'file': await MultipartFile.fromFile(filePath, filename: 'logo.png'),
-    });
-
-    final res = await dio.post(
-      '/admin-users/$adminId/projects/$projectId/apps/$slug/logo',
-      data: form,
-      options: Options(contentType: 'multipart/form-data'),
-    );
-
-    final data = (res.data as Map)
-        .map((k, v) => MapEntry(k.toString(), v?.toString() ?? ''));
-    // returns { logoUrl, apkUrl }
-    return {
-      'logoUrl': data['logoUrl'] ?? '',
-      'apkUrl': data['apkUrl'] ?? '',
-    };
-  }
-
-  /// Auto-approve endpoint
+  /// One-shot create+approve+trigger CI (multipart).
+  /// If [logoFilePath] is provided, we attach it as "file".
+  /// If not, but [logoUrl] is provided, we send it as a normal field.
   Future<AppRequestDto> createAuto({
     required int ownerId,
     required int projectId,
     required String appName,
-    String? slug, // <-- allow sending the slug we used for upload
+    String? slug,
     int? themeId,
-    String? logoUrl,
+    String? notes,
+    String? logoUrl, // optional when no file
+    String? logoFilePath, // optional file path to upload
   }) async {
-    final body = {
-      'projectId': projectId,
-      'appName': appName,
-      'slug':
-          slug, // if null, backend slugifies; if non-null, matches upload path
-      'logoUrl': logoUrl,
-      'themeId': themeId,
-      'notes': null,
-    };
+    final form = FormData();
+
+    // scalar fields
+    form.fields
+      ..add(MapEntry('projectId', projectId.toString()))
+      ..add(MapEntry('appName', appName));
+    if (slug != null && slug.trim().isNotEmpty) {
+      form.fields.add(MapEntry('slug', slug.trim()));
+    }
+    if (themeId != null) {
+      form.fields.add(MapEntry('themeId', themeId.toString()));
+    }
+    if (notes != null && notes.trim().isNotEmpty) {
+      form.fields.add(MapEntry('notes', notes.trim()));
+    }
+
+    // either attach a file or pass logoUrl
+    if (logoFilePath != null && logoFilePath.isNotEmpty) {
+      form.files.add(MapEntry(
+        'file',
+        await MultipartFile.fromFile(logoFilePath, filename: 'logo.png'),
+      ));
+    } else if (logoUrl != null && logoUrl.trim().isNotEmpty) {
+      form.fields.add(MapEntry('logoUrl', logoUrl.trim()));
+    }
+
     final res = await dio.post(
       '/owner/app-requests/auto',
       queryParameters: {'ownerId': ownerId},
-      data: body,
+      data: form,
+      options: Options(contentType: 'multipart/form-data'),
     );
+
     return AppRequestDto.fromJson(res.data as Map<String, dynamic>);
   }
 }

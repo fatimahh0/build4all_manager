@@ -1,15 +1,17 @@
+// lib/features/owner/ownerrequests/presentation/screens/owner_request_screen.dart
 import 'package:build4all_manager/core/network/dio_client.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/repositories/owner_requests_repository_impl.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/services/owner_requests_api.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/services/themes_api.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/presentation/cubit/owner_requests_cubit.dart';
+import 'package:build4all_manager/features/owner/ownerrequests/presentation/cubit/owner_requests_state.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OwnerRequestScreen extends StatelessWidget {
   final int ownerId;
@@ -18,16 +20,14 @@ class OwnerRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dio = DioClient.ensure();
-    final repo = OwnerRequestsRepositoryImpl(
-      OwnerRequestsApi(dio),
-      ThemesApi(dio),
-    );
+
+    final api = OwnerRequestsApi(dio);
+    final repo = OwnerRequestsRepositoryImpl(api, ThemesApi(dio));
 
     return BlocProvider(
       create: (_) {
         final cubit = OwnerRequestsCubit(repo: repo, ownerId: ownerId);
-        // Wire the concrete API so the cubit can call multipart upload
-        cubit.setConcreteApi(OwnerRequestsApi(dio));
+        cubit.setConcreteApi(api);
         cubit.init();
         return cubit;
       },
@@ -45,8 +45,10 @@ class _OwnerRequestView extends StatelessWidget {
 
     return BlocConsumer<OwnerRequestsCubit, OwnerRequestsState>(
       listenWhen: (p, c) =>
-          p.error != c.error || p.lastCreated != c.lastCreated,
-      listener: (context, s) {
+          p.error != c.error ||
+          p.lastCreated != c.lastCreated ||
+          p.builtApkUrl != c.builtApkUrl,
+      listener: (context, s) async {
         if (s.error != null && s.error!.isNotEmpty) {
           final msg = switch (s.error) {
             '_ERR_NO_PROJECT_' => l10n.owner_request_error_choose_project,
@@ -56,15 +58,68 @@ class _OwnerRequestView extends StatelessWidget {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(msg)));
         }
-        if (s.lastCreated != null) {
+        if (s.lastCreated != null &&
+            (s.builtApkUrl == null || s.builtApkUrl!.isEmpty)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(l10n.owner_request_success)),
+          );
+        }
+        if (s.builtApkUrl != null && s.builtApkUrl!.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.owner_request_build_done),
+              action: SnackBarAction(
+                label: l10n.common_download,
+                onPressed: () async {
+                  final uri = Uri.parse(s.builtApkUrl!);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                },
+              ),
+            ),
           );
         }
       },
       builder: (context, s) {
         final cubit = context.read<OwnerRequestsCubit>();
         final cs = Theme.of(context).colorScheme;
+
+        final submitBtn = SizedBox(
+          width: double.infinity,
+          child: FilledButton.icon(
+            onPressed: s.submitting ? null : cubit.submitAutoOneShot,
+            icon: s.submitting
+                ? const SizedBox(
+                    height: 16,
+                    width: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.rocket_launch),
+            label: Text(
+              s.submitting
+                  ? l10n.owner_request_submitting
+                  : l10n.owner_request_submit_and_build,
+            ),
+          ),
+        );
+
+        final builtChip = (s.builtApkUrl != null && s.builtApkUrl!.isNotEmpty)
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: ActionChip(
+                  avatar: const Icon(Icons.download_rounded, size: 18),
+                  label: Text(l10n.common_download_apk),
+                  onPressed: () async {
+                    final uri = Uri.parse(s.builtApkUrl!);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri,
+                          mode: LaunchMode.externalApplication);
+                    }
+                  },
+                ),
+              )
+            : const SizedBox.shrink();
 
         return Scaffold(
           appBar: AppBar(title: Text(l10n.owner_request_title)),
@@ -75,7 +130,6 @@ class _OwnerRequestView extends StatelessWidget {
                     builder: (ctx, bx) {
                       final isWide = bx.maxWidth >= 980;
 
-                      // ---------- Left: Professional form (card, responsive) ----------
                       final form = ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 640),
                         child: Card(
@@ -97,8 +151,6 @@ class _OwnerRequestView extends StatelessWidget {
                                   icon: Icons.rocket_launch,
                                 ),
                                 const SizedBox(height: 16),
-
-                                // Project dropdown (no grid)
                                 DropdownButtonFormField<Project?>(
                                   value: s.selected,
                                   isExpanded: true,
@@ -109,17 +161,13 @@ class _OwnerRequestView extends StatelessWidget {
                                   items: s.projects.map((p) {
                                     return DropdownMenuItem<Project?>(
                                       value: p,
-                                      child: Text(
-                                        p.name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                      child: Text(p.name,
+                                          overflow: TextOverflow.ellipsis),
                                     );
                                   }).toList(),
                                   onChanged: cubit.selectProject,
                                 ),
                                 const SizedBox(height: 12),
-
-                                // App name
                                 _TextField(
                                   label: l10n.owner_request_appName,
                                   hint: l10n.owner_request_appName_hint,
@@ -128,7 +176,7 @@ class _OwnerRequestView extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 12),
 
-                                // Logo URL (optional)
+                                // Optional logo URL (fallback if no file picked)
                                 _TextField(
                                   label: l10n.owner_request_logo_url,
                                   hint: l10n.owner_request_logo_url_hint,
@@ -139,13 +187,13 @@ class _OwnerRequestView extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 8),
 
-                                // NEW: Upload file button + preview of the saved URL
+                                // Pick a file to send within the same request
                                 Row(
                                   children: [
                                     OutlinedButton.icon(
                                       onPressed: s.uploadingLogo
                                           ? null
-                                          : () => cubit.pickAndUploadLogo(),
+                                          : cubit.pickLogoFile,
                                       icon: s.uploadingLogo
                                           ? const SizedBox(
                                               width: 16,
@@ -154,13 +202,27 @@ class _OwnerRequestView extends StatelessWidget {
                                                   strokeWidth: 2),
                                             )
                                           : const Icon(Icons.upload_file),
-                                      label: Text(
-                                        // Add this key to your l10n files
-                                        l10n.owner_request_upload_logo,
-                                      ),
+                                      label:
+                                          Text(l10n.owner_request_upload_logo),
                                     ),
                                     const SizedBox(width: 12),
-                                    if ((s.logoUrl ?? '').isNotEmpty)
+                                    if ((s.logoFilePath ?? '').isNotEmpty)
+                                      Expanded(
+                                        child: Tooltip(
+                                          message: s.logoFilePath!,
+                                          child: Text(
+                                            s.logoFilePath!
+                                                .split(RegExp(r'[\\/]+'))
+                                                .last,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
+                                        ),
+                                      )
+                                    else if ((s.logoUrl ?? '').isNotEmpty)
                                       Expanded(
                                         child: Tooltip(
                                           message: s.logoUrl!,
@@ -178,42 +240,23 @@ class _OwnerRequestView extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 12),
 
-                                // Theme dropdown
                                 _ThemePicker(
-                                  themes: s.themes, // List<ThemeLite>
+                                  themes: s.themes,
                                   selectedId: s.selectedThemeId,
                                   onChanged: cubit.setThemeId,
                                   label: l10n.owner_request_theme_pref,
                                 ),
                                 const SizedBox(height: 16),
 
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: FilledButton.icon(
-                                    onPressed:
-                                        s.submitting ? null : cubit.submitAuto,
-                                    icon: s.submitting
-                                        ? const SizedBox(
-                                            height: 16,
-                                            width: 16,
-                                            child: CircularProgressIndicator(
-                                                strokeWidth: 2),
-                                          )
-                                        : const Icon(Icons.send_rounded),
-                                    label: Text(
-                                      s.submitting
-                                          ? l10n.owner_request_submitting
-                                          : l10n.owner_request_submit,
-                                    ),
-                                  ),
-                                ),
+                                submitBtn,
+                                const SizedBox(height: 10),
+                                builtChip,
                               ],
                             ),
                           ),
                         ),
                       );
 
-                      // ---------- Right: Requests ----------
                       final requests = _SectionCard(
                         title: l10n.owner_request_my_requests,
                         child: _RequestsList(requests: s.myRequests),
@@ -226,20 +269,18 @@ class _OwnerRequestView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                flex: 2,
-                                child: SingleChildScrollView(child: form),
-                              ),
+                                  flex: 2,
+                                  child: SingleChildScrollView(child: form)),
                               const SizedBox(width: 16),
                               Expanded(
-                                flex: 3,
-                                child: SingleChildScrollView(child: requests),
-                              ),
+                                  flex: 3,
+                                  child:
+                                      SingleChildScrollView(child: requests)),
                             ],
                           ),
                         );
                       }
 
-                      // Mobile: one scroll, no overflow
                       return SingleChildScrollView(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -259,24 +300,18 @@ class _OwnerRequestView extends StatelessWidget {
   }
 }
 
-/* -------------------------- Hero header -------------------------- */
+/* ---------- helpers ---------- */
 
 class _HeroHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-
-  const _HeroHeader({
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-  });
-
+  const _HeroHeader(
+      {required this.title, required this.subtitle, required this.icon});
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -308,12 +343,10 @@ class _HeroHeader extends StatelessWidget {
                     style:
                         tt.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
                 const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: tt.bodySmall?.copyWith(
-                    color: tt.bodySmall?.color?.withOpacity(.75),
-                  ),
-                ),
+                Text(subtitle,
+                    style: tt.bodySmall?.copyWith(
+                      color: tt.bodySmall?.color?.withOpacity(.75),
+                    )),
               ],
             ),
           ),
@@ -323,28 +356,23 @@ class _HeroHeader extends StatelessWidget {
   }
 }
 
-/* ------------------------- Theme picker ------------------------- */
-
 class _ThemePicker extends StatelessWidget {
   final List<ThemeLite> themes;
   final int? selectedId;
   final ValueChanged<int?> onChanged;
   final String label;
-
-  const _ThemePicker({
-    required this.themes,
-    required this.selectedId,
-    required this.onChanged,
-    required this.label,
-  });
-
+  const _ThemePicker(
+      {required this.themes,
+      required this.selectedId,
+      required this.onChanged,
+      required this.label});
   @override
   Widget build(BuildContext context) {
     final items = <DropdownMenuItem<int?>>[
       DropdownMenuItem<int?>(
-        value: null,
-        child: Text(AppLocalizations.of(context)!.owner_request_theme_default),
-      ),
+          value: null,
+          child:
+              Text(AppLocalizations.of(context)!.owner_request_theme_default)),
       ...themes.map((t) {
         final nav = (t.menuType ?? '').isEmpty ? '' : ' – ${t.menuType}';
         final color = _primaryColorOf(t);
@@ -355,15 +383,14 @@ class _ThemePicker extends StatelessWidget {
             children: [
               if (color != null)
                 Container(
-                  width: 10,
-                  height: 10,
-                  margin: const EdgeInsets.only(right: 8),
-                  decoration:
-                      BoxDecoration(color: color, shape: BoxShape.circle),
-                ),
+                    width: 10,
+                    height: 10,
+                    margin: const EdgeInsets.only(right: 8),
+                    decoration:
+                        BoxDecoration(color: color, shape: BoxShape.circle)),
               Flexible(
-                child: Text('${t.name}$nav', overflow: TextOverflow.ellipsis),
-              ),
+                  child:
+                      Text('${t.name}$nav', overflow: TextOverflow.ellipsis)),
             ],
           ),
         );
@@ -373,10 +400,8 @@ class _ThemePicker extends StatelessWidget {
     return DropdownButtonFormField<int?>(
       value: selectedId,
       isExpanded: true,
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
+      decoration: const InputDecoration(
+          labelText: 'Theme', border: OutlineInputBorder()),
       items: items,
       onChanged: onChanged,
     );
@@ -395,20 +420,15 @@ class _ThemePicker extends StatelessWidget {
   }
 }
 
-/* ------------------------- Requests list ------------------------- */
-
 class _RequestsList extends StatelessWidget {
   final List<AppRequest> requests;
   const _RequestsList({required this.requests});
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
     if (requests.isEmpty) {
       return _EmptyBox(text: l10n.owner_request_no_requests_yet);
     }
-
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -436,7 +456,6 @@ class _RequestsList extends StatelessWidget {
 class _StatusChip extends StatelessWidget {
   final String status;
   const _StatusChip({required this.status});
-
   @override
   Widget build(BuildContext context) {
     final norm = status.toUpperCase();
@@ -456,18 +475,11 @@ class _StatusChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration:
           BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
-      child: Text(
-        norm,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+      child: const Text('OK',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
     );
   }
 }
-
-/* ------------------------- Small helpers ------------------------- */
 
 class _TextField extends StatelessWidget {
   final String label;
@@ -475,15 +487,12 @@ class _TextField extends StatelessWidget {
   final String initial;
   final ValueChanged<String> onChanged;
   final Widget? prefixIcon;
-
-  const _TextField({
-    required this.label,
-    this.hint,
-    required this.initial,
-    required this.onChanged,
-    this.prefixIcon,
-  });
-
+  const _TextField(
+      {required this.label,
+      this.hint,
+      required this.initial,
+      required this.onChanged,
+      this.prefixIcon});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -502,7 +511,6 @@ class _TextField extends StatelessWidget {
 class _EmptyBox extends StatelessWidget {
   final String text;
   const _EmptyBox({required this.text});
-
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
@@ -514,13 +522,7 @@ class _EmptyBox extends StatelessWidget {
         color: cs.surfaceContainerHighest.withOpacity(.4),
         border: Border.all(color: cs.outline.withOpacity(.3)),
       ),
-      child: Center(
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
+      child: Center(child: Text(text, textAlign: TextAlign.center)),
     );
   }
 }
@@ -528,11 +530,16 @@ class _EmptyBox extends StatelessWidget {
 class _SectionCard extends StatelessWidget {
   final String title;
   final Widget child;
-  const _SectionCard({required this.title, required this.child});
+
+  const _SectionCard({
+    required this.title,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,

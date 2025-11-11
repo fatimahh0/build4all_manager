@@ -431,7 +431,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get owner_projects_openInBrowser => 'فتح';
 
   @override
-  String get owner_request_title => 'طلب إنشاء تطبيق جديد';
+  String get owner_request_title => 'طلب تطبيقك';
+
+  @override
+  String get owner_request_submit_hint => 'اختر مشروعًا، أضف اسم التطبيق، حمل الشعار (اختياري)، اختر سمة، ثم أرسل للبناء.';
 
   @override
   String get owner_request_project => 'المشروع';
@@ -440,55 +443,61 @@ class AppLocalizationsAr extends AppLocalizations {
   String get owner_request_appName => 'اسم التطبيق';
 
   @override
-  String get owner_request_appName_hint => 'مثال: My Coffee';
+  String get owner_request_appName_hint => 'مثال: تطبيقي للمالك';
 
   @override
-  String get owner_request_logo_url => 'Logo URL (optional)';
+  String get owner_request_logo_url => 'رابط الشعار (اختياري)';
 
   @override
-  String get owner_request_logo_url_hint => 'https://example.com/logo.png';
+  String get owner_request_logo_url_hint => 'ألصق رابطًا عامًا أو استخدم الرفع';
 
   @override
-  String get owner_request_theme_pref => 'تفضيل السمة (اختياري)';
+  String get owner_request_upload_logo => 'رفع الشعار';
 
   @override
-  String get owner_request_theme_pref_hint => 'emerald / violet / amber ...';
+  String get owner_request_theme_pref => 'السمة';
 
   @override
-  String get owner_request_theme_default => 'Default theme';
+  String get owner_request_theme_default => 'استخدام السمة الافتراضية';
 
   @override
-  String get owner_request_submit => 'إرسال الطلب';
+  String get owner_request_submit => 'إرسال';
 
   @override
-  String get owner_request_submitting => 'جارٍ الإرسال...';
+  String get owner_request_submitting => 'جارٍ الإرسال…';
 
   @override
-  String get owner_request_submit_hint => 'Your request is auto-approved. The build will start shortly.';
+  String get owner_request_submit_and_build => 'إرسال وبناء APK';
+
+  @override
+  String get owner_request_building => 'جارٍ بناء ملف APK…';
+
+  @override
+  String get owner_request_build_done => 'تم إنهاء بناء الـ APK.';
+
+  @override
+  String get owner_request_success => 'تم إرسال الطلب بنجاح.';
+
+  @override
+  String get owner_request_no_requests_yet => 'لا توجد طلبات بعد.';
 
   @override
   String get owner_request_my_requests => 'طلباتي';
 
   @override
-  String get owner_request_no_requests_yet => 'لا توجد طلبات بعد';
+  String get owner_request_error_choose_project => 'يرجى اختيار مشروع.';
 
   @override
-  String get owner_request_no_projects => 'No available projects.';
+  String get owner_request_error_app_name => 'يرجى إدخال اسم التطبيق.';
 
   @override
-  String get owner_request_success => 'تم إنشاء الطلب. سيبدأ البناء قريباً.';
+  String get common_download => 'تنزيل';
 
   @override
-  String get owner_request_error_choose_project => 'رجاءً اختر مشروعاً';
-
-  @override
-  String get owner_request_error_app_name => 'اسم التطبيق مطلوب';
+  String get common_download_apk => 'تنزيل APK';
 
   @override
   String get menuType => 'Menu Type';
-
-  @override
-  String get owner_request_upload_logo => 'تحميل ملف الشعار';
 
   @override
   String get owner_profile_username => 'اسم المستخدم';

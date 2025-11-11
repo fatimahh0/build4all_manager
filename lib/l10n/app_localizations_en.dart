@@ -431,7 +431,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_projects_openInBrowser => 'Open';
 
   @override
-  String get owner_request_title => 'Request a New App';
+  String get owner_request_title => 'Request Your App';
+
+  @override
+  String get owner_request_submit_hint => 'Pick a project, name your app, add a logo (optional), choose a theme, then submit to build.';
 
   @override
   String get owner_request_project => 'Project';
@@ -440,55 +443,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_request_appName => 'App name';
 
   @override
-  String get owner_request_appName_hint => 'e.g., My Coffee';
+  String get owner_request_appName_hint => 'e.g. My Owner App';
 
   @override
   String get owner_request_logo_url => 'Logo URL (optional)';
 
   @override
-  String get owner_request_logo_url_hint => 'https://example.com/logo.png';
+  String get owner_request_logo_url_hint => 'Paste a public URL or use Upload';
 
   @override
-  String get owner_request_theme_pref => 'Theme (optional)';
+  String get owner_request_upload_logo => 'Upload logo file';
 
   @override
-  String get owner_request_theme_pref_hint => 'Pick a theme';
+  String get owner_request_theme_pref => 'Theme';
 
   @override
-  String get owner_request_theme_default => 'Default theme';
+  String get owner_request_theme_default => 'Use default theme';
 
   @override
-  String get owner_request_submit => 'Submit request';
+  String get owner_request_submit => 'Submit';
 
   @override
   String get owner_request_submitting => 'Submitting…';
 
   @override
-  String get owner_request_submit_hint => 'Your request is auto-approved. The build will start shortly.';
+  String get owner_request_submit_and_build => 'Submit & Build APK';
 
   @override
-  String get owner_request_my_requests => 'My requests';
+  String get owner_request_building => 'Building APK…';
+
+  @override
+  String get owner_request_build_done => 'APK build completed.';
+
+  @override
+  String get owner_request_success => 'Request submitted successfully.';
 
   @override
   String get owner_request_no_requests_yet => 'No requests yet.';
 
   @override
-  String get owner_request_no_projects => 'No available projects.';
-
-  @override
-  String get owner_request_success => 'Request created. Build will start soon.';
+  String get owner_request_my_requests => 'My Requests';
 
   @override
   String get owner_request_error_choose_project => 'Please choose a project.';
 
   @override
-  String get owner_request_error_app_name => 'App name is required.';
+  String get owner_request_error_app_name => 'Please enter an app name.';
+
+  @override
+  String get common_download => 'Download';
+
+  @override
+  String get common_download_apk => 'Download APK';
 
   @override
   String get menuType => 'Menu Type';
-
-  @override
-  String get owner_request_upload_logo => 'Upload logo file';
 
   @override
   String get owner_profile_username => 'Username';

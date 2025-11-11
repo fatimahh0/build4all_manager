@@ -1,21 +1,20 @@
-import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
+// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_cubit.dart
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:file_picker/file_picker.dart'; // <— add this package
+import 'package:file_picker/file_picker.dart';
+import 'package:dio/dio.dart';
+
 import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
 import '../../domain/repositories/i_owner_requests_repository.dart';
-import '../../data/services/owner_requests_api.dart'
-    show OwnerRequestsApi; // need the concrete API
-import '../../utils/slug.dart'; // the helper from step #1
-
-part 'owner_requests_state.dart';
+import '../../data/services/owner_requests_api.dart' show OwnerRequestsApi;
+import '../../utils/slug.dart';
+import 'owner_requests_state.dart'; // <-- keep import, no `part` below
 
 class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   final IOwnerRequestsRepository repo;
   final int ownerId;
 
-  // Access the concrete API when we need upload (you already pass the instance in the repo)
   OwnerRequestsApi? _api;
   void setConcreteApi(OwnerRequestsApi api) => _api = api;
 
@@ -41,56 +40,35 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
 
   void selectProject(Project? p) => emit(state.copyWith(selected: p));
   void setAppName(String v) => emit(state.copyWith(appName: v));
-  void setLogoUrl(String? v) => emit(state.copyWith(logoUrl: v));
+
+  /// When user types/pastes URL manually, clear file path (avoid sending both).
+  void setLogoUrl(String? v) =>
+      emit(state.copyWith(logoUrl: v, logoFilePath: null));
+
   void setThemeId(int? id) => emit(state.copyWith(selectedThemeId: id));
 
-  /// NEW: pick a file and upload to get a logoUrl
-  Future<void> pickAndUploadLogo() async {
-    if (state.selected == null) {
-      emit(state.copyWith(error: '_ERR_NO_PROJECT_'));
-      return;
-    }
-    if (state.appName.trim().isEmpty) {
-      emit(state.copyWith(error: '_ERR_NO_APPNAME_'));
-      return;
-    }
-    if (_api == null) {
-      emit(state.copyWith(error: 'Upload API not wired'));
-      return;
-    }
-
-    // 1) pick file
+  /// Pick an image file to be sent in the ONE-SHOT multipart.
+  Future<void> pickLogoFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.image,
       withData: false,
     );
-    if (result == null || result.files.isEmpty) return; // cancelled
-
+    if (result == null || result.files.isEmpty) return;
     final path = result.files.single.path;
-    if (path == null) {
-      emit(state.copyWith(error: 'Failed to read file path'));
-      return;
-    }
-
-    // 2) upload
-    emit(state.copyWith(uploadingLogo: true, error: null));
-    try {
-      final slug =
-          slugify(state.appName); // ensure same slug for both upload + create
-      final resp = await _api!.uploadLogo(
-        adminId: ownerId, // in your model, admin == owner
-        projectId: state.selected!.id,
-        slug: slug,
-        filePath: path,
-      );
-      final logoUrl = resp['logoUrl'];
-      emit(state.copyWith(uploadingLogo: false, logoUrl: logoUrl));
-    } catch (e) {
-      emit(state.copyWith(uploadingLogo: false, error: e.toString()));
-    }
+    if (path == null) return;
+    // Clear URL if we pick a file (avoid ambiguity)
+    emit(state.copyWith(logoFilePath: path, logoUrl: null));
   }
 
-  Future<void> submitAuto() async {
+  /// One-shot submit (multipart):
+  /// POST /api/owner/app-requests/auto?ownerId=...
+  /// Fields: projectId, appName, slug, themeId?, notes?
+  /// File: file (optional) OR logoUrl if no file selected
+  Future<void> submitAutoOneShot() async {
+    if (_api == null) {
+      emit(state.copyWith(error: 'API not wired'));
+      return;
+    }
     if (state.selected == null) {
       emit(state.copyWith(error: '_ERR_NO_PROJECT_'));
       return;
@@ -100,25 +78,79 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
       return;
     }
 
-    emit(state.copyWith(submitting: true, error: null));
+    final slug = slugify(state.appName);
+
+    emit(state.copyWith(
+      submitting: true,
+      error: null,
+      lastCreated: null,
+      builtApkUrl: null,
+      builtAt: null,
+    ));
+
     try {
-      // IMPORTANT: send the exact slug we used during upload (so backend paths match)
-      final created = await repo.createAppRequestAuto(
-        ownerId: ownerId,
-        projectId: state.selected!.id,
-        appName: state.appName.trim(),
-        themeId: state.selectedThemeId,
-        logoUrl: state.logoUrl,
-        slug: slugify(state.appName), // <— NEW
+      // Build multipart form:
+      final fields = <String, dynamic>{
+        'projectId': state.selected!.id,
+        'appName': state.appName.trim(),
+        'slug': slug,
+        if (state.selectedThemeId != null) 'themeId': state.selectedThemeId,
+      };
+
+      // Attach file if chosen, else attach logoUrl if provided.
+      if ((state.logoFilePath ?? '').isNotEmpty) {
+        fields['file'] = await MultipartFile.fromFile(
+          state.logoFilePath!,
+          filename: 'logo.png',
+        );
+      } else if ((state.logoUrl ?? '').isNotEmpty) {
+        fields['logoUrl'] = state.logoUrl;
+      }
+
+      final form = FormData.fromMap(fields);
+
+      final res = await _api!.dio.post(
+        '/owner/app-requests/auto',
+        queryParameters: {'ownerId': ownerId},
+        data: form,
+        options: Options(contentType: 'multipart/form-data'),
       );
+
+      // Controller returns map incl. slug/status/logoUrl/apkUrl/etc.
+      final data = (res.data as Map).map((k, v) => MapEntry(k.toString(), v));
+
+      final returnedSlug = (data['slug'] ?? '').toString();
+      final returnedStatus = (data['status'] ?? '').toString();
+      final apkUrl = (data['apkUrl'] ?? '').toString();
+      final projectId = int.tryParse((data['projectId'] ?? '0').toString()) ??
+          state.selected!.id;
+
+      // Refresh my requests
       final reqs = await repo.getMyRequests(ownerId);
+
+      // Best-effort lastCreated (since /auto returns link info not AppRequest)
+      final created = AppRequest(
+        id: 0, // unknown from this endpoint
+        ownerId: ownerId,
+        projectId: projectId,
+        appName: state.appName.trim(),
+        status: (returnedStatus.isEmpty) ? 'APPROVED' : returnedStatus,
+        notes: null,
+        createdAt: null,
+        slug: (returnedSlug.isEmpty) ? slug : returnedSlug,
+        apkUrl: apkUrl.isEmpty ? null : apkUrl,
+      );
+
       emit(state.copyWith(
         submitting: false,
         myRequests: reqs,
         lastCreated: created,
+        builtApkUrl: apkUrl.isEmpty ? null : apkUrl,
+        // Reset form
         selected: null,
         appName: '',
         logoUrl: null,
+        logoFilePath: null,
         selectedThemeId: null,
       ));
     } catch (e) {

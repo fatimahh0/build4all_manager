@@ -431,64 +431,73 @@ class AppLocalizationsFr extends AppLocalizations {
   String get owner_projects_openInBrowser => 'Ouvrir';
 
   @override
-  String get owner_request_title => 'Demander une nouvelle application';
+  String get owner_request_title => 'Demander votre application';
+
+  @override
+  String get owner_request_submit_hint => 'Choisissez un projet, nommez l’app, ajoutez un logo (optionnel), choisissez un thème, puis envoyez pour construire.';
 
   @override
   String get owner_request_project => 'Projet';
 
   @override
-  String get owner_request_appName => 'Nom de l’application';
+  String get owner_request_appName => 'Nom de l’app';
 
   @override
-  String get owner_request_appName_hint => 'ex. Mon Café';
+  String get owner_request_appName_hint => 'ex. Mon App Propriétaire';
 
   @override
   String get owner_request_logo_url => 'URL du logo (optionnel)';
 
   @override
-  String get owner_request_logo_url_hint => 'https://exemple.com/logo.png';
+  String get owner_request_logo_url_hint => 'Collez une URL publique ou utilisez Importer';
 
   @override
-  String get owner_request_theme_pref => 'Thème (optionnel)';
+  String get owner_request_upload_logo => 'Importer le logo';
 
   @override
-  String get owner_request_theme_pref_hint => 'Choisissez un thème';
+  String get owner_request_theme_pref => 'Thème';
 
   @override
-  String get owner_request_theme_default => 'Thème par défaut';
+  String get owner_request_theme_default => 'Utiliser le thème par défaut';
 
   @override
-  String get owner_request_submit => 'Envoyer la demande';
+  String get owner_request_submit => 'Envoyer';
 
   @override
   String get owner_request_submitting => 'Envoi…';
 
   @override
-  String get owner_request_submit_hint => 'Votre demande est approuvée automatiquement. La compilation démarrera bientôt.';
+  String get owner_request_submit_and_build => 'Envoyer & Construire l’APK';
 
   @override
-  String get owner_request_my_requests => 'Mes demandes';
+  String get owner_request_building => 'Construction de l’APK…';
+
+  @override
+  String get owner_request_build_done => 'Construction de l’APK terminée.';
+
+  @override
+  String get owner_request_success => 'Demande envoyée avec succès.';
 
   @override
   String get owner_request_no_requests_yet => 'Aucune demande pour l’instant.';
 
   @override
-  String get owner_request_no_projects => 'Aucun projet disponible.';
-
-  @override
-  String get owner_request_success => 'Demande créée. La compilation va bientôt démarrer.';
+  String get owner_request_my_requests => 'Mes demandes';
 
   @override
   String get owner_request_error_choose_project => 'Veuillez choisir un projet.';
 
   @override
-  String get owner_request_error_app_name => 'Le nom de l’application est requis.';
+  String get owner_request_error_app_name => 'Veuillez saisir un nom d’application.';
+
+  @override
+  String get common_download => 'Télécharger';
+
+  @override
+  String get common_download_apk => 'Télécharger l’APK';
 
   @override
   String get menuType => 'Menu Type';
-
-  @override
-  String get owner_request_upload_logo => 'Télécharger le fichier logo';
 
   @override
   String get owner_profile_username => 'Nom d\'utilisateur';

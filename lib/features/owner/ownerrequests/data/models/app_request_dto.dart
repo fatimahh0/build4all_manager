@@ -7,6 +7,10 @@ class AppRequestDto {
   final String status;
   final DateTime? createdAt;
 
+  // NEW:
+  final String? slug;
+  final String? apkUrl;
+
   AppRequestDto({
     required this.id,
     required this.ownerId,
@@ -15,11 +19,14 @@ class AppRequestDto {
     required this.status,
     this.notes,
     this.createdAt,
+    this.slug, // NEW
+    this.apkUrl, // NEW
   });
 
   factory AppRequestDto.fromJson(Map<String, dynamic> j) => AppRequestDto(
         id: (j['id'] ?? 0) as int,
-        ownerId: (j['ownerId'] ?? 0) as int,
+        ownerId:
+            (j['ownerId'] ?? j['adminId'] ?? 0) as int, // tolerate adminId name
         projectId: (j['projectId'] ?? 0) as int,
         appName: (j['appName'] ?? '').toString(),
         notes: j['notes']?.toString(),
@@ -27,6 +34,10 @@ class AppRequestDto {
         createdAt: j['createdAt'] == null
             ? null
             : DateTime.tryParse(j['createdAt'].toString()),
+
+        // NEW (present in your response payload)
+        slug: j['slug']?.toString(),
+        apkUrl: j['apkUrl']?.toString(),
       );
 
   static List<AppRequestDto> list(dynamic data) {
