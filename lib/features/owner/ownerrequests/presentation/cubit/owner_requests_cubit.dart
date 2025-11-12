@@ -1,15 +1,14 @@
-// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_cubit.dart
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
 import '../../domain/repositories/i_owner_requests_repository.dart';
-import '../../data/services/owner_requests_api.dart' show OwnerRequestsApi;
+import '../../data/services/owner_requests_api.dart';
 import '../../utils/slug.dart';
-import 'owner_requests_state.dart'; // <-- keep import, no `part` below
+import '../../../common/domain/entities/app_request.dart';
+import 'owner_requests_state.dart';
 
 class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   final IOwnerRequestsRepository repo;
@@ -40,30 +39,19 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
 
   void selectProject(Project? p) => emit(state.copyWith(selected: p));
   void setAppName(String v) => emit(state.copyWith(appName: v));
-
-  /// When user types/pastes URL manually, clear file path (avoid sending both).
   void setLogoUrl(String? v) =>
       emit(state.copyWith(logoUrl: v, logoFilePath: null));
-
   void setThemeId(int? id) => emit(state.copyWith(selectedThemeId: id));
 
-  /// Pick an image file to be sent in the ONE-SHOT multipart.
   Future<void> pickLogoFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      withData: false,
-    );
+    final result = await FilePicker.platform
+        .pickFiles(type: FileType.image, withData: false);
     if (result == null || result.files.isEmpty) return;
     final path = result.files.single.path;
     if (path == null) return;
-    // Clear URL if we pick a file (avoid ambiguity)
     emit(state.copyWith(logoFilePath: path, logoUrl: null));
   }
 
-  /// One-shot submit (multipart):
-  /// POST /api/owner/app-requests/auto?ownerId=...
-  /// Fields: projectId, appName, slug, themeId?, notes?
-  /// File: file (optional) OR logoUrl if no file selected
   Future<void> submitAutoOneShot() async {
     if (_api == null) {
       emit(state.copyWith(error: 'API not wired'));
@@ -89,7 +77,6 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     ));
 
     try {
-      // Build multipart form:
       final fields = <String, dynamic>{
         'projectId': state.selected!.id,
         'appName': state.appName.trim(),
@@ -97,12 +84,9 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
         if (state.selectedThemeId != null) 'themeId': state.selectedThemeId,
       };
 
-      // Attach file if chosen, else attach logoUrl if provided.
       if ((state.logoFilePath ?? '').isNotEmpty) {
-        fields['file'] = await MultipartFile.fromFile(
-          state.logoFilePath!,
-          filename: 'logo.png',
-        );
+        fields['file'] = await MultipartFile.fromFile(state.logoFilePath!,
+            filename: 'logo.png');
       } else if ((state.logoUrl ?? '').isNotEmpty) {
         fields['logoUrl'] = state.logoUrl;
       }
@@ -116,27 +100,24 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
         options: Options(contentType: 'multipart/form-data'),
       );
 
-      // Controller returns map incl. slug/status/logoUrl/apkUrl/etc.
       final data = (res.data as Map).map((k, v) => MapEntry(k.toString(), v));
-
       final returnedSlug = (data['slug'] ?? '').toString();
       final returnedStatus = (data['status'] ?? '').toString();
       final apkUrl = (data['apkUrl'] ?? '').toString();
       final projectId = int.tryParse((data['projectId'] ?? '0').toString()) ??
           state.selected!.id;
 
-      // Refresh my requests
       final reqs = await repo.getMyRequests(ownerId);
 
-      // Best-effort lastCreated (since /auto returns link info not AppRequest)
       final created = AppRequest(
-        id: 0, // unknown from this endpoint
+        id: 0,
         ownerId: ownerId,
         projectId: projectId,
         appName: state.appName.trim(),
-        status: (returnedStatus.isEmpty) ? 'APPROVED' : returnedStatus,
-        notes: null,
-        createdAt: null,
+        status: (returnedStatus.isEmpty)
+            ? 'APPROVED'
+            : returnedStatus.toUpperCase(),
+        createdAt: DateTime.now(),
         slug: (returnedSlug.isEmpty) ? slug : returnedSlug,
         apkUrl: apkUrl.isEmpty ? null : apkUrl,
       );
@@ -146,7 +127,6 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
         myRequests: reqs,
         lastCreated: created,
         builtApkUrl: apkUrl.isEmpty ? null : apkUrl,
-        // Reset form
         selected: null,
         appName: '',
         logoUrl: null,

@@ -820,13 +820,13 @@ abstract class AppLocalizations {
   /// No description provided for @owner_home_hello.
   ///
   /// In en, this message translates to:
-  /// **'👋 Hi, Owner'**
+  /// **'Hi, Owner 👋'**
   String get owner_home_hello;
 
   /// No description provided for @owner_home_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Manage your apps easily'**
+  /// **'Ready to launch your next app build?'**
   String get owner_home_subtitle;
 
   /// No description provided for @owner_home_requestApp.
@@ -844,7 +844,7 @@ abstract class AppLocalizations {
   /// No description provided for @owner_home_recentRequests.
   ///
   /// In en, this message translates to:
-  /// **'Recent Requests'**
+  /// **'Recent requests'**
   String get owner_home_recentRequests;
 
   /// No description provided for @owner_home_noRecent.
@@ -1164,6 +1164,588 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @owner_nav_myapps.
+  ///
+  /// In en, this message translates to:
+  /// **'My Apps'**
+  String get owner_nav_myapps;
+
+  /// No description provided for @common_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get common_search_hint;
+
+  /// No description provided for @owner_home_search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search apps, requests, guides'**
+  String get owner_home_search_hint;
+
+  /// No description provided for @owner_home_chooseProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your project'**
+  String get owner_home_chooseProject;
+
+  /// No description provided for @owner_proj_open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open project'**
+  String get owner_proj_open;
+
+  /// No description provided for @owner_proj_activities_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Activities'**
+  String get owner_proj_activities_title;
+
+  /// No description provided for @owner_proj_activities_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticketing, schedules, and event highlights crafted for experiences on the go.'**
+  String get owner_proj_activities_desc;
+
+  /// No description provided for @owner_proj_ecom_title.
+  ///
+  /// In en, this message translates to:
+  /// **'E-commerce'**
+  String get owner_proj_ecom_title;
+
+  /// No description provided for @owner_proj_ecom_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Product catalogs, carts, and checkout flows that mirror your storefront.'**
+  String get owner_proj_ecom_desc;
+
+  /// No description provided for @owner_proj_gym_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Gym'**
+  String get owner_proj_gym_title;
+
+  /// No description provided for @owner_proj_gym_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Training plans, booking slots, and membership perks in one app.'**
+  String get owner_proj_gym_desc;
+
+  /// No description provided for @owner_proj_services_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get owner_proj_services_title;
+
+  /// No description provided for @owner_proj_services_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes, appointments, and customer updates tailored to your brand.'**
+  String get owner_proj_services_desc;
+
+  /// No description provided for @status_delivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get status_delivered;
+
+  /// No description provided for @status_in_production.
+  ///
+  /// In en, this message translates to:
+  /// **'In production'**
+  String get status_in_production;
+
+  /// No description provided for @status_approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get status_approved;
+
+  /// No description provided for @status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get status_pending;
+
+  /// No description provided for @status_rejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get status_rejected;
+
+  /// No description provided for @owner_request_requested.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get owner_request_requested;
+
+  /// No description provided for @timeago_days.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}d ago'**
+  String timeago_days(int count);
+
+  /// No description provided for @timeago_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h ago'**
+  String timeago_hours(int count);
+
+  /// No description provided for @timeago_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m ago'**
+  String timeago_minutes(int count);
+
+  /// No description provided for @timeago_just_now.
+  ///
+  /// In en, this message translates to:
+  /// **'just now'**
+  String get timeago_just_now;
+
+  /// No description provided for @owner_proj_details_highlights.
+  ///
+  /// In en, this message translates to:
+  /// **'Highlights'**
+  String get owner_proj_details_highlights;
+
+  /// No description provided for @owner_proj_details_screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Screens & flows'**
+  String get owner_proj_details_screens;
+
+  /// No description provided for @owner_proj_details_modules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules included'**
+  String get owner_proj_details_modules;
+
+  /// No description provided for @owner_proj_details_why.
+  ///
+  /// In en, this message translates to:
+  /// **'Why teams love this template'**
+  String get owner_proj_details_why;
+
+  /// No description provided for @owner_proj_details_primaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Request this app'**
+  String get owner_proj_details_primaryCta;
+
+  /// No description provided for @owner_proj_details_secondaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview demo'**
+  String get owner_proj_details_secondaryCta;
+
+  /// No description provided for @owner_proj_details_create_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my project'**
+  String get owner_proj_details_create_title;
+
+  /// No description provided for @owner_proj_details_create_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Launch your customized version in minutes.'**
+  String get owner_proj_details_create_subtitle;
+
+  /// No description provided for @stat_reviews_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'reviews'**
+  String get stat_reviews_hint;
+
+  /// No description provided for @stat_active_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'active deployments'**
+  String get stat_active_hint;
+
+  /// No description provided for @stat_days_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'days avg. turnaround'**
+  String get stat_days_hint;
+
+  /// No description provided for @owner_proj_details_headline_activities.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan, book, and manage every activity in one place.'**
+  String get owner_proj_details_headline_activities;
+
+  /// No description provided for @owner_proj_details_subhead_activities.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfect for studios, clubs, and programs with polished booking & schedules.'**
+  String get owner_proj_details_subhead_activities;
+
+  /// No description provided for @owner_proj_details_act_h1.
+  ///
+  /// In en, this message translates to:
+  /// **'Class schedules with waitlists'**
+  String get owner_proj_details_act_h1;
+
+  /// No description provided for @owner_proj_details_act_h2.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet & credits support'**
+  String get owner_proj_details_act_h2;
+
+  /// No description provided for @owner_proj_details_act_h3.
+  ///
+  /// In en, this message translates to:
+  /// **'Push reminders for attendees'**
+  String get owner_proj_details_act_h3;
+
+  /// No description provided for @owner_proj_details_act_h4.
+  ///
+  /// In en, this message translates to:
+  /// **'Embedded community feed'**
+  String get owner_proj_details_act_h4;
+
+  /// No description provided for @owner_proj_details_act_s1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule grid'**
+  String get owner_proj_details_act_s1_title;
+
+  /// No description provided for @owner_proj_details_act_s1_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by instructor & location with one tap.'**
+  String get owner_proj_details_act_s1_sub;
+
+  /// No description provided for @owner_proj_details_act_s2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking flow'**
+  String get owner_proj_details_act_s2_title;
+
+  /// No description provided for @owner_proj_details_act_s2_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Frictionless checkout with saved cards.'**
+  String get owner_proj_details_act_s2_sub;
+
+  /// No description provided for @owner_proj_details_act_m1.
+  ///
+  /// In en, this message translates to:
+  /// **'Dynamic schedules & multi-location calendars'**
+  String get owner_proj_details_act_m1;
+
+  /// No description provided for @owner_proj_details_act_m2.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructor bios and ratings'**
+  String get owner_proj_details_act_m2;
+
+  /// No description provided for @owner_proj_details_act_m3.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership tiers with perks'**
+  String get owner_proj_details_act_m3;
+
+  /// No description provided for @owner_proj_details_act_i1.
+  ///
+  /// In en, this message translates to:
+  /// **'78% of members book via mobile within the first week.'**
+  String get owner_proj_details_act_i1;
+
+  /// No description provided for @owner_proj_details_act_i2.
+  ///
+  /// In en, this message translates to:
+  /// **'Retention jumps 24% after enabling reminder pushes.'**
+  String get owner_proj_details_act_i2;
+
+  /// No description provided for @owner_proj_details_headline_ecommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'Launch a high-converting storefront your shoppers trust.'**
+  String get owner_proj_details_headline_ecommerce;
+
+  /// No description provided for @owner_proj_details_subhead_ecommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'For DTC brands: catalogs, bundles, and one-click reorders.'**
+  String get owner_proj_details_subhead_ecommerce;
+
+  /// No description provided for @owner_proj_details_ecom_h1.
+  ///
+  /// In en, this message translates to:
+  /// **'Visual catalog with rich media'**
+  String get owner_proj_details_ecom_h1;
+
+  /// No description provided for @owner_proj_details_ecom_h2.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart upsell recommendations'**
+  String get owner_proj_details_ecom_h2;
+
+  /// No description provided for @owner_proj_details_ecom_h3.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app order tracking'**
+  String get owner_proj_details_ecom_h3;
+
+  /// No description provided for @owner_proj_details_ecom_h4.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount & loyalty engine'**
+  String get owner_proj_details_ecom_h4;
+
+  /// No description provided for @owner_proj_details_ecom_s1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Product showcase'**
+  String get owner_proj_details_ecom_s1_title;
+
+  /// No description provided for @owner_proj_details_ecom_s1_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Full-bleed imagery with swatches.'**
+  String get owner_proj_details_ecom_s1_sub;
+
+  /// No description provided for @owner_proj_details_ecom_s2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart & checkout'**
+  String get owner_proj_details_ecom_s2_title;
+
+  /// No description provided for @owner_proj_details_ecom_s2_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Accelerated checkout with saved addresses.'**
+  String get owner_proj_details_ecom_s2_sub;
+
+  /// No description provided for @owner_proj_details_ecom_m1.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited product variants & bundles'**
+  String get owner_proj_details_ecom_m1;
+
+  /// No description provided for @owner_proj_details_ecom_m2.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory sync with Shopify/Woo'**
+  String get owner_proj_details_ecom_m2;
+
+  /// No description provided for @owner_proj_details_ecom_m3.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift cards and referral rewards'**
+  String get owner_proj_details_ecom_m3;
+
+  /// No description provided for @owner_proj_details_ecom_i1.
+  ///
+  /// In en, this message translates to:
+  /// **'Average order value lifts 32% with bundled offers.'**
+  String get owner_proj_details_ecom_i1;
+
+  /// No description provided for @owner_proj_details_ecom_i2.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers reorder 2.1× faster via the mobile channel.'**
+  String get owner_proj_details_ecom_i2;
+
+  /// No description provided for @owner_proj_details_headline_gym.
+  ///
+  /// In en, this message translates to:
+  /// **'Give members a personal coach in their pocket.'**
+  String get owner_proj_details_headline_gym;
+
+  /// No description provided for @owner_proj_details_subhead_gym.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid training, class packs, and equipment rentals.'**
+  String get owner_proj_details_subhead_gym;
+
+  /// No description provided for @owner_proj_details_gym_h1.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal-based onboarding'**
+  String get owner_proj_details_gym_h1;
+
+  /// No description provided for @owner_proj_details_gym_h2.
+  ///
+  /// In en, this message translates to:
+  /// **'Trainer messaging & programs'**
+  String get owner_proj_details_gym_h2;
+
+  /// No description provided for @owner_proj_details_gym_h3.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout video library'**
+  String get owner_proj_details_gym_h3;
+
+  /// No description provided for @owner_proj_details_gym_h4.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress tracking dashboards'**
+  String get owner_proj_details_gym_h4;
+
+  /// No description provided for @owner_proj_details_gym_s1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Training plans'**
+  String get owner_proj_details_gym_s1_title;
+
+  /// No description provided for @owner_proj_details_gym_s1_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Periodised plans with rest logic.'**
+  String get owner_proj_details_gym_s1_sub;
+
+  /// No description provided for @owner_proj_details_gym_s2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Live classes'**
+  String get owner_proj_details_gym_s2_title;
+
+  /// No description provided for @owner_proj_details_gym_s2_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Book in-person or virtual sessions.'**
+  String get owner_proj_details_gym_s2_sub;
+
+  /// No description provided for @owner_proj_details_gym_m1.
+  ///
+  /// In en, this message translates to:
+  /// **'Trainer marketplace with availability'**
+  String get owner_proj_details_gym_m1;
+
+  /// No description provided for @owner_proj_details_gym_m2.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout logging & wearable sync'**
+  String get owner_proj_details_gym_m2;
+
+  /// No description provided for @owner_proj_details_gym_m3.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition plans with macro targets'**
+  String get owner_proj_details_gym_m3;
+
+  /// No description provided for @owner_proj_details_gym_i1.
+  ///
+  /// In en, this message translates to:
+  /// **'Members completing onboarding convert 3× faster.'**
+  String get owner_proj_details_gym_i1;
+
+  /// No description provided for @owner_proj_details_gym_i2.
+  ///
+  /// In en, this message translates to:
+  /// **'Churn drops 19% when messaging is enabled.'**
+  String get owner_proj_details_gym_i2;
+
+  /// No description provided for @owner_proj_details_headline_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Deliver a concierge-grade service experience.'**
+  String get owner_proj_details_headline_services;
+
+  /// No description provided for @owner_proj_details_subhead_services.
+  ///
+  /// In en, this message translates to:
+  /// **'For agencies, consultancies, and service pros.'**
+  String get owner_proj_details_subhead_services;
+
+  /// No description provided for @owner_proj_details_services_h1.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart booking windows'**
+  String get owner_proj_details_services_h1;
+
+  /// No description provided for @owner_proj_details_services_h2.
+  ///
+  /// In en, this message translates to:
+  /// **'Client workspaces'**
+  String get owner_proj_details_services_h2;
+
+  /// No description provided for @owner_proj_details_services_h3.
+  ///
+  /// In en, this message translates to:
+  /// **'Task & milestone tracker'**
+  String get owner_proj_details_services_h3;
+
+  /// No description provided for @owner_proj_details_services_h4.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrated invoicing'**
+  String get owner_proj_details_services_h4;
+
+  /// No description provided for @owner_proj_details_services_s1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Client portal'**
+  String get owner_proj_details_services_s1_title;
+
+  /// No description provided for @owner_proj_details_services_s1_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared files, notes, and approvals.'**
+  String get owner_proj_details_services_s1_sub;
+
+  /// No description provided for @owner_proj_details_services_s2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment flow'**
+  String get owner_proj_details_services_s2_title;
+
+  /// No description provided for @owner_proj_details_services_s2_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Buffers and intake forms.'**
+  String get owner_proj_details_services_s2_sub;
+
+  /// No description provided for @owner_proj_details_services_m1.
+  ///
+  /// In en, this message translates to:
+  /// **'Client CRM with shared timelines'**
+  String get owner_proj_details_services_m1;
+
+  /// No description provided for @owner_proj_details_services_m2.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital contracts & e-signatures'**
+  String get owner_proj_details_services_m2;
+
+  /// No description provided for @owner_proj_details_services_m3.
+  ///
+  /// In en, this message translates to:
+  /// **'Automated invoice & receipt emails'**
+  String get owner_proj_details_services_m3;
+
+  /// No description provided for @owner_proj_details_services_i1.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects close 27% faster with shared workspaces.'**
+  String get owner_proj_details_services_i1;
+
+  /// No description provided for @owner_proj_details_services_i2.
+  ///
+  /// In en, this message translates to:
+  /// **'Automated billing reduces late payments by 43%.'**
+  String get owner_proj_details_services_i2;
+
+  /// No description provided for @owner_proj_details_stat_reviews_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'reviews'**
+  String get owner_proj_details_stat_reviews_hint;
+
+  /// No description provided for @owner_proj_details_stat_active_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'active deployments'**
+  String get owner_proj_details_stat_active_hint;
+
+  /// No description provided for @owner_proj_details_stat_days_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'days avg. turnaround'**
+  String get owner_proj_details_stat_days_hint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

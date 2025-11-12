@@ -1,13 +1,10 @@
-// lib/features/owner/ownerrequests/data/models/theme_lite.dart
 import 'dart:convert';
 
-/// Minimal theme model for picker (from /api/themes/all or /all/mobile)
 class ThemeLite {
   final int id;
   final String name;
-  final Map<String, dynamic>
-      valuesMobile; // expects primaryColor, nav/menu type
-  final String? menuType; // derived from valuesMobile['nav'] or backend field
+  final Map<String, dynamic> valuesMobile;
+  final String? menuType; // from valuesMobile['nav'] or 'menuType'
 
   ThemeLite({
     required this.id,
@@ -17,31 +14,24 @@ class ThemeLite {
   });
 
   factory ThemeLite.fromJson(Map<String, dynamic> j) {
-    // valuesMobile may be JSON string or map
-    dynamic vm = j['valuesMobile'];
-    Map<String, dynamic> m;
-    if (vm is String) {
+    Map<String, dynamic> vm;
+    final v = j['valuesMobile'];
+    if (v is String) {
       try {
-        m = (vm.isEmpty)
-            ? <String, dynamic>{}
-            : Map<String, dynamic>.from((vm.startsWith('{'))
-                ? (jsonDecode(vm) as Map)
-                : <String, dynamic>{});
+        vm = v.isEmpty ? {} : Map<String, dynamic>.from(jsonDecode(v) as Map);
       } catch (_) {
-        m = <String, dynamic>{};
+        vm = {};
       }
-    } else if (vm is Map) {
-      m = Map<String, dynamic>.from(vm);
+    } else if (v is Map) {
+      vm = Map<String, dynamic>.from(v);
     } else {
-      m = <String, dynamic>{};
+      vm = {};
     }
-
-    final menu = (m['nav'] ?? m['menuType'])?.toString();
-
+    final menu = (vm['nav'] ?? vm['menuType'])?.toString();
     return ThemeLite(
       id: (j['id'] ?? 0) as int,
       name: (j['name'] ?? '').toString(),
-      valuesMobile: m,
+      valuesMobile: vm,
       menuType: menu,
     );
   }

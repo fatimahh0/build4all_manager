@@ -1,5 +1,5 @@
-// lib/features/owner/ownerrequests/presentation/screens/owner_request_screen.dart
 import 'package:build4all_manager/core/network/dio_client.dart';
+import 'package:build4all_manager/features/owner/common/domain/entities/app_request.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/repositories/owner_requests_repository_impl.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/services/owner_requests_api.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/data/services/themes_api.dart';
@@ -9,35 +9,52 @@ import 'package:build4all_manager/features/owner/ownerrequests/presentation/cubi
 import 'package:build4all_manager/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OwnerRequestScreen extends StatelessWidget {
   final int ownerId;
-  const OwnerRequestScreen({super.key, required this.ownerId});
+  final int? initialProjectId; // 👈 from router extras
+  final String? initialAppName; // 👈 from router extras
+
+  const OwnerRequestScreen({
+    super.key,
+    required this.ownerId,
+    this.initialProjectId,
+    this.initialAppName,
+  });
 
   @override
   Widget build(BuildContext context) {
     final dio = DioClient.ensure();
-
     final api = OwnerRequestsApi(dio);
     final repo = OwnerRequestsRepositoryImpl(api, ThemesApi(dio));
 
     return BlocProvider(
-      create: (_) {
-        final cubit = OwnerRequestsCubit(repo: repo, ownerId: ownerId);
-        cubit.setConcreteApi(api);
-        cubit.init();
-        return cubit;
-      },
-      child: const _OwnerRequestView(),
+      create: (_) => OwnerRequestsCubit(repo: repo, ownerId: ownerId)
+        ..setConcreteApi(api)
+        ..init(),
+      child: _OwnerRequestView(
+        initialProjectId: initialProjectId,
+        initialAppName: initialAppName,
+      ),
     );
   }
 }
 
-class _OwnerRequestView extends StatelessWidget {
-  const _OwnerRequestView();
+/// Stateful so we can apply the initial selection **once** when data arrives.
+class _OwnerRequestView extends StatefulWidget {
+  final int? initialProjectId;
+  final String? initialAppName;
+  const _OwnerRequestView(
+      {super.key, this.initialProjectId, this.initialAppName});
+
+  @override
+  State<_OwnerRequestView> createState() => _OwnerRequestViewState();
+}
+
+class _OwnerRequestViewState extends State<_OwnerRequestView> {
+  bool _appliedInit = false; // ensure we only prefill once
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +64,29 @@ class _OwnerRequestView extends StatelessWidget {
       listenWhen: (p, c) =>
           p.error != c.error ||
           p.lastCreated != c.lastCreated ||
-          p.builtApkUrl != c.builtApkUrl,
+          p.builtApkUrl != c.builtApkUrl ||
+          // also trigger when projects list appears (to apply init)
+          (!_appliedInit && p.projects.isEmpty && c.projects.isNotEmpty),
       listener: (context, s) async {
+        // 1) Apply initial project + name exactly once when projects loaded
+        if (!_appliedInit && s.projects.isNotEmpty) {
+          _appliedInit = true;
+          final cubit = context.read<OwnerRequestsCubit>();
+
+          if (widget.initialProjectId != null) {
+            final p = s.projects.firstWhere(
+              (p) => p.id == widget.initialProjectId,
+              orElse: () => s.projects.first,
+            );
+            cubit.selectProject(p);
+          }
+          final prefillName = (widget.initialAppName ?? '').trim();
+          if (prefillName.isNotEmpty) {
+            cubit.setAppName(prefillName);
+          }
+        }
+
+        // 2) Normal snackbars
         if (s.error != null && s.error!.isNotEmpty) {
           final msg = switch (s.error) {
             '_ERR_NO_PROJECT_' => l10n.owner_request_error_choose_project,
@@ -61,8 +99,7 @@ class _OwnerRequestView extends StatelessWidget {
         if (s.lastCreated != null &&
             (s.builtApkUrl == null || s.builtApkUrl!.isEmpty)) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.owner_request_success)),
-          );
+              SnackBar(content: Text(l10n.owner_request_success)));
         }
         if (s.builtApkUrl != null && s.builtApkUrl!.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -93,14 +130,11 @@ class _OwnerRequestView extends StatelessWidget {
                 ? const SizedBox(
                     height: 16,
                     width: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
+                    child: CircularProgressIndicator(strokeWidth: 2))
                 : const Icon(Icons.rocket_launch),
-            label: Text(
-              s.submitting
-                  ? l10n.owner_request_submitting
-                  : l10n.owner_request_submit_and_build,
-            ),
+            label: Text(s.submitting
+                ? l10n.owner_request_submitting
+                : l10n.owner_request_submit_and_build),
           ),
         );
 
@@ -175,8 +209,6 @@ class _OwnerRequestView extends StatelessWidget {
                                   onChanged: cubit.setAppName,
                                 ),
                                 const SizedBox(height: 12),
-
-                                // Optional logo URL (fallback if no file picked)
                                 _TextField(
                                   label: l10n.owner_request_logo_url,
                                   hint: l10n.owner_request_logo_url_hint,
@@ -186,8 +218,6 @@ class _OwnerRequestView extends StatelessWidget {
                                   prefixIcon: const Icon(Icons.image_outlined),
                                 ),
                                 const SizedBox(height: 8),
-
-                                // Pick a file to send within the same request
                                 Row(
                                   children: [
                                     OutlinedButton.icon(
@@ -199,8 +229,7 @@ class _OwnerRequestView extends StatelessWidget {
                                               width: 16,
                                               height: 16,
                                               child: CircularProgressIndicator(
-                                                  strokeWidth: 2),
-                                            )
+                                                  strokeWidth: 2))
                                           : const Icon(Icons.upload_file),
                                       label:
                                           Text(l10n.owner_request_upload_logo),
@@ -239,7 +268,6 @@ class _OwnerRequestView extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 12),
-
                                 _ThemePicker(
                                   themes: s.themes,
                                   selectedId: s.selectedThemeId,
@@ -247,7 +275,6 @@ class _OwnerRequestView extends StatelessWidget {
                                   label: l10n.owner_request_theme_pref,
                                 ),
                                 const SizedBox(height: 16),
-
                                 submitBtn,
                                 const SizedBox(height: 10),
                                 builtChip,
@@ -269,13 +296,14 @@ class _OwnerRequestView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                  flex: 2,
-                                  child: SingleChildScrollView(child: form)),
+                                flex: 2,
+                                child: SingleChildScrollView(child: form),
+                              ),
                               const SizedBox(width: 16),
                               Expanded(
-                                  flex: 3,
-                                  child:
-                                      SingleChildScrollView(child: requests)),
+                                flex: 3,
+                                child: SingleChildScrollView(child: requests),
+                              ),
                             ],
                           ),
                         );
@@ -345,8 +373,7 @@ class _HeroHeader extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(subtitle,
                     style: tt.bodySmall?.copyWith(
-                      color: tt.bodySmall?.color?.withOpacity(.75),
-                    )),
+                        color: tt.bodySmall?.color?.withOpacity(.75))),
               ],
             ),
           ),
@@ -370,29 +397,26 @@ class _ThemePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = <DropdownMenuItem<int?>>[
       DropdownMenuItem<int?>(
-          value: null,
-          child:
-              Text(AppLocalizations.of(context)!.owner_request_theme_default)),
+        value: null,
+        child: Text(AppLocalizations.of(context)!.owner_request_theme_default),
+      ),
       ...themes.map((t) {
         final nav = (t.menuType ?? '').isEmpty ? '' : ' – ${t.menuType}';
         final color = _primaryColorOf(t);
         return DropdownMenuItem<int?>(
           value: t.id,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (color != null)
-                Container(
-                    width: 10,
-                    height: 10,
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration:
-                        BoxDecoration(color: color, shape: BoxShape.circle)),
-              Flexible(
-                  child:
-                      Text('${t.name}$nav', overflow: TextOverflow.ellipsis)),
-            ],
-          ),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            if (color != null)
+              Container(
+                width: 10,
+                height: 10,
+                margin: const EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+              ),
+            Flexible(
+              child: Text('${t.name}$nav', overflow: TextOverflow.ellipsis),
+            ),
+          ]),
         );
       }),
     ];
@@ -400,8 +424,8 @@ class _ThemePicker extends StatelessWidget {
     return DropdownButtonFormField<int?>(
       value: selectedId,
       isExpanded: true,
-      decoration: const InputDecoration(
-          labelText: 'Theme', border: OutlineInputBorder()),
+      decoration:
+          InputDecoration(labelText: label, border: const OutlineInputBorder()),
       items: items,
       onChanged: onChanged,
     );
@@ -439,10 +463,7 @@ class _RequestsList extends StatelessWidget {
         return ListTile(
           leading: const Icon(Icons.description_outlined),
           title: Text(r.appName, maxLines: 1, overflow: TextOverflow.ellipsis),
-          subtitle: Text([
-            r.status,
-            if (r.createdAt != null) _fmt(r.createdAt!),
-          ].join(' • ')),
+          subtitle: Text([r.status, _fmt(r.createdAt)].join(' • ')),
           trailing: _StatusChip(status: r.status),
         );
       },
@@ -461,22 +482,29 @@ class _StatusChip extends StatelessWidget {
     final norm = status.toUpperCase();
     Color bg;
     switch (norm) {
+      case 'DELIVERED':
       case 'APPROVED':
         bg = Colors.green;
         break;
       case 'REJECTED':
         bg = Colors.red;
         break;
+      case 'IN_PRODUCTION':
+        bg = Colors.orange;
+        break;
       case 'PENDING':
       default:
-        bg = Colors.orange;
+        bg = Colors.grey;
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration:
           BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
-      child: const Text('OK',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+      child: Text(
+        norm,
+        style:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+      ),
     );
   }
 }
@@ -487,12 +515,13 @@ class _TextField extends StatelessWidget {
   final String initial;
   final ValueChanged<String> onChanged;
   final Widget? prefixIcon;
-  const _TextField(
-      {required this.label,
-      this.hint,
-      required this.initial,
-      required this.onChanged,
-      this.prefixIcon});
+  const _TextField({
+    required this.label,
+    this.hint,
+    required this.initial,
+    required this.onChanged,
+    this.prefixIcon,
+  });
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -530,16 +559,11 @@ class _EmptyBox extends StatelessWidget {
 class _SectionCard extends StatelessWidget {
   final String title;
   final Widget child;
-
-  const _SectionCard({
-    required this.title,
-    required this.child,
-  });
+  const _SectionCard({required this.title, required this.child});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
@@ -552,13 +576,11 @@ class _SectionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700),
-            ),
+            Text(title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             child,
           ],

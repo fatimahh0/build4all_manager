@@ -1,12 +1,12 @@
-import '../../domain/repositories/i_owner_requests_repository.dart';
-import '../../domain/entities/app_request.dart';
-import '../../domain/entities/project.dart';
-import '../models/app_request_dto.dart';
-import '../models/project_dto.dart';
+import 'package:build4all_manager/features/owner/common/domain/entities/app_request.dart';
+import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/project.dart';
+import 'package:build4all_manager/features/owner/ownerrequests/domain/entities/theme_lite.dart';
 
+import '../models/project_dto.dart';
+import '../../../common/data/models/app_request_dto.dart';
 import '../services/owner_requests_api.dart';
 import '../services/themes_api.dart';
-import '../../domain/entities/theme_lite.dart';
+import '../../domain/repositories/i_owner_requests_repository.dart';
 
 class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
   final OwnerRequestsApi api;
@@ -20,18 +20,7 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
         active: d.active,
       );
 
-  AppRequest _mapReq(AppRequestDto d) => AppRequest(
-        id: d.id,
-        ownerId: d.ownerId,
-        projectId: d.projectId,
-        appName: d.appName,
-        notes: d.notes,
-        status: d.status,
-        createdAt: d.createdAt,
-        // NEW:
-        slug: d.slug,
-        apkUrl: d.apkUrl,
-      );
+  AppRequest _mapReq(AppRequestDto d) => d.toEntity();
 
   @override
   Future<List<Project>> getAvailableProjects() async {
@@ -56,6 +45,7 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
     int? themeId,
     String? logoUrl,
     String? slug,
+    String? logoFilePath,
   }) async {
     final dto = await api.createAuto(
       ownerId: ownerId,
@@ -64,6 +54,7 @@ class OwnerRequestsRepositoryImpl implements IOwnerRequestsRepository {
       themeId: themeId,
       logoUrl: logoUrl,
       slug: slug,
+      logoFilePath: logoFilePath,
     );
     return _mapReq(dto);
   }

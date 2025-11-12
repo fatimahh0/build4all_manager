@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-
 import '../models/project_dto.dart';
-import '../models/app_request_dto.dart';
+import '../../../common/data/models/app_request_dto.dart';
 
 class OwnerRequestsApi {
   final Dio dio;
@@ -13,16 +12,12 @@ class OwnerRequestsApi {
   }
 
   Future<List<AppRequestDto>> getMyRequests(int ownerId) async {
-    final res = await dio.get(
-      '/owner/app-requests',
-      queryParameters: {'ownerId': ownerId},
-    );
-    return AppRequestDto.list(res.data);
+    final res = await dio
+        .get('/owner/app-requests', queryParameters: {'ownerId': ownerId});
+    final list = (res.data as List).cast<Map<String, dynamic>>();
+    return list.map(AppRequestDto.fromJson).toList();
   }
 
-  /// One-shot create+approve+trigger CI (multipart).
-  /// If [logoFilePath] is provided, we attach it as "file".
-  /// If not, but [logoUrl] is provided, we send it as a normal field.
   Future<AppRequestDto> createAuto({
     required int ownerId,
     required int projectId,
@@ -30,12 +25,11 @@ class OwnerRequestsApi {
     String? slug,
     int? themeId,
     String? notes,
-    String? logoUrl, // optional when no file
-    String? logoFilePath, // optional file path to upload
+    String? logoUrl,
+    String? logoFilePath,
   }) async {
     final form = FormData();
 
-    // scalar fields
     form.fields
       ..add(MapEntry('projectId', projectId.toString()))
       ..add(MapEntry('appName', appName));
@@ -49,7 +43,6 @@ class OwnerRequestsApi {
       form.fields.add(MapEntry('notes', notes.trim()));
     }
 
-    // either attach a file or pass logoUrl
     if (logoFilePath != null && logoFilePath.isNotEmpty) {
       form.files.add(MapEntry(
         'file',

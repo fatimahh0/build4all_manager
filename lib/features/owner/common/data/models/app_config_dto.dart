@@ -7,10 +7,16 @@ class AppConfigDto {
   AppConfigDto({required this.ownerProjectLinkId, required this.wsPath});
 
   factory AppConfigDto.fromJson(Map<String, dynamic> j) => AppConfigDto(
-        ownerProjectLinkId: j['ownerProjectLinkId'],
-        wsPath: j['wsPath'] ?? '',
+        ownerProjectLinkId: j['ownerProjectLinkId'] as String?,
+        wsPath: (j['wsPath'] ?? '').toString(),
       );
 
-  AppConfig toEntity() =>
-      AppConfig(ownerProjectLinkId: ownerProjectLinkId, wsPath: wsPath);
+  // ✅ Fallback when 403/404
+  factory AppConfigDto.fallback() =>
+      AppConfigDto(ownerProjectLinkId: null, wsPath: '');
+
+  AppConfig toEntity() => AppConfig(
+        ownerProjectLinkId: ownerProjectLinkId,
+        wsPath: wsPath,
+      );
 }

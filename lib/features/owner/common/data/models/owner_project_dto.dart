@@ -14,10 +14,10 @@ class OwnerProjectDto {
   });
 
   factory OwnerProjectDto.fromJson(Map<String, dynamic> j) => OwnerProjectDto(
-        projectId: j['projectId'],
-        projectName: j['projectName'],
-        slug: j['slug'],
-        apkUrl: j['apkUrl'],
+        projectId: j['projectId'] ?? 0,
+        projectName: (j['projectName'] ?? '').toString(),
+        slug: (j['slug'] ?? '').toString(),
+        apkUrl: j['apkUrl']?.toString(),
       );
 
   OwnerProject toEntity() => OwnerProject(

@@ -371,10 +371,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get owner_profile_title => 'ملف المالك';
 
   @override
-  String get owner_home_hello => '👋 أهلاً، صاحب التطبيق';
+  String get owner_home_hello => 'مرحبًا، المالك 👋';
 
   @override
-  String get owner_home_subtitle => 'إدارة تطبيقاتك بسهولة';
+  String get owner_home_subtitle => 'جاهز لإطلاق نسختك التالية؟';
 
   @override
   String get owner_home_requestApp => 'اطلب تطبيقي';
@@ -543,4 +543,301 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'إلغاء';
+
+  @override
+  String get owner_nav_myapps => 'تطبيقاتي';
+
+  @override
+  String get common_search_hint => 'ابحث...';
+
+  @override
+  String get owner_home_search_hint => 'ابحث عن التطبيقات والطلبات والإرشادات';
+
+  @override
+  String get owner_home_chooseProject => 'اختر مشروعك';
+
+  @override
+  String get owner_proj_open => 'افتح المشروع';
+
+  @override
+  String get owner_proj_activities_title => 'الفعاليات';
+
+  @override
+  String get owner_proj_activities_desc => 'تذاكر، جداول، وأبرز الأحداث مصمّمة للتجارب أثناء التنقل.';
+
+  @override
+  String get owner_proj_ecom_title => 'التجارة الإلكترونية';
+
+  @override
+  String get owner_proj_ecom_desc => 'كتالوجات المنتجات وسلال الشراء وتدفّقات الدفع المطابقة لمتجرك.';
+
+  @override
+  String get owner_proj_gym_title => 'النادي الرياضي';
+
+  @override
+  String get owner_proj_gym_desc => 'خطط تدريب، حجوزات مواعيد، ومزايا العضوية في تطبيق واحد.';
+
+  @override
+  String get owner_proj_services_title => 'الخدمات';
+
+  @override
+  String get owner_proj_services_desc => 'عروض أسعار، مواعيد، وتحديثات للعميل متوافقة مع هويتك.';
+
+  @override
+  String get status_delivered => 'تم التسليم';
+
+  @override
+  String get status_in_production => 'قيد التنفيذ';
+
+  @override
+  String get status_approved => 'موافق عليه';
+
+  @override
+  String get status_pending => 'قيد الانتظار';
+
+  @override
+  String get status_rejected => 'مرفوض';
+
+  @override
+  String get owner_request_requested => 'تم الطلب';
+
+  @override
+  String timeago_days(int count) {
+    return 'منذ $count يوم';
+  }
+
+  @override
+  String timeago_hours(int count) {
+    return 'منذ $count ساعة';
+  }
+
+  @override
+  String timeago_minutes(int count) {
+    return 'منذ $count دقيقة';
+  }
+
+  @override
+  String get timeago_just_now => 'الآن';
+
+  @override
+  String get owner_proj_details_highlights => 'أبرز الميزات';
+
+  @override
+  String get owner_proj_details_screens => 'الشاشات والتدفّقات';
+
+  @override
+  String get owner_proj_details_modules => 'الوحدات المتضمَّنة';
+
+  @override
+  String get owner_proj_details_why => 'لماذا يحبّها الفرق';
+
+  @override
+  String get owner_proj_details_primaryCta => 'اطلب هذا التطبيق';
+
+  @override
+  String get owner_proj_details_secondaryCta => 'عرض النسخة التجريبية';
+
+  @override
+  String get owner_proj_details_create_title => 'أنشئ مشروعي';
+
+  @override
+  String get owner_proj_details_create_subtitle => 'أطلق نسختك المخصّصة خلال دقائق.';
+
+  @override
+  String get stat_reviews_hint => 'تقييم';
+
+  @override
+  String get stat_active_hint => 'نشر فعّال';
+
+  @override
+  String get stat_days_hint => 'أيام متوسّط التنفيذ';
+
+  @override
+  String get owner_proj_details_headline_activities => 'نظّم، احجز، وادر كل نشاط من مكان واحد.';
+
+  @override
+  String get owner_proj_details_subhead_activities => 'مثالي للأندية والمراكز بواجهات حجز وجداول مصقولة.';
+
+  @override
+  String get owner_proj_details_act_h1 => 'جداول حصص مع لوائح انتظار';
+
+  @override
+  String get owner_proj_details_act_h2 => 'محفظة ودعم الرصيد';
+
+  @override
+  String get owner_proj_details_act_h3 => 'تذكيرات دفعية للمشاركين';
+
+  @override
+  String get owner_proj_details_act_h4 => 'خلاصة تواصل مدمجة';
+
+  @override
+  String get owner_proj_details_act_s1_title => 'شبكة الجداول';
+
+  @override
+  String get owner_proj_details_act_s1_sub => 'تصفية بالمدرب والموقع بضغطة واحدة.';
+
+  @override
+  String get owner_proj_details_act_s2_title => 'تدفّق الحجز';
+
+  @override
+  String get owner_proj_details_act_s2_sub => 'دفع سلس مع بطاقات محفوظة.';
+
+  @override
+  String get owner_proj_details_act_m1 => 'جداول ديناميكية ومتعدّدة المواقع';
+
+  @override
+  String get owner_proj_details_act_m2 => 'سير ذاتية وتقييمات المدرّبين';
+
+  @override
+  String get owner_proj_details_act_m3 => 'عضويات بمستويات ومزايا';
+
+  @override
+  String get owner_proj_details_act_i1 => '78٪ من الأعضاء يحجزون عبر الهاتف خلال الأسبوع الأول.';
+
+  @override
+  String get owner_proj_details_act_i2 => 'تزداد الاستمرارية 24٪ بعد تفعيل التذكيرات.';
+
+  @override
+  String get owner_proj_details_headline_ecommerce => 'أطلق متجراً عالي التحويل يثق به عملاؤك.';
+
+  @override
+  String get owner_proj_details_subhead_ecommerce => 'للبيع المباشر: كتالوجات، حِزم، وإعادة شراء بنقرة.';
+
+  @override
+  String get owner_proj_details_ecom_h1 => 'كتالوج بصري مع وسائط غنيّة';
+
+  @override
+  String get owner_proj_details_ecom_h2 => 'ترشيحات ذكية للبيع الإضافي';
+
+  @override
+  String get owner_proj_details_ecom_h3 => 'تتبّع الطلب داخل التطبيق';
+
+  @override
+  String get owner_proj_details_ecom_h4 => 'محرك خصومات وولاء';
+
+  @override
+  String get owner_proj_details_ecom_s1_title => 'عرض المنتجات';
+
+  @override
+  String get owner_proj_details_ecom_s1_sub => 'صور ممتدّة مع عينات ألوان.';
+
+  @override
+  String get owner_proj_details_ecom_s2_title => 'السلة والدفع';
+
+  @override
+  String get owner_proj_details_ecom_s2_sub => 'دفع سريع مع عناوين محفوظة.';
+
+  @override
+  String get owner_proj_details_ecom_m1 => 'متغيرات ومنتجات مجمّعة غير محدودة';
+
+  @override
+  String get owner_proj_details_ecom_m2 => 'مزامنة المخزون مع Shopify/Woo';
+
+  @override
+  String get owner_proj_details_ecom_m3 => 'بطاقات هدايا وبرامج إحالة';
+
+  @override
+  String get owner_proj_details_ecom_i1 => 'يرتفع متوسط قيمة الطلب 32٪ مع الحزم.';
+
+  @override
+  String get owner_proj_details_ecom_i2 => 'يعيد العملاء الشراء أسرع بـ 2.1× عبر الهاتف.';
+
+  @override
+  String get owner_proj_details_headline_gym => 'امنح الأعضاء مدرّباً شخصياً في جيوبهم.';
+
+  @override
+  String get owner_proj_details_subhead_gym => 'تدريب هجين، باقات حصص، وتأجير معدات.';
+
+  @override
+  String get owner_proj_details_gym_h1 => 'تهيئة حسب الأهداف';
+
+  @override
+  String get owner_proj_details_gym_h2 => 'مراسلة المدرّب والبرامج';
+
+  @override
+  String get owner_proj_details_gym_h3 => 'مكتبة فيديوهات للتمارين';
+
+  @override
+  String get owner_proj_details_gym_h4 => 'لوحات تقدّم وتتبع';
+
+  @override
+  String get owner_proj_details_gym_s1_title => 'خطط التدريب';
+
+  @override
+  String get owner_proj_details_gym_s1_sub => 'خطط مُمرحلة بمنطق الاستراحة.';
+
+  @override
+  String get owner_proj_details_gym_s2_title => 'حصص مباشرة';
+
+  @override
+  String get owner_proj_details_gym_s2_sub => 'احجز حضورياً أو عبر الإنترنت.';
+
+  @override
+  String get owner_proj_details_gym_m1 => 'سوق مدرّبين مع التوفّر';
+
+  @override
+  String get owner_proj_details_gym_m2 => 'تسجيل التمارين ومزامنة الأجهزة';
+
+  @override
+  String get owner_proj_details_gym_m3 => 'خطط تغذية مع أهداف الماكروز';
+
+  @override
+  String get owner_proj_details_gym_i1 => 'المنضمون يكملون التهيئة يتحولون أسرع بـ3×.';
+
+  @override
+  String get owner_proj_details_gym_i2 => 'ينخفض التسرّب 19٪ عند تفعيل الرسائل.';
+
+  @override
+  String get owner_proj_details_headline_services => 'قدّم تجربة خِدمة بمستوى كونسيرج.';
+
+  @override
+  String get owner_proj_details_subhead_services => 'للوكالات والاستشارات ومقدمي الخدمات.';
+
+  @override
+  String get owner_proj_details_services_h1 => 'نوافذ حجز ذكية';
+
+  @override
+  String get owner_proj_details_services_h2 => 'مساحات عمل للعميل';
+
+  @override
+  String get owner_proj_details_services_h3 => 'تتبّع المهام والمعالم';
+
+  @override
+  String get owner_proj_details_services_h4 => 'فواتير مدمجة';
+
+  @override
+  String get owner_proj_details_services_s1_title => 'بوابة العميل';
+
+  @override
+  String get owner_proj_details_services_s1_sub => 'ملفات مشتركة، ملاحظات، وموافقات.';
+
+  @override
+  String get owner_proj_details_services_s2_title => 'تدفّق المواعيد';
+
+  @override
+  String get owner_proj_details_services_s2_sub => 'فواصل ونماذج معلومات مسبقة.';
+
+  @override
+  String get owner_proj_details_services_m1 => 'CRM للعميل بخطوط زمنية مشتركة';
+
+  @override
+  String get owner_proj_details_services_m2 => 'عقود رقمية وتوقيع إلكتروني';
+
+  @override
+  String get owner_proj_details_services_m3 => 'فواتير وإيصالات تلقائية';
+
+  @override
+  String get owner_proj_details_services_i1 => 'تُغلق المشاريع أسرع بـ 27٪ مع المساحات المشتركة.';
+
+  @override
+  String get owner_proj_details_services_i2 => 'الفوترة التلقائية تقلّل التأخير 43٪.';
+
+  @override
+  String get owner_proj_details_stat_reviews_hint => 'المراجعات';
+
+  @override
+  String get owner_proj_details_stat_active_hint => 'النشطات';
+
+  @override
+  String get owner_proj_details_stat_days_hint => 'الأيام';
 }

@@ -1,20 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/domain/entities/app_config.dart';
 import '../../../common/domain/entities/app_request.dart';
-import '../../../common/domain/entities/owner_project.dart';
 import '../../../common/domain/usecases/get_app_config_uc.dart';
-import '../../../common/domain/usecases/get_my_apps_uc.dart';
 import '../../../common/domain/usecases/get_my_requests_uc.dart';
 import 'owner_home_event.dart';
 import 'owner_home_state.dart';
 
 class OwnerHomeBloc extends Bloc<OwnerHomeEvent, OwnerHomeState> {
-  final GetMyAppsUc getMyApps;
   final GetMyRequestsUc getMyRequests;
   final GetAppConfigUc getAppConfig;
 
   OwnerHomeBloc({
-    required this.getMyApps,
     required this.getMyRequests,
     required this.getAppConfig,
   }) : super(const OwnerHomeState()) {
@@ -29,17 +25,21 @@ class OwnerHomeBloc extends Bloc<OwnerHomeEvent, OwnerHomeState> {
     emit(state.copyWith(loading: true, error: null));
 
     try {
-      final List<OwnerProject> apps = await getMyApps(ownerId);
       final List<AppRequest> reqs = await getMyRequests(ownerId);
-      final AppConfig config = await getAppConfig();
-
       reqs.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+      // ✅ Never let config failure block the screen
+      AppConfig? cfg;
+      try {
+        cfg = await getAppConfig();
+      } catch (_) {
+        cfg = null;
+      }
 
       emit(state.copyWith(
         loading: false,
-        apps: apps,
-        recent: reqs.take(2).toList(),
-        config: config,
+        recent: reqs.take(5).toList(),
+        config: cfg,
       ));
     } catch (err) {
       emit(state.copyWith(loading: false, error: err.toString()));

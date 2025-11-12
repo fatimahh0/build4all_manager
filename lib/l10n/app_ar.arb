@@ -173,5 +173,125 @@
   "owner_profile_tips": "احرص على تحديث معلومات ملفك الشخصي لتخصيص تجربتك.",
   "yes": "نعم",
   "no": "لا",
-  "refresh": "تحديث"
+  "refresh": "تحديث",
+   "owner_nav_myapps":" تطبيقاتي",
+     "common_search_hint": "ابحث...",
+  "owner_home_search_hint": "ابحث عن التطبيقات والطلبات والإرشادات",
+  "owner_home_chooseProject": "اختر مشروعك",
+
+  "owner_proj_open": "افتح المشروع",
+  "owner_proj_activities_title": "الفعاليات",
+  "owner_proj_activities_desc": "تذاكر، جداول، وأبرز الأحداث مصمّمة للتجارب أثناء التنقل.",
+  "owner_proj_ecom_title": "التجارة الإلكترونية",
+  "owner_proj_ecom_desc": "كتالوجات المنتجات وسلال الشراء وتدفّقات الدفع المطابقة لمتجرك.",
+  "owner_proj_gym_title": "النادي الرياضي",
+  "owner_proj_gym_desc": "خطط تدريب، حجوزات مواعيد، ومزايا العضوية في تطبيق واحد.",
+  "owner_proj_services_title": "الخدمات",
+  "owner_proj_services_desc": "عروض أسعار، مواعيد، وتحديثات للعميل متوافقة مع هويتك.",
+
+  "status_delivered": "تم التسليم",
+  "status_in_production": "قيد التنفيذ",
+  "status_approved": "موافق عليه",
+  "status_pending": "قيد الانتظار",
+  "status_rejected": "مرفوض",
+
+  "owner_home_recentRequests": "الطلبات الأخيرة",
+  "owner_home_viewAll": "عرض الكل",
+  "owner_home_noRecent": "لا توجد طلبات حديثة",
+  "owner_home_hello": "مرحبًا، المالك 👋",
+  "owner_home_subtitle": "جاهز لإطلاق نسختك التالية؟",
+  "owner_home_requestApp": "اطلب تطبيقي",
+
+  "owner_request_requested": "تم الطلب",
+
+  "timeago_days": "منذ {count} يوم",
+  "@timeago_days": { "placeholders": { "count": { "type": "int" } } },
+  "timeago_hours": "منذ {count} ساعة",
+  "@timeago_hours": { "placeholders": { "count": { "type": "int" } } },
+  "timeago_minutes": "منذ {count} دقيقة",
+  "@timeago_minutes": { "placeholders": { "count": { "type": "int" } } },
+  "timeago_just_now": "الآن",
+  "owner_nav_home": "الرئيسية",
+  "owner_nav_myapps": "تطبيقاتي",
+  "owner_nav_profile": "الملف الشخصي",
+
+  "owner_proj_details_highlights": "أبرز الميزات",
+  "owner_proj_details_screens": "الشاشات والتدفّقات",
+  "owner_proj_details_modules": "الوحدات المتضمَّنة",
+  "owner_proj_details_why": "لماذا يحبّها الفرق",
+  "owner_proj_details_primaryCta": "اطلب هذا التطبيق",
+  "owner_proj_details_secondaryCta": "عرض النسخة التجريبية",
+  "owner_proj_details_create_title": "أنشئ مشروعي",
+  "owner_proj_details_create_subtitle": "أطلق نسختك المخصّصة خلال دقائق.",
+  "stat_reviews_hint": "تقييم",
+  "stat_active_hint": "نشر فعّال",
+  "stat_days_hint": "أيام متوسّط التنفيذ",
+
+  "owner_proj_details_headline_activities": "نظّم، احجز، وادر كل نشاط من مكان واحد.",
+  "owner_proj_details_subhead_activities": "مثالي للأندية والمراكز بواجهات حجز وجداول مصقولة.",
+  "owner_proj_details_act_h1": "جداول حصص مع لوائح انتظار",
+  "owner_proj_details_act_h2": "محفظة ودعم الرصيد",
+  "owner_proj_details_act_h3": "تذكيرات دفعية للمشاركين",
+  "owner_proj_details_act_h4": "خلاصة تواصل مدمجة",
+  "owner_proj_details_act_s1_title": "شبكة الجداول",
+  "owner_proj_details_act_s1_sub": "تصفية بالمدرب والموقع بضغطة واحدة.",
+  "owner_proj_details_act_s2_title": "تدفّق الحجز",
+  "owner_proj_details_act_s2_sub": "دفع سلس مع بطاقات محفوظة.",
+  "owner_proj_details_act_m1": "جداول ديناميكية ومتعدّدة المواقع",
+  "owner_proj_details_act_m2": "سير ذاتية وتقييمات المدرّبين",
+  "owner_proj_details_act_m3": "عضويات بمستويات ومزايا",
+  "owner_proj_details_act_i1": "78٪ من الأعضاء يحجزون عبر الهاتف خلال الأسبوع الأول.",
+  "owner_proj_details_act_i2": "تزداد الاستمرارية 24٪ بعد تفعيل التذكيرات.",
+
+  "owner_proj_details_headline_ecommerce": "أطلق متجراً عالي التحويل يثق به عملاؤك.",
+  "owner_proj_details_subhead_ecommerce": "للبيع المباشر: كتالوجات، حِزم، وإعادة شراء بنقرة.",
+  "owner_proj_details_ecom_h1": "كتالوج بصري مع وسائط غنيّة",
+  "owner_proj_details_ecom_h2": "ترشيحات ذكية للبيع الإضافي",
+  "owner_proj_details_ecom_h3": "تتبّع الطلب داخل التطبيق",
+  "owner_proj_details_ecom_h4": "محرك خصومات وولاء",
+  "owner_proj_details_ecom_s1_title": "عرض المنتجات",
+  "owner_proj_details_ecom_s1_sub": "صور ممتدّة مع عينات ألوان.",
+  "owner_proj_details_ecom_s2_title": "السلة والدفع",
+  "owner_proj_details_ecom_s2_sub": "دفع سريع مع عناوين محفوظة.",
+  "owner_proj_details_ecom_m1": "متغيرات ومنتجات مجمّعة غير محدودة",
+  "owner_proj_details_ecom_m2": "مزامنة المخزون مع Shopify/Woo",
+  "owner_proj_details_ecom_m3": "بطاقات هدايا وبرامج إحالة",
+  "owner_proj_details_ecom_i1": "يرتفع متوسط قيمة الطلب 32٪ مع الحزم.",
+  "owner_proj_details_ecom_i2": "يعيد العملاء الشراء أسرع بـ 2.1× عبر الهاتف.",
+
+  "owner_proj_details_headline_gym": "امنح الأعضاء مدرّباً شخصياً في جيوبهم.",
+  "owner_proj_details_subhead_gym": "تدريب هجين، باقات حصص، وتأجير معدات.",
+  "owner_proj_details_gym_h1": "تهيئة حسب الأهداف",
+  "owner_proj_details_gym_h2": "مراسلة المدرّب والبرامج",
+  "owner_proj_details_gym_h3": "مكتبة فيديوهات للتمارين",
+  "owner_proj_details_gym_h4": "لوحات تقدّم وتتبع",
+  "owner_proj_details_gym_s1_title": "خطط التدريب",
+  "owner_proj_details_gym_s1_sub": "خطط مُمرحلة بمنطق الاستراحة.",
+  "owner_proj_details_gym_s2_title": "حصص مباشرة",
+  "owner_proj_details_gym_s2_sub": "احجز حضورياً أو عبر الإنترنت.",
+  "owner_proj_details_gym_m1": "سوق مدرّبين مع التوفّر",
+  "owner_proj_details_gym_m2": "تسجيل التمارين ومزامنة الأجهزة",
+  "owner_proj_details_gym_m3": "خطط تغذية مع أهداف الماكروز",
+  "owner_proj_details_gym_i1": "المنضمون يكملون التهيئة يتحولون أسرع بـ3×.",
+  "owner_proj_details_gym_i2": "ينخفض التسرّب 19٪ عند تفعيل الرسائل.",
+
+  "owner_proj_details_headline_services": "قدّم تجربة خِدمة بمستوى كونسيرج.",
+  "owner_proj_details_subhead_services": "للوكالات والاستشارات ومقدمي الخدمات.",
+  "owner_proj_details_services_h1": "نوافذ حجز ذكية",
+  "owner_proj_details_services_h2": "مساحات عمل للعميل",
+  "owner_proj_details_services_h3": "تتبّع المهام والمعالم",
+  "owner_proj_details_services_h4": "فواتير مدمجة",
+  "owner_proj_details_services_s1_title": "بوابة العميل",
+  "owner_proj_details_services_s1_sub": "ملفات مشتركة، ملاحظات، وموافقات.",
+  "owner_proj_details_services_s2_title": "تدفّق المواعيد",
+  "owner_proj_details_services_s2_sub": "فواصل ونماذج معلومات مسبقة.",
+  "owner_proj_details_services_m1": "CRM للعميل بخطوط زمنية مشتركة",
+  "owner_proj_details_services_m2": "عقود رقمية وتوقيع إلكتروني",
+  "owner_proj_details_services_m3": "فواتير وإيصالات تلقائية",
+  "owner_proj_details_services_i1": "تُغلق المشاريع أسرع بـ 27٪ مع المساحات المشتركة.",
+  "owner_proj_details_services_i2": "الفوترة التلقائية تقلّل التأخير 43٪.",
+  "owner_proj_details_stat_reviews_hint": "المراجعات",
+  "owner_proj_details_stat_active_hint": "النشطات",
+  "owner_proj_details_stat_days_hint": "الأيام"
+
 }

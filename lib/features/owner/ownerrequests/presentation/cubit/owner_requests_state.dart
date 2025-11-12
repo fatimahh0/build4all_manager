@@ -1,14 +1,13 @@
-// lib/features/owner/ownerrequests/presentation/cubit/owner_requests_state.dart
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/app_request.dart';
 import '../../domain/entities/project.dart';
 import '../../domain/entities/theme_lite.dart';
+import '../../../common/domain/entities/app_request.dart';
 
 class OwnerRequestsState extends Equatable {
   final bool loading;
   final bool submitting;
-  final bool uploadingLogo; // kept for UI consistency (button spinner)
-  final bool building; // kept for compatibility (not used now)
+  final bool uploadingLogo;
+  final bool building;
   final String? error;
 
   final List<Project> projects;
@@ -17,17 +16,13 @@ class OwnerRequestsState extends Equatable {
   final List<ThemeLite> themes;
   final int? selectedThemeId;
 
-  /// Either a pasted URL (server-side hosted) OR a picked file path.
   final String? logoUrl;
-  final String? logoFilePath; // <— NEW
+  final String? logoFilePath;
 
   final Project? selected;
   final String appName;
 
-  /// last server result (lightweight, best-effort)
   final AppRequest? lastCreated;
-
-  /// If backend returns it right away
   final String? builtApkUrl;
   final String? builtAt;
 

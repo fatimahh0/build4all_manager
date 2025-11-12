@@ -6,4 +6,5 @@ abstract class IOwnerRepository {
   Future<AppConfig> getAppConfig();
   Future<List<AppRequest>> getMyRequests({required int ownerId});
   Future<List<OwnerProject>> getMyApps({required int ownerId});
+  Future<List<AppRequest>> getRecentRequests(int ownerId, {int limit = 5});
 }

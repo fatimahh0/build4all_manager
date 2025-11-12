@@ -1,6 +1,6 @@
-// lib/features/owner/ownernav/presentation/screens/owner_nav_shell.dart
 import 'package:flutter/material.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
+import '../widgets/owner_pill_nav_bar.dart'; // pill nav
 
 enum OwnerMenuType { top, bottom, drawer }
 
@@ -43,7 +43,6 @@ class OwnerNavShell extends StatefulWidget {
     this.initialIndex = 0,
   });
 
-  
   State<OwnerNavShell> createState() => _OwnerNavShellState();
 }
 
@@ -105,19 +104,23 @@ class _OwnerNavShellState extends State<OwnerNavShell>
 
     return AppBar(
       titleSpacing: 8,
-      title: Row(children: [
-        Container(
-          width: 10,
-          height: 10,
-          margin: const EdgeInsets.only(right: 8),
-          decoration: BoxDecoration(
-            color: cs.primary,
-            borderRadius: BorderRadius.circular(4),
+      title: Row(
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: cs.primary,
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
-        ),
-        Text('${l10n.owner_nav_title} — $label',
-            style: Theme.of(context).textTheme.titleMedium),
-      ]),
+          Text(
+            '${l10n.owner_nav_title} — $label',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ],
+      ),
       bottom: _mode == OwnerMenuType.top
           ? TabBar(
               controller: _tab,
@@ -135,6 +138,7 @@ class _OwnerNavShellState extends State<OwnerNavShell>
   @override
   Widget build(BuildContext context) {
     final pages = widget.destinations;
+    final l10n = AppLocalizations.of(context)!;
 
     switch (_mode) {
       case OwnerMenuType.top:
@@ -153,34 +157,42 @@ class _OwnerNavShellState extends State<OwnerNavShell>
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: IndexedStack(
-                index: _index, children: [for (final d in pages) d.page]),
+              index: _index,
+              children: [for (final d in pages) d.page],
+            ),
           ),
         );
 
       case OwnerMenuType.bottom:
       default:
+        // Use our custom pill nav for the bottom mode
         return Scaffold(
           appBar: _appBar(context),
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 220),
             child: IndexedStack(
-                index: _index, children: [for (final d in pages) d.page]),
+              index: _index,
+              children: [for (final d in pages) d.page],
+            ),
           ),
-          bottomNavigationBar: NavigationBar(
-            height: 64,
-            elevation: 0,
-            selectedIndex: _index,
-            onDestinationSelected: (i) => setState(() => _index = i),
-            indicatorColor:
-                Theme.of(context).colorScheme.primary.withOpacity(0.10),
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-            destinations: [
-              for (final d in pages)
-                NavigationDestination(
-                  icon: Icon(d.icon),
-                  selectedIcon: Icon(d.selectedIcon),
-                  label: d.label,
-                ),
+          bottomNavigationBar: OwnerPillNavBar(
+            currentIndex: _index,
+            onTap: (i) => setState(() => _index = i),
+            items: [
+              OwnerPillNavItem(
+                icon: const Text('🏠', style: TextStyle(fontSize: 22)),
+                label: l10n.owner_nav_home,
+              ),
+              OwnerPillNavItem(
+                // choose your favorite emoji: 🧮 / 📱 / 🗂️
+                icon: const Text('🧮', style: TextStyle(fontSize: 22)),
+                // If you added owner_nav_myapps to ARB, switch next line to: l10n.owner_nav_myapps
+                label: l10n.owner_nav_projects,
+              ),
+              OwnerPillNavItem(
+                icon: const Text('👤', style: TextStyle(fontSize: 22)),
+                label: l10n.owner_nav_profile,
+              ),
             ],
           ),
         );

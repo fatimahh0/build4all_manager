@@ -371,10 +371,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get owner_profile_title => 'Profil du propriétaire';
 
   @override
-  String get owner_home_hello => '👋 Salut, Propriétaire';
+  String get owner_home_hello => 'Salut, Propriétaire 👋';
 
   @override
-  String get owner_home_subtitle => 'Gérez vos apps facilement';
+  String get owner_home_subtitle => 'Prêt à lancer votre prochain build ?';
 
   @override
   String get owner_home_requestApp => 'Demander mon app';
@@ -543,4 +543,301 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cancel => 'Annuler';
+
+  @override
+  String get owner_nav_myapps => 'Mes Apps';
+
+  @override
+  String get common_search_hint => 'Rechercher…';
+
+  @override
+  String get owner_home_search_hint => 'Rechercher des apps, demandes, guides';
+
+  @override
+  String get owner_home_chooseProject => 'Choisissez votre projet';
+
+  @override
+  String get owner_proj_open => 'Ouvrir le projet';
+
+  @override
+  String get owner_proj_activities_title => 'Événements';
+
+  @override
+  String get owner_proj_activities_desc => 'Billetterie, horaires et temps forts, conçus pour les expériences en mobilité.';
+
+  @override
+  String get owner_proj_ecom_title => 'E-commerce';
+
+  @override
+  String get owner_proj_ecom_desc => 'Catalogues produits, paniers et paiement, fidèles à votre boutique.';
+
+  @override
+  String get owner_proj_gym_title => 'Salle de sport';
+
+  @override
+  String get owner_proj_gym_desc => 'Plans d’entraînement, créneaux de réservation et avantages membres dans une seule app.';
+
+  @override
+  String get owner_proj_services_title => 'Services';
+
+  @override
+  String get owner_proj_services_desc => 'Devis, rendez-vous et mises à jour clients adaptés à votre marque.';
+
+  @override
+  String get status_delivered => 'Livré';
+
+  @override
+  String get status_in_production => 'En production';
+
+  @override
+  String get status_approved => 'Approuvé';
+
+  @override
+  String get status_pending => 'En attente';
+
+  @override
+  String get status_rejected => 'Refusé';
+
+  @override
+  String get owner_request_requested => 'Demandé';
+
+  @override
+  String timeago_days(int count) {
+    return 'il y a $count j';
+  }
+
+  @override
+  String timeago_hours(int count) {
+    return 'il y a $count h';
+  }
+
+  @override
+  String timeago_minutes(int count) {
+    return 'il y a $count min';
+  }
+
+  @override
+  String get timeago_just_now => 'à l’instant';
+
+  @override
+  String get owner_proj_details_highlights => 'Points forts';
+
+  @override
+  String get owner_proj_details_screens => 'Écrans & parcours';
+
+  @override
+  String get owner_proj_details_modules => 'Modules inclus';
+
+  @override
+  String get owner_proj_details_why => 'Pourquoi les équipes adorent';
+
+  @override
+  String get owner_proj_details_primaryCta => 'Demander cette app';
+
+  @override
+  String get owner_proj_details_secondaryCta => 'Voir la démo';
+
+  @override
+  String get owner_proj_details_create_title => 'Créer mon projet';
+
+  @override
+  String get owner_proj_details_create_subtitle => 'Lancez votre version personnalisée en quelques minutes.';
+
+  @override
+  String get stat_reviews_hint => 'avis';
+
+  @override
+  String get stat_active_hint => 'déploiements actifs';
+
+  @override
+  String get stat_days_hint => 'jours en moyenne';
+
+  @override
+  String get owner_proj_details_headline_activities => 'Planifiez, réservez et gérez toutes les activités au même endroit.';
+
+  @override
+  String get owner_proj_details_subhead_activities => 'Parfait pour clubs et studios avec réservation & plannings soignés.';
+
+  @override
+  String get owner_proj_details_act_h1 => 'Plannings avec listes d’attente';
+
+  @override
+  String get owner_proj_details_act_h2 => 'Portefeuille et crédits';
+
+  @override
+  String get owner_proj_details_act_h3 => 'Rappels push aux participants';
+
+  @override
+  String get owner_proj_details_act_h4 => 'Flux communauté intégré';
+
+  @override
+  String get owner_proj_details_act_s1_title => 'Grille des cours';
+
+  @override
+  String get owner_proj_details_act_s1_sub => 'Filtrez par coach & lieu en un geste.';
+
+  @override
+  String get owner_proj_details_act_s2_title => 'Parcours de réservation';
+
+  @override
+  String get owner_proj_details_act_s2_sub => 'Paiement fluide avec cartes enregistrées.';
+
+  @override
+  String get owner_proj_details_act_m1 => 'Plannings multi-sites dynamiques';
+
+  @override
+  String get owner_proj_details_act_m2 => 'Bios & notes des coachs';
+
+  @override
+  String get owner_proj_details_act_m3 => 'Niveaux d’adhésion et avantages';
+
+  @override
+  String get owner_proj_details_act_i1 => '78% réservent sur mobile dès la première semaine.';
+
+  @override
+  String get owner_proj_details_act_i2 => 'La rétention grimpe de 24% avec les rappels.';
+
+  @override
+  String get owner_proj_details_headline_ecommerce => 'Lancez une boutique performante qui inspire confiance.';
+
+  @override
+  String get owner_proj_details_subhead_ecommerce => 'Pour marques DTC : catalogues, bundles, réachats en un clic.';
+
+  @override
+  String get owner_proj_details_ecom_h1 => 'Catalogue visuel riche';
+
+  @override
+  String get owner_proj_details_ecom_h2 => 'Recommandations d’upsell intelligentes';
+
+  @override
+  String get owner_proj_details_ecom_h3 => 'Suivi de commande in-app';
+
+  @override
+  String get owner_proj_details_ecom_h4 => 'Moteur de remises & fidélité';
+
+  @override
+  String get owner_proj_details_ecom_s1_title => 'Vitrine produit';
+
+  @override
+  String get owner_proj_details_ecom_s1_sub => 'Images plein écran avec variantes.';
+
+  @override
+  String get owner_proj_details_ecom_s2_title => 'Panier & paiement';
+
+  @override
+  String get owner_proj_details_ecom_s2_sub => 'Paiement accéléré avec adresses enregistrées.';
+
+  @override
+  String get owner_proj_details_ecom_m1 => 'Variantes illimitées & bundles';
+
+  @override
+  String get owner_proj_details_ecom_m2 => 'Sync stock avec Shopify/Woo';
+
+  @override
+  String get owner_proj_details_ecom_m3 => 'Cartes cadeaux & parrainage';
+
+  @override
+  String get owner_proj_details_ecom_i1 => 'Le panier moyen augmente de 32% avec les bundles.';
+
+  @override
+  String get owner_proj_details_ecom_i2 => 'Les clients rachètent 2,1× plus vite sur mobile.';
+
+  @override
+  String get owner_proj_details_headline_gym => 'Offrez un coach personnel dans la poche.';
+
+  @override
+  String get owner_proj_details_subhead_gym => 'Entraînement hybride, packs de cours, location d’équipement.';
+
+  @override
+  String get owner_proj_details_gym_h1 => 'Onboarding orienté objectifs';
+
+  @override
+  String get owner_proj_details_gym_h2 => 'Messagerie entraîneur & programmes';
+
+  @override
+  String get owner_proj_details_gym_h3 => 'Bibliothèque vidéo d’exercices';
+
+  @override
+  String get owner_proj_details_gym_h4 => 'Tableaux de progression';
+
+  @override
+  String get owner_proj_details_gym_s1_title => 'Plans d’entraînement';
+
+  @override
+  String get owner_proj_details_gym_s1_sub => 'Plans périodisés avec repos.';
+
+  @override
+  String get owner_proj_details_gym_s2_title => 'Cours en direct';
+
+  @override
+  String get owner_proj_details_gym_s2_sub => 'Réservez en présentiel ou en ligne.';
+
+  @override
+  String get owner_proj_details_gym_m1 => 'Place de marché d’entraîneurs';
+
+  @override
+  String get owner_proj_details_gym_m2 => 'Journal d’exercices & wearables';
+
+  @override
+  String get owner_proj_details_gym_m3 => 'Plans nutritionnels (macros)';
+
+  @override
+  String get owner_proj_details_gym_i1 => 'L’onboarding triple le taux de conversion.';
+
+  @override
+  String get owner_proj_details_gym_i2 => 'Le churn baisse de 19% avec la messagerie.';
+
+  @override
+  String get owner_proj_details_headline_services => 'Offrez une expérience de service haut de gamme.';
+
+  @override
+  String get owner_proj_details_subhead_services => 'Pour agences, cabinets et pros du service.';
+
+  @override
+  String get owner_proj_details_services_h1 => 'Créneaux de réservation intelligents';
+
+  @override
+  String get owner_proj_details_services_h2 => 'Espaces clients';
+
+  @override
+  String get owner_proj_details_services_h3 => 'Suivi des tâches & jalons';
+
+  @override
+  String get owner_proj_details_services_h4 => 'Facturation intégrée';
+
+  @override
+  String get owner_proj_details_services_s1_title => 'Portail client';
+
+  @override
+  String get owner_proj_details_services_s1_sub => 'Fichiers, notes et validations partagés.';
+
+  @override
+  String get owner_proj_details_services_s2_title => 'Parcours de rendez-vous';
+
+  @override
+  String get owner_proj_details_services_s2_sub => 'Tampons et formulaires d’entrée.';
+
+  @override
+  String get owner_proj_details_services_m1 => 'CRM client avec frises partagées';
+
+  @override
+  String get owner_proj_details_services_m2 => 'Contrats numériques & e-signature';
+
+  @override
+  String get owner_proj_details_services_m3 => 'Factures & reçus automatisés';
+
+  @override
+  String get owner_proj_details_services_i1 => 'Les projets se bouclent 27% plus vite.';
+
+  @override
+  String get owner_proj_details_services_i2 => 'La facturation auto réduit 43% les retards.';
+
+  @override
+  String get owner_proj_details_stat_reviews_hint => 'avis';
+
+  @override
+  String get owner_proj_details_stat_active_hint => 'déploiements actifs';
+
+  @override
+  String get owner_proj_details_stat_days_hint => 'jours en moyenne';
 }

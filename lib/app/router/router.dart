@@ -1,3 +1,6 @@
+import 'package:build4all_manager/features/owner/ownerhome/data/static_project_models.dart';
+import 'package:build4all_manager/features/owner/ownerhome/presentation/screens/owner_project_details_screen.dart';
+import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +15,7 @@ import 'package:build4all_manager/features/auth/presentation/screens/super_admin
 import 'package:build4all_manager/features/owner/ownernav/presentation/screens/owner_nav_shell.dart';
 import 'package:build4all_manager/features/owner/ownerhome/presentation/screens/owner_home_screen.dart';
 import 'package:build4all_manager/features/owner/ownerprojects/presentation/screens/owner_projects_screen.dart';
-import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
+
 import 'package:build4all_manager/features/owner/ownerprofile/presentation/screens/owner_profile_screen.dart';
 
 // l10n
@@ -80,10 +83,36 @@ final router = GoRouter(
       builder: (_, __) => const _OwnerProjectsBuilder(),
     ),
 
-    // 🔥 Profile deep-link — opens shell on the Profile tab
+    // ✅ Details page now wrapped to resolve ownerId before building the screen
+    GoRoute(
+      path: '/owner/project/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        final tpl = projectTemplates.firstWhere(
+          (t) => t.id == id,
+          orElse: () => projectTemplates.first,
+        );
+        return _OwnerProjectDetailsBuilder(tpl: tpl);
+      },
+    ),
+
+    GoRoute(
+      path: '/owner/requests',
+      builder: (context, state) {
+        final extra = (state.extra ?? const {}) as Map;
+        final int? initialProjectId = extra['projectId'] as int?;
+        final String? initialAppName = extra['appName'] as String?;
+        return _OwnerRequestsBuilder(
+          initialProjectId: initialProjectId,
+          initialAppName: initialAppName,
+        );
+      },
+    ),
+
+    // Profile deep-link — opens shell on the Profile tab
     GoRoute(
       path: '/owner/profile',
-      builder: (_, __) => const _OwnerEntryLoader(initialIndex: 3),
+      builder: (_, __) => const _OwnerEntryLoader(initialIndex: 2),
     ),
 
     // Register flow
@@ -160,7 +189,7 @@ Future<int?> _loadOwnerIdFromJwt() async {
 
 /// Loads ownerId then mounts OwnerEntry
 class _OwnerEntryLoader extends StatelessWidget {
-  final int initialIndex; // 👈 NEW
+  final int initialIndex; // 0: Home, 1: Projects, 2: Profile
   const _OwnerEntryLoader({super.key, this.initialIndex = 0});
 
   @override
@@ -185,7 +214,7 @@ class _OwnerEntryLoader extends StatelessWidget {
           ownerId: ownerId,
           dio: dio,
           backendMenuType: 'bottom',
-          initialIndex: initialIndex, // 👈 pass it down
+          initialIndex: initialIndex,
         );
       },
     );
@@ -209,21 +238,47 @@ class _OwnerProjectsBuilder extends StatelessWidget {
         if (ownerId == null) {
           WidgetsBinding.instance
               .addPostFrameCallback((_) => context.go('/login'));
-          return const SizedBox.shrink();
         }
         final Dio dio = DioClient.ensure();
-        return OwnerProjectsScreen(ownerId: ownerId, dio: dio);
+        return OwnerProjectsScreen(ownerId: ownerId!, dio: dio);
       },
     );
   }
 }
 
-// OwnerEntry with the real Profile screen + deep-linking index
+/// ✅ New: resolve ownerId then build the Project Details screen
+class _OwnerProjectDetailsBuilder extends StatelessWidget {
+  final ProjectTemplate tpl;
+  const _OwnerProjectDetailsBuilder({super.key, required this.tpl});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<int?>(
+      future: _loadOwnerIdFromJwt(),
+      builder: (context, snap) {
+        if (snap.connectionState != ConnectionState.done) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final ownerId = snap.data;
+        if (ownerId == null) {
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => context.go('/login'));
+          return const SizedBox.shrink();
+        }
+        return OwnerProjectDetailsScreen(tpl: tpl, ownerId: ownerId);
+      },
+    );
+  }
+}
+
+// OwnerEntry with the real screens + deep-linking index
 class OwnerEntry extends StatelessWidget {
   final String? backendMenuType; // "bottom" | "top" | "drawer"
   final int ownerId;
   final Dio dio;
-  final int initialIndex; // 👈 NEW
+  final int initialIndex;
 
   const OwnerEntry({
     super.key,
@@ -245,31 +300,54 @@ class OwnerEntry extends StatelessWidget {
         page: OwnerHomeScreen(ownerId: ownerId, dio: dio),
       ),
       OwnerDestination(
-        icon: Icons.widgets_outlined,
-        selectedIcon: Icons.widgets_rounded,
-        label: l10n.owner_nav_projects,
+        icon: Icons.apps_outlined,
+        selectedIcon: Icons.apps_rounded,
+        label: l10n.owner_nav_projects, // clean & simple
         page: OwnerProjectsScreen(ownerId: ownerId, dio: dio),
       ),
-      OwnerDestination(
-        icon: Icons.receipt_long_outlined,
-        selectedIcon: Icons.receipt_long_rounded,
-        label: l10n.owner_nav_requests,
-        page: OwnerRequestScreen(ownerId: ownerId),
-      ),
-      // in router.dart, inside OwnerEntry.build()
       OwnerDestination(
         icon: Icons.person_outline,
         selectedIcon: Icons.person,
         label: l10n.owner_nav_profile,
         page: OwnerProfileScreen(ownerId: ownerId, dio: dio),
       ),
-
     ];
 
     return OwnerNavShell(
       destinations: destinations,
       backendMenuType: backendMenuType ?? 'bottom',
-      initialIndex: initialIndex, // 👈 respect deep-link index
+      initialIndex: initialIndex,
+    );
+  }
+}
+
+class _OwnerRequestsBuilder extends StatelessWidget {
+  final int? initialProjectId;
+  final String? initialAppName;
+  const _OwnerRequestsBuilder(
+      {super.key, this.initialProjectId, this.initialAppName});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<int?>(
+      future: _loadOwnerIdFromJwt(),
+      builder: (context, snap) {
+        if (snap.connectionState != ConnectionState.done) {
+          return const Scaffold(
+              body: Center(child: CircularProgressIndicator()));
+        }
+        final ownerId = snap.data;
+        if (ownerId == null) {
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => context.go('/login'));
+          return const SizedBox.shrink();
+        }
+        return OwnerRequestScreen(
+          ownerId: ownerId,
+          initialProjectId: initialProjectId,
+          initialAppName: initialAppName,
+        );
+      },
     );
   }
 }

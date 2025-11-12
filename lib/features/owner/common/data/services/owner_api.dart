@@ -1,35 +1,53 @@
+// lib/features/common/data/services/owner_api.dart
 import 'package:dio/dio.dart';
-
 import '../models/app_config_dto.dart';
 import '../models/app_request_dto.dart';
 import '../models/owner_project_dto.dart';
+import '../../domain/entities/app_request.dart';
 
 class OwnerApi {
   final Dio dio;
   OwnerApi(this.dio);
 
   Future<AppConfigDto> getAppConfig() async {
-    final r = await dio.get('/public/app-config');
-    return AppConfigDto.fromJson(r.data as Map<String, dynamic>);
+    try {
+      final r = await dio.get('/public/app-config');
+      return AppConfigDto.fromJson(r.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      // swallow 403 (or any network issue) and return safe defaults
+      if (e.response?.statusCode == 403) {
+        return AppConfigDto(ownerProjectLinkId: null, wsPath: '');
+      }
+      // also be defensive for any other error to keep home stable
+      return AppConfigDto(ownerProjectLinkId: null, wsPath: '');
+    }
   }
 
   Future<List<AppRequestDto>> getMyRequests({required int ownerId}) async {
-    final r = await dio.get(
-      '/owner/app-requests',
-      queryParameters: {'ownerId': ownerId},
-    );
-    return (r.data as List)
-        .map((e) => AppRequestDto.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final r = await dio
+        .get('/owner/app-requests', queryParameters: {'ownerId': ownerId});
+    final list = (r.data as List).cast<Map<String, dynamic>>();
+    return list.map(AppRequestDto.fromJson).toList();
   }
 
   Future<List<OwnerProjectDto>> getMyApps({required int ownerId}) async {
+    final r =
+        await dio.get('/owner/my-apps', queryParameters: {'ownerId': ownerId});
+    final list = (r.data as List).cast<Map<String, dynamic>>();
+    return list.map(OwnerProjectDto.fromJson).toList();
+  }
+
+  Future<List<AppRequest>> getRecentRequests(int ownerId,
+      {int limit = 5}) async {
     final r = await dio.get(
-      '/owner/my-apps',
-      queryParameters: {'ownerId': ownerId},
+      '/owner/app-requests',
+      queryParameters: {
+        'limit': limit,
+        'sort': 'createdAt,desc',
+        'ownerId': ownerId
+      },
     );
-    return (r.data as List)
-        .map((e) => OwnerProjectDto.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final list = (r.data as List).cast<Map<String, dynamic>>();
+    return list.map((j) => AppRequestDto.fromJson(j).toEntity()).toList();
   }
 }

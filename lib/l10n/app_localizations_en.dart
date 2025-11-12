@@ -371,10 +371,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_profile_title => 'Owner Profile';
 
   @override
-  String get owner_home_hello => '👋 Hi, Owner';
+  String get owner_home_hello => 'Hi, Owner 👋';
 
   @override
-  String get owner_home_subtitle => 'Manage your apps easily';
+  String get owner_home_subtitle => 'Ready to launch your next app build?';
 
   @override
   String get owner_home_requestApp => 'Request My App';
@@ -383,7 +383,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_home_myProjects => 'My Active Projects';
 
   @override
-  String get owner_home_recentRequests => 'Recent Requests';
+  String get owner_home_recentRequests => 'Recent requests';
 
   @override
   String get owner_home_noRecent => 'No recent requests';
@@ -543,4 +543,301 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get owner_nav_myapps => 'My Apps';
+
+  @override
+  String get common_search_hint => 'Search...';
+
+  @override
+  String get owner_home_search_hint => 'Search apps, requests, guides';
+
+  @override
+  String get owner_home_chooseProject => 'Choose your project';
+
+  @override
+  String get owner_proj_open => 'Open project';
+
+  @override
+  String get owner_proj_activities_title => 'Activities';
+
+  @override
+  String get owner_proj_activities_desc => 'Ticketing, schedules, and event highlights crafted for experiences on the go.';
+
+  @override
+  String get owner_proj_ecom_title => 'E-commerce';
+
+  @override
+  String get owner_proj_ecom_desc => 'Product catalogs, carts, and checkout flows that mirror your storefront.';
+
+  @override
+  String get owner_proj_gym_title => 'Gym';
+
+  @override
+  String get owner_proj_gym_desc => 'Training plans, booking slots, and membership perks in one app.';
+
+  @override
+  String get owner_proj_services_title => 'Services';
+
+  @override
+  String get owner_proj_services_desc => 'Quotes, appointments, and customer updates tailored to your brand.';
+
+  @override
+  String get status_delivered => 'Delivered';
+
+  @override
+  String get status_in_production => 'In production';
+
+  @override
+  String get status_approved => 'Approved';
+
+  @override
+  String get status_pending => 'Pending';
+
+  @override
+  String get status_rejected => 'Rejected';
+
+  @override
+  String get owner_request_requested => 'Requested';
+
+  @override
+  String timeago_days(int count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String timeago_hours(int count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String timeago_minutes(int count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String get timeago_just_now => 'just now';
+
+  @override
+  String get owner_proj_details_highlights => 'Highlights';
+
+  @override
+  String get owner_proj_details_screens => 'Screens & flows';
+
+  @override
+  String get owner_proj_details_modules => 'Modules included';
+
+  @override
+  String get owner_proj_details_why => 'Why teams love this template';
+
+  @override
+  String get owner_proj_details_primaryCta => 'Request this app';
+
+  @override
+  String get owner_proj_details_secondaryCta => 'Preview demo';
+
+  @override
+  String get owner_proj_details_create_title => 'Create my project';
+
+  @override
+  String get owner_proj_details_create_subtitle => 'Launch your customized version in minutes.';
+
+  @override
+  String get stat_reviews_hint => 'reviews';
+
+  @override
+  String get stat_active_hint => 'active deployments';
+
+  @override
+  String get stat_days_hint => 'days avg. turnaround';
+
+  @override
+  String get owner_proj_details_headline_activities => 'Plan, book, and manage every activity in one place.';
+
+  @override
+  String get owner_proj_details_subhead_activities => 'Perfect for studios, clubs, and programs with polished booking & schedules.';
+
+  @override
+  String get owner_proj_details_act_h1 => 'Class schedules with waitlists';
+
+  @override
+  String get owner_proj_details_act_h2 => 'Wallet & credits support';
+
+  @override
+  String get owner_proj_details_act_h3 => 'Push reminders for attendees';
+
+  @override
+  String get owner_proj_details_act_h4 => 'Embedded community feed';
+
+  @override
+  String get owner_proj_details_act_s1_title => 'Schedule grid';
+
+  @override
+  String get owner_proj_details_act_s1_sub => 'Filter by instructor & location with one tap.';
+
+  @override
+  String get owner_proj_details_act_s2_title => 'Booking flow';
+
+  @override
+  String get owner_proj_details_act_s2_sub => 'Frictionless checkout with saved cards.';
+
+  @override
+  String get owner_proj_details_act_m1 => 'Dynamic schedules & multi-location calendars';
+
+  @override
+  String get owner_proj_details_act_m2 => 'Instructor bios and ratings';
+
+  @override
+  String get owner_proj_details_act_m3 => 'Membership tiers with perks';
+
+  @override
+  String get owner_proj_details_act_i1 => '78% of members book via mobile within the first week.';
+
+  @override
+  String get owner_proj_details_act_i2 => 'Retention jumps 24% after enabling reminder pushes.';
+
+  @override
+  String get owner_proj_details_headline_ecommerce => 'Launch a high-converting storefront your shoppers trust.';
+
+  @override
+  String get owner_proj_details_subhead_ecommerce => 'For DTC brands: catalogs, bundles, and one-click reorders.';
+
+  @override
+  String get owner_proj_details_ecom_h1 => 'Visual catalog with rich media';
+
+  @override
+  String get owner_proj_details_ecom_h2 => 'Smart upsell recommendations';
+
+  @override
+  String get owner_proj_details_ecom_h3 => 'In-app order tracking';
+
+  @override
+  String get owner_proj_details_ecom_h4 => 'Discount & loyalty engine';
+
+  @override
+  String get owner_proj_details_ecom_s1_title => 'Product showcase';
+
+  @override
+  String get owner_proj_details_ecom_s1_sub => 'Full-bleed imagery with swatches.';
+
+  @override
+  String get owner_proj_details_ecom_s2_title => 'Cart & checkout';
+
+  @override
+  String get owner_proj_details_ecom_s2_sub => 'Accelerated checkout with saved addresses.';
+
+  @override
+  String get owner_proj_details_ecom_m1 => 'Unlimited product variants & bundles';
+
+  @override
+  String get owner_proj_details_ecom_m2 => 'Inventory sync with Shopify/Woo';
+
+  @override
+  String get owner_proj_details_ecom_m3 => 'Gift cards and referral rewards';
+
+  @override
+  String get owner_proj_details_ecom_i1 => 'Average order value lifts 32% with bundled offers.';
+
+  @override
+  String get owner_proj_details_ecom_i2 => 'Customers reorder 2.1× faster via the mobile channel.';
+
+  @override
+  String get owner_proj_details_headline_gym => 'Give members a personal coach in their pocket.';
+
+  @override
+  String get owner_proj_details_subhead_gym => 'Hybrid training, class packs, and equipment rentals.';
+
+  @override
+  String get owner_proj_details_gym_h1 => 'Goal-based onboarding';
+
+  @override
+  String get owner_proj_details_gym_h2 => 'Trainer messaging & programs';
+
+  @override
+  String get owner_proj_details_gym_h3 => 'Workout video library';
+
+  @override
+  String get owner_proj_details_gym_h4 => 'Progress tracking dashboards';
+
+  @override
+  String get owner_proj_details_gym_s1_title => 'Training plans';
+
+  @override
+  String get owner_proj_details_gym_s1_sub => 'Periodised plans with rest logic.';
+
+  @override
+  String get owner_proj_details_gym_s2_title => 'Live classes';
+
+  @override
+  String get owner_proj_details_gym_s2_sub => 'Book in-person or virtual sessions.';
+
+  @override
+  String get owner_proj_details_gym_m1 => 'Trainer marketplace with availability';
+
+  @override
+  String get owner_proj_details_gym_m2 => 'Workout logging & wearable sync';
+
+  @override
+  String get owner_proj_details_gym_m3 => 'Nutrition plans with macro targets';
+
+  @override
+  String get owner_proj_details_gym_i1 => 'Members completing onboarding convert 3× faster.';
+
+  @override
+  String get owner_proj_details_gym_i2 => 'Churn drops 19% when messaging is enabled.';
+
+  @override
+  String get owner_proj_details_headline_services => 'Deliver a concierge-grade service experience.';
+
+  @override
+  String get owner_proj_details_subhead_services => 'For agencies, consultancies, and service pros.';
+
+  @override
+  String get owner_proj_details_services_h1 => 'Smart booking windows';
+
+  @override
+  String get owner_proj_details_services_h2 => 'Client workspaces';
+
+  @override
+  String get owner_proj_details_services_h3 => 'Task & milestone tracker';
+
+  @override
+  String get owner_proj_details_services_h4 => 'Integrated invoicing';
+
+  @override
+  String get owner_proj_details_services_s1_title => 'Client portal';
+
+  @override
+  String get owner_proj_details_services_s1_sub => 'Shared files, notes, and approvals.';
+
+  @override
+  String get owner_proj_details_services_s2_title => 'Appointment flow';
+
+  @override
+  String get owner_proj_details_services_s2_sub => 'Buffers and intake forms.';
+
+  @override
+  String get owner_proj_details_services_m1 => 'Client CRM with shared timelines';
+
+  @override
+  String get owner_proj_details_services_m2 => 'Digital contracts & e-signatures';
+
+  @override
+  String get owner_proj_details_services_m3 => 'Automated invoice & receipt emails';
+
+  @override
+  String get owner_proj_details_services_i1 => 'Projects close 27% faster with shared workspaces.';
+
+  @override
+  String get owner_proj_details_services_i2 => 'Automated billing reduces late payments by 43%.';
+
+  @override
+  String get owner_proj_details_stat_reviews_hint => 'reviews';
+
+  @override
+  String get owner_proj_details_stat_active_hint => 'active deployments';
+
+  @override
+  String get owner_proj_details_stat_days_hint => 'days avg. turnaround';
 }
