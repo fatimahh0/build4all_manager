@@ -93,6 +93,8 @@ class _HomeBody extends StatelessWidget {
                           children: [
                             Text(
                               'OWNER HUB',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: tt.labelSmall?.copyWith(
                                 letterSpacing: 1.2,
                                 color: cs.onSurface.withOpacity(.55),
@@ -146,6 +148,8 @@ class _HomeBody extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Text(
                     l10n.owner_home_chooseProject,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style:
                         tt.titleMedium?.copyWith(fontWeight: FontWeight.w800),
                   ),
@@ -196,6 +200,8 @@ class _HomeBody extends StatelessWidget {
                       Expanded(
                         child: Text(
                           l10n.owner_home_recentRequests,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: tt.titleMedium
                               ?.copyWith(fontWeight: FontWeight.w800),
                         ),
@@ -216,6 +222,8 @@ class _HomeBody extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 6, bottom: 12),
                       child: Text(
                         l10n.owner_home_noRecent,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: tt.bodyMedium
                             ?.copyWith(color: cs.onSurface.withOpacity(.7)),
                       ),

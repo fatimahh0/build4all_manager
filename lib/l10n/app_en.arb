@@ -379,7 +379,8 @@
   "owner_proj_details_services_i2": "Automated billing reduces late payments by 43%.",
   "owner_proj_details_stat_reviews_hint": "reviews",
   "owner_proj_details_stat_active_hint": "active deployments",
-  "owner_proj_details_stat_days_hint": "days avg. turnaround"
+  "owner_proj_details_stat_days_hint": "days avg. turnaround",
+  "owner_projects_subtitle": "Manage your projects and app builds seamlessly"
 
   
   

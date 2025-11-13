@@ -10,7 +10,7 @@ import '../../data/static_project_models.dart';
 
 class OwnerProjectDetailsScreen extends StatelessWidget {
   final ProjectTemplate tpl;
-  final int ownerId; // required to carry to the request screen
+  final int ownerId;
 
   const OwnerProjectDetailsScreen({
     super.key,
@@ -25,7 +25,6 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
     final ux = Theme.of(context).extension<UiTokens>()!;
     final width = MediaQuery.of(context).size.width;
 
-    // Spec uses template id (e.g., 'activities', 'ecommerce', ...)
     final spec = themedSpecFor(context, tpl.kind);
 
     final pagePad = width >= 480
@@ -34,9 +33,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
     final radiusLg = ux.radiusLg;
     final radiusMd = ux.radiusMd;
 
-    // Map template id -> numeric project id for the dropdown preselect
     final int initialProjectId = _resolveProjectId(tpl.kind);
-    // Optional prefilled app name (pure UX candy)
     final String? initialAppName = _prefillName(tpl.kind);
 
     return Scaffold(
@@ -45,7 +42,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // ---------- Header (gradient) ----------
+            // ---------- Header ----------
             SliverToBoxAdapter(
               child: Container(
                 margin: EdgeInsets.fromLTRB(
@@ -69,7 +66,6 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Emoji badge
                       Container(
                         height: 52,
                         width: 52,
@@ -107,7 +103,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Stats ----------
+            // ---------- Stats (ALWAYS one row, 2 lines each) ----------
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -120,7 +116,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Gradient CTA (tap -> navigate) ----------
+            // ---------- CTA ----------
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -174,7 +170,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Screens & flows ----------
+            // ---------- Screens ----------
             _SectionTitle(
               padH: pagePad.horizontal / 2,
               title: spec.i18nScreens(l10n),
@@ -253,7 +249,6 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      // keep or remove based on your nav pattern
       bottomNavigationBar: _BottomNav(),
     );
   }
@@ -272,7 +267,7 @@ int _resolveProjectId(String id) {
     case 'services':
       return 4;
     default:
-      return 0; // unknown
+      return 0;
   }
 }
 
@@ -324,12 +319,15 @@ class _StatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final ux = Theme.of(context).extension<UiTokens>()!;
 
-    // Localize the hints (2nd line)
+    // map the hint keys to localized strings
     String _hint(String key) => switch (key) {
-          'stat_reviews_hint' => l10n.owner_proj_details_stat_reviews_hint,
-          'stat_active_hint' => l10n.owner_proj_details_stat_active_hint,
-          'stat_days_hint' => l10n.owner_proj_details_stat_days_hint,
+          'stat_reviews_hint' =>
+            l10n.owner_proj_details_stat_reviews_hint, // "reviews"
+          'stat_active_hint' =>
+            l10n.owner_proj_details_stat_active_hint, // "Active deployments"
+          'stat_days_hint' => l10n.owner_proj_details_stat_days_hint, // "days"
           _ => key,
         };
 
@@ -337,60 +335,43 @@ class _StatsRow extends StatelessWidget {
       decoration: BoxDecoration(
         color: cs.surface,
         borderRadius: BorderRadius.circular(radius),
-        boxShadow: Theme.of(context).extension<UiTokens>()!.cardShadow,
+        boxShadow: ux.cardShadow,
       ),
       padding: const EdgeInsets.all(16),
-      child: LayoutBuilder(builder: (_, c) {
-        final isTight = c.maxWidth < 360;
-
-        final widgets = [
-          // 4.8★ + "214+ reviews"
-          _MetricItem(
-            top: spec.stat1Title, // "4.8"
-            hint: _hint(spec.stat1Hint), // localized: "214+ reviews"
-            suffixStar: true, // adds the ★ inline
+      child: Row(
+        children: [
+          // 4.8★ + "reviews"
+          Expanded(
+            child: _MetricItem(
+              top: spec.stat1Title, // "4.8"
+              hint: _hint(spec.stat1Hint), // "reviews"
+              suffixStar: true,
+            ),
           ),
-          // 3.6k + "Active deployments"
-          _MetricItem(
-            top: spec.stat2Title, // "3.6k"
-            hint: _hint(spec.stat2Hint), // localized
+          Expanded(
+            child: _MetricItem(
+              top: spec.stat2Title, // "3.6k"
+              hint: _hint(spec.stat2Hint), // "Active deployments"
+            ),
           ),
-          // 10 days + "Average turnaround"
-          _MetricItem(
-            top:
-                '${spec.stat3Title} ${l10n.owner_proj_details_stat_days_hint}', // "10 days"
-            hint: _hint(spec.stat3Hint), // localized
+          Expanded(
+            child: _MetricItem(
+              // "10 days" on the FIRST line
+              top: '${spec.stat3Title} ', // "10 days"
+              // "Average turnaround" on SECOND line
+              hint: _hint(spec.stat3Hint),
+            ),
           ),
-        ];
-
-        if (isTight) {
-          return Column(
-            children: [
-              for (var i = 0; i < widgets.length; i++) ...[
-                widgets[i],
-                if (i != widgets.length - 1)
-                  Divider(color: cs.outlineVariant.withOpacity(.35)),
-              ],
-            ],
-          );
-        }
-
-        return Row(
-          children: [
-            Expanded(child: widgets[0]),
-            Expanded(child: widgets[1]),
-            Expanded(child: widgets[2]),
-          ],
-        );
-      }),
+        ],
+      ),
     );
   }
 }
 
 class _MetricItem extends StatelessWidget {
-  final String top; // e.g. "4.8" or "10 days"
+  final String top; // first line
   final String hint; // second line
-  final bool suffixStar; // show ★ inline after the number
+  final bool suffixStar;
 
   const _MetricItem({
     required this.top,
@@ -406,89 +387,34 @@ class _MetricItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // First line (bold) with optional star
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              top,
-              style: tt.bodyLarge?.copyWith(fontWeight: FontWeight.w800),
-            ),
-            if (suffixStar) ...[
-              const SizedBox(width: 4),
-              const Icon(Icons.star_rounded, size: 16, color: Colors.amber),
+        // line 1 (scaled to fit, star inline if needed)
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                top,
+                style: tt.bodyLarge?.copyWith(fontWeight: FontWeight.w800),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              if (suffixStar) ...[
+                const SizedBox(width: 4),
+                const Icon(Icons.star_rounded, size: 16, color: Colors.amber),
+              ],
             ],
-          ],
+          ),
         ),
         const SizedBox(height: 4),
-        // Second line (muted)
+        // line 2
         Text(
           hint,
           style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-      ],
-    );
-  }
-}
-
-String _resolveHint(AppLocalizations l10n, String key) {
-  switch (key) {
-    case 'stat_reviews_hint':
-      return l10n.owner_proj_details_stat_reviews_hint;
-    case 'stat_active_hint':
-      return l10n.owner_proj_details_stat_active_hint;
-    case 'stat_days_hint':
-      return l10n.owner_proj_details_stat_days_hint;
-    default:
-      return key; // fallback to raw string if someone passed text directly
-  }
-}
-
-class _RatingItem extends StatelessWidget {
-  final String ratingValue; // e.g. "4.8"
-  final String reviewsText; // e.g. "214+ reviews"
-  const _RatingItem({required this.ratingValue, required this.reviewsText});
-
-  @override
-  Widget build(BuildContext context) {
-    final tt = Theme.of(context).textTheme;
-    final cs = Theme.of(context).colorScheme;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Icon(Icons.star_rounded, size: 18, color: Colors.amber),
-        const SizedBox(width: 6),
-        Text(ratingValue,
-            style: tt.bodyLarge?.copyWith(fontWeight: FontWeight.w800)),
-        Text(' • ', style: tt.bodyMedium),
-        Flexible(
-          child: Text(
-            reviewsText,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatItem extends StatelessWidget {
-  final String title;
-  final String hint; // already localized
-  const _StatItem({required this.title, required this.hint});
-  @override
-  Widget build(BuildContext context) {
-    final tt = Theme.of(context).textTheme;
-    final cs = Theme.of(context).colorScheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: tt.bodyLarge?.copyWith(fontWeight: FontWeight.w800)),
-        const SizedBox(height: 2),
-        Text(hint, style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant)),
       ],
     );
   }
