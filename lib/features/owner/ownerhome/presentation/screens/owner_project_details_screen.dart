@@ -1,10 +1,10 @@
-// lib/features/owner/ownerhome/presentation/screens/owner_project_details_screen.dart
 import 'package:build4all_manager/features/owner/ownerhome/presentation/specs/project_details_specs.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
 import 'package:build4all_manager/shared/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../data/static_project_models.dart';
 
@@ -36,35 +36,31 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
     final int initialProjectId = _resolveProjectId(tpl.kind);
     final String? initialAppName = _prefillName(tpl.kind);
 
+    final extra = GoRouterState.of(context).extra;
+    final bool canRequest = (extra is Map && extra['canRequest'] is bool)
+        ? extra['canRequest'] as bool
+        : false;
+
     return Scaffold(
       backgroundColor: cs.background,
-
-      // NEW: top app bar with a back button instead of bottom nav
       appBar: AppBar(
+        backgroundColor: cs.surface,
         elevation: 0,
-        backgroundColor: cs.background,
+        centerTitle: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
-          color: cs.onSurface,
           onPressed: () => Navigator.of(context).pop(),
-          tooltip: l10n.owner_nav_home,
         ),
         title: Text(
-          l10n.translate(tpl.titleKey),
-          style: TextStyle(
-            color: cs.onSurface,
-            fontWeight: FontWeight.w800,
-          ),
+          spec.headline(l10n),
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700),
         ),
-        centerTitle: false,
       ),
-
       body: SafeArea(
-        top: false, // we already have an AppBar
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // ---------- Header ----------
+            // Header
             SliverToBoxAdapter(
               child: Container(
                 margin: EdgeInsets.fromLTRB(
@@ -125,7 +121,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Stats (ALWAYS one row, 2 lines each) ----------
+            // Stats
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -138,7 +134,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- CTA ----------
+            // CTA
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
@@ -150,22 +146,28 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(radiusLg),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => OwnerRequestScreen(
-                          ownerId: ownerId,
-                          initialProjectId: initialProjectId,
-                          initialAppName: initialAppName,
+                    if (canRequest) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => OwnerRequestScreen(
+                            ownerId: ownerId,
+                            initialProjectId: initialProjectId,
+                            initialAppName: initialAppName,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(l10n.owner_proj_comingSoon)),
+                      );
+                    }
                   },
                   child: _CreateCtaCard(spec: spec, radius: radiusLg),
                 ),
               ),
             ),
 
-            // ---------- Highlights ----------
+            // Highlights
             _SectionTitle(
               padH: pagePad.horizontal / 2,
               title: spec.i18nHighlights(l10n),
@@ -192,7 +194,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Screens ----------
+            // Screens
             _SectionTitle(
               padH: pagePad.horizontal / 2,
               title: spec.i18nScreens(l10n),
@@ -220,7 +222,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Modules ----------
+            // Modules
             _SectionTitle(
               padH: pagePad.horizontal / 2,
               title: spec.i18nModules(l10n),
@@ -242,7 +244,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            // ---------- Insights ----------
+            // Insights
             _SectionTitle(
               padH: pagePad.horizontal / 2,
               title: spec.i18nWhy(l10n),
@@ -271,7 +273,6 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      // NOTE: bottomNavigationBar removed as requested
     );
   }
 }
@@ -343,13 +344,10 @@ class _StatsRow extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final ux = Theme.of(context).extension<UiTokens>()!;
 
-    // map the hint keys to localized strings
     String _hint(String key) => switch (key) {
-          'stat_reviews_hint' =>
-            l10n.owner_proj_details_stat_reviews_hint, // "reviews"
-          'stat_active_hint' =>
-            l10n.owner_proj_details_stat_active_hint, // "Active deployments"
-          'stat_days_hint' => l10n.owner_proj_details_stat_days_hint, // "days"
+          'stat_reviews_hint' => l10n.owner_proj_details_stat_reviews_hint,
+          'stat_active_hint' => l10n.owner_proj_details_stat_active_hint,
+          'stat_days_hint' => l10n.owner_proj_details_stat_days_hint,
           _ => key,
         };
 
@@ -362,25 +360,22 @@ class _StatsRow extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          // 4.8★ + "reviews"
           Expanded(
             child: _MetricItem(
-              top: spec.stat1Title, // "4.8"
-              hint: _hint(spec.stat1Hint), // "reviews"
+              top: spec.stat1Title,
+              hint: _hint(spec.stat1Hint),
               suffixStar: true,
             ),
           ),
           Expanded(
             child: _MetricItem(
-              top: spec.stat2Title, // "3.6k"
-              hint: _hint(spec.stat2Hint), // "Active deployments"
+              top: spec.stat2Title,
+              hint: _hint(spec.stat2Hint),
             ),
           ),
           Expanded(
             child: _MetricItem(
-              // "10 days" on the FIRST line
-              top: '${spec.stat3Title} ', // "10 days"
-              // "Average turnaround" on SECOND line
+              top: '${spec.stat3Title} ',
               hint: _hint(spec.stat3Hint),
             ),
           ),
@@ -391,8 +386,8 @@ class _StatsRow extends StatelessWidget {
 }
 
 class _MetricItem extends StatelessWidget {
-  final String top; // first line
-  final String hint; // second line
+  final String top;
+  final String hint;
   final bool suffixStar;
 
   const _MetricItem({
@@ -409,7 +404,6 @@ class _MetricItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // line 1 (scaled to fit, star inline if needed)
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -423,14 +417,13 @@ class _MetricItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               if (suffixStar) ...[
-                const SizedBox(width: 4),
+                const SizedBox(height: 0, width: 4),
                 const Icon(Icons.star_rounded, size: 16, color: Colors.amber),
               ],
             ],
           ),
         ),
         const SizedBox(height: 4),
-        // line 2
         Text(
           hint,
           style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
@@ -476,12 +469,15 @@ class _CreateCtaCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(spec.i18nCreateTitle(AppLocalizations.of(context)!),
+                  Text(
+                      AppLocalizations.of(context)!
+                          .owner_proj_details_create_title,
                       style: const TextStyle(
                           fontWeight: FontWeight.w800, fontSize: 15)),
                   const SizedBox(height: 4),
                   Text(
-                    spec.i18nCreateSubtitle(AppLocalizations.of(context)!),
+                    AppLocalizations.of(context)!
+                        .owner_proj_details_create_subtitle,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white.withOpacity(.86),
@@ -577,11 +573,6 @@ class _ListTileCard extends StatelessWidget {
   }
 }
 
-extension on SizedBox {
-  EdgeInsets get flatten => EdgeInsets.zero;
-  // helper to keep code compiles if you paste as-is
-}
-
 class _InsightCard extends StatelessWidget {
   final String emoji;
   final String text;
@@ -657,23 +648,5 @@ class _Badge extends StatelessWidget {
       child:
           Text(text, style: TextStyle(fontSize: fontSize, color: Colors.white)),
     );
-  }
-}
-
-// tiny helper for dynamic title in AppBar
-extension _L10nX on AppLocalizations {
-  String translate(String key) {
-    switch (key) {
-      case 'owner_proj_activities_title':
-        return owner_proj_activities_title;
-      case 'owner_proj_ecom_title':
-        return owner_proj_ecom_title;
-      case 'owner_proj_gym_title':
-        return owner_proj_gym_title;
-      case 'owner_proj_services_title':
-        return owner_proj_services_title;
-      default:
-        return key;
-    }
   }
 }

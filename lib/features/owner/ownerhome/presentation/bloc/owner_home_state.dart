@@ -8,11 +8,16 @@ class OwnerHomeState extends Equatable {
   final AppConfig? config;
   final String? error;
 
+  /// which kinds are available from backend (mapped)
+  /// default fallback = {'activities'}
+  final Set<String> availableKinds;
+
   const OwnerHomeState({
     this.loading = false,
     this.recent = const [],
     this.config,
     this.error,
+    this.availableKinds = const {'activities'},
   });
 
   OwnerHomeState copyWith({
@@ -20,14 +25,16 @@ class OwnerHomeState extends Equatable {
     List<AppRequest>? recent,
     AppConfig? config,
     String? error,
+    Set<String>? availableKinds,
   }) =>
       OwnerHomeState(
         loading: loading ?? this.loading,
         recent: recent ?? this.recent,
         config: config ?? this.config,
         error: error,
+        availableKinds: availableKinds ?? this.availableKinds,
       );
 
   @override
-  List<Object?> get props => [loading, recent, config, error];
+  List<Object?> get props => [loading, recent, config, error, availableKinds];
 }

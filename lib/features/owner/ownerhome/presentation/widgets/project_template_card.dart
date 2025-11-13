@@ -1,19 +1,18 @@
-// lib/features/owner/ownerhome/presentation/widgets/project_template_card.dart
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
 import '../../data/static_project_models.dart';
-import 'package:flutter/material.dart';
 
 class ProjectTemplateCard extends StatelessWidget {
   final ProjectTemplate tpl;
   final VoidCallback? onOpen;
-  final bool comingSoon; // visual only
+  final bool isAvailable;
 
   const ProjectTemplateCard({
     super.key,
     required this.tpl,
     this.onOpen,
-    this.comingSoon = false,
+    this.isAvailable = true,
   });
 
   @override
@@ -22,14 +21,24 @@ class ProjectTemplateCard extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
 
-    final tint = tpl.tint ?? _pickTintFor(tpl.kind, cs); // always colored
+    final tint = tpl.tint ?? _pickTintFor(tpl.kind, cs);
+
+    final mutedFg = cs.onSurface.withOpacity(isAvailable ? .72 : .45);
+    final borderColor = isAvailable
+        ? cs.outlineVariant.withOpacity(.6)
+        : cs.outlineVariant.withOpacity(.35);
+    final chipBg = tint.withOpacity(isAvailable ? .12 : .06);
+    final chipFg = isAvailable ? tint : tint.withOpacity(.45);
+
+    final ctaText =
+        isAvailable ? l10n.translate(tpl.ctaKey) : l10n.owner_proj_comingSoon;
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: cs.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: cs.outlineVariant.withOpacity(.6)),
+        border: Border.all(color: borderColor),
         boxShadow: const [
           BoxShadow(
               color: Color(0x0F000000), blurRadius: 10, offset: Offset(0, 6)),
@@ -38,46 +47,22 @@ class ProjectTemplateCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _IconBadge(icon: tpl.icon, tint: tint),
+          _IconBadge(icon: tpl.icon, tint: tint, dimmed: !isAvailable),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.translate(tpl.titleKey),
-                  style: tt.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: cs.onSurface,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              if (comingSoon)
-                Container(
-                  margin: const EdgeInsets.only(left: 8),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: cs.outlineVariant.withOpacity(.32),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    'Soon',
-                    style: tt.labelSmall?.copyWith(
-                      color: cs.onSurface.withOpacity(.7),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-            ],
+          Text(
+            l10n.translate(tpl.titleKey),
+            style: tt.titleSmall?.copyWith(
+              fontWeight: FontWeight.w800,
+              color: isAvailable ? cs.onSurface : cs.onSurface.withOpacity(.75),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 6),
           Expanded(
             child: Text(
               l10n.translate(tpl.descKey),
-              style:
-                  tt.bodySmall?.copyWith(color: cs.onSurface.withOpacity(.72)),
+              style: tt.bodySmall?.copyWith(color: mutedFg),
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),
@@ -86,16 +71,16 @@ class ProjectTemplateCard extends StatelessWidget {
           Align(
             alignment: Alignment.bottomLeft,
             child: OutlinedButton(
-              onPressed:
-                  onOpen ?? () => context.push('/owner/project/${tpl.id}'),
+              onPressed: onOpen, // details screen will gate the CTA
               style: OutlinedButton.styleFrom(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 shape: const StadiumBorder(),
-                side: BorderSide(color: tint.withOpacity(.6)),
-                foregroundColor: tint,
+                side: BorderSide(color: chipFg),
+                foregroundColor: chipFg,
+                backgroundColor: chipBg,
               ),
-              child: Text('${l10n.translate(tpl.ctaKey)} →'),
+              child: Text('$ctaText →'),
             ),
           ),
         ],
@@ -122,20 +107,24 @@ class ProjectTemplateCard extends StatelessWidget {
 class _IconBadge extends StatelessWidget {
   final IconData icon;
   final Color tint;
-  const _IconBadge({required this.icon, required this.tint});
+  final bool dimmed;
+  const _IconBadge(
+      {required this.icon, required this.tint, this.dimmed = false});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final bg = tint.withOpacity(dimmed ? .06 : .12);
+    final fg = dimmed ? tint.withOpacity(.45) : tint;
     return Container(
       width: 42,
       height: 42,
       decoration: BoxDecoration(
-        color: tint.withOpacity(.12),
+        color: bg,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: cs.outlineVariant.withOpacity(.35)),
       ),
-      child: Icon(icon, size: 22, color: tint),
+      child: Icon(icon, size: 22, color: fg),
     );
   }
 }

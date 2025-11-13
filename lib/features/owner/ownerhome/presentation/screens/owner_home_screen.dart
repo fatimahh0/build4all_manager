@@ -1,5 +1,4 @@
-// lib/features/owner/ownerhome/presentation/screens/owner_home_screen.dart
-import 'package:build4all_manager/shared/themes/app_theme.dart'; // for UiTokens extension
+import 'package:build4all_manager/shared/themes/app_theme.dart';
 import 'package:build4all_manager/shared/widgets/search_input.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,10 @@ import '../../../common/data/repositories/owner_repository_impl.dart';
 import '../../../common/data/services/owner_api.dart';
 import '../../../common/domain/usecases/get_app_config_uc.dart';
 import '../../../common/domain/usecases/get_my_requests_uc.dart';
+
+import '../../domain/usecases/get_available_kinds_from_active_uc.dart';
+import '../../data/services/owner_projects_api.dart';
+import '../../data/repositories/owner_projects_repository_impl.dart';
 
 import '../bloc/owner_home_bloc.dart';
 import '../bloc/owner_home_event.dart';
@@ -27,11 +30,18 @@ class OwnerHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repo = OwnerRepositoryImpl(OwnerApi(dio));
+    // existing repo (recent requests + config)
+    final generalRepo = OwnerRepositoryImpl(OwnerApi(dio));
+
+    // new repo for /api/projects (kinds availability)
+    final projectsRepo = OwnerProjectsRepositoryImpl(OwnerProjectsApi(dio));
+    final getAvailableKinds = GetAvailableKindsFromActiveUc(projectsRepo);
+
     return BlocProvider(
       create: (_) => OwnerHomeBloc(
-        getMyRequests: GetMyRequestsUc(repo),
-        getAppConfig: GetAppConfigUc(repo),
+        getMyRequests: GetMyRequestsUc(generalRepo),
+        getAppConfig: GetAppConfigUc(generalRepo),
+        getAvailableKinds: getAvailableKinds,
       )..add(OwnerHomeStarted(ownerId)),
       child: const _HomeScaffold(),
     );
@@ -82,7 +92,7 @@ class _HomeBody extends StatelessWidget {
                 parent: AlwaysScrollableScrollPhysics(),
               ),
               slivers: [
-                // ---------- Header ----------
+                // ----- Header -----
                 SliverToBoxAdapter(
                   child: Row(
                     children: [
@@ -137,13 +147,13 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-                // ---------- Shared Search ----------
+                // ----- Search -----
                 const SliverToBoxAdapter(
                   child: AppSearchInput(hintKey: 'owner_home_search_hint'),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-                // ---------- Choose your project ----------
+                // ----- Choose your project -----
                 SliverToBoxAdapter(
                   child: Text(
                     l10n.owner_home_chooseProject,
@@ -155,7 +165,7 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-                // ---------- Grid (cards always open details) ----------
+                // grid
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: ux.radiusMd),
                   sliver: SliverLayoutBuilder(
@@ -177,14 +187,16 @@ class _HomeBody extends StatelessWidget {
                         delegate: SliverChildBuilderDelegate(
                           (context, i) {
                             final tpl = projectTemplates[i];
-                            final comingSoon = tpl.kind !=
-                                'activities'; // only activities is live
+                            final isAvailable =
+                                state.availableKinds.contains(tpl.kind);
+
                             return ProjectTemplateCard(
                               tpl: tpl,
-                              comingSoon:
-                                  comingSoon, // visual chip only; still navigates
-                              onOpen: () =>
-                                  context.push('/owner/project/${tpl.id}'),
+                              isAvailable: isAvailable,
+                              onOpen: () => context.push(
+                                '/owner/project/${tpl.id}',
+                                extra: {'canRequest': isAvailable},
+                              ),
                             );
                           },
                           childCount: projectTemplates.length,
@@ -194,7 +206,7 @@ class _HomeBody extends StatelessWidget {
                   ),
                 ),
 
-                // ---------- Recent requests ----------
+                // ----- Recent requests -----
                 SliverToBoxAdapter(
                   child: Row(
                     children: [

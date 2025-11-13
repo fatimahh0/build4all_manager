@@ -873,4 +873,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get copy => 'نسخ';
+
+  @override
+  String get owner_proj_comingSoon => 'قريباً';
 }

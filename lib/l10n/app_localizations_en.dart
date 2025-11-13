@@ -873,4 +873,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copy => 'Copy';
+
+  @override
+  String get owner_proj_comingSoon => 'Coming Soon';
 }
