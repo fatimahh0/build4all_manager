@@ -37,6 +37,11 @@ class OwnerApi {
     return list.map(OwnerProjectDto.fromJson).toList();
   }
 
+  Future<void> rebuildLink({required int linkId, required int ownerId}) async {
+    await dio.post('/owner/links/$linkId/rebuild',
+        queryParameters: {'ownerId': ownerId});
+  }
+
   Future<List<AppRequest>> getRecentRequests(int ownerId,
       {int limit = 5}) async {
     final r = await dio.get(
@@ -50,4 +55,6 @@ class OwnerApi {
     final list = (r.data as List).cast<Map<String, dynamic>>();
     return list.map((j) => AppRequestDto.fromJson(j).toEntity()).toList();
   }
+
+  
 }

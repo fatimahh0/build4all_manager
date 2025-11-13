@@ -87,9 +87,10 @@ final router = GoRouter(
     GoRoute(
       path: '/owner/project/:id',
       builder: (context, state) {
-        final id = state.pathParameters['id']!;
+        final idStr = state.pathParameters['id']!;
+        final id = int.tryParse(idStr) ?? projectTemplates.first.id; 
         final tpl = projectTemplates.firstWhere(
-          (t) => t.id == id,
+          (t) => t.id == id, // <-- compare int to int
           orElse: () => projectTemplates.first,
         );
         return _OwnerProjectDetailsBuilder(tpl: tpl);

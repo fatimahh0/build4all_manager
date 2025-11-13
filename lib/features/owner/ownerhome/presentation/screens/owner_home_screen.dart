@@ -61,7 +61,6 @@ class _HomeBody extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     final ux = Theme.of(context).extension<UiTokens>()!;
 
-    // Responsive outer padding
     final w = MediaQuery.of(context).size.width;
     final pagePad = w >= 480
         ? const EdgeInsets.symmetric(horizontal: 20, vertical: 16)
@@ -144,7 +143,7 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-                // ---------- Choose your project (SINGLE grid, responsive) ----------
+                // ---------- Choose your project ----------
                 SliverToBoxAdapter(
                   child: Text(
                     l10n.owner_home_chooseProject,
@@ -156,23 +155,21 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-                // One responsive grid (no duplicates, no overflow)
+                // ---------- Grid (cards always open details) ----------
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: ux.radiusMd),
                   sliver: SliverLayoutBuilder(
                     builder: (context, constraints) {
                       final cross = constraints.crossAxisExtent;
-
-                      // Taller tiles on tiny screens so text+button always fit
                       final aspect = cross < 340
-                          ? 0.78 // very small phones
+                          ? 0.78
                           : (cross < 420)
-                              ? 0.90 // small/medium phones
-                              : 1.02; // large phones / tablets
+                              ? 0.90
+                              : 1.02;
 
                       return SliverGrid(
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 260, // auto columns
+                          maxCrossAxisExtent: 260,
                           mainAxisSpacing: 12,
                           crossAxisSpacing: 12,
                           childAspectRatio: aspect,
@@ -180,8 +177,12 @@ class _HomeBody extends StatelessWidget {
                         delegate: SliverChildBuilderDelegate(
                           (context, i) {
                             final tpl = projectTemplates[i];
+                            final comingSoon = tpl.kind !=
+                                'activities'; // only activities is live
                             return ProjectTemplateCard(
                               tpl: tpl,
+                              comingSoon:
+                                  comingSoon, // visual chip only; still navigates
                               onOpen: () =>
                                   context.push('/owner/project/${tpl.id}'),
                             );

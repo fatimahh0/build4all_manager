@@ -38,7 +38,29 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: cs.background,
+
+      // NEW: top app bar with a back button instead of bottom nav
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: cs.background,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          color: cs.onSurface,
+          onPressed: () => Navigator.of(context).pop(),
+          tooltip: l10n.owner_nav_home,
+        ),
+        title: Text(
+          l10n.translate(tpl.titleKey),
+          style: TextStyle(
+            color: cs.onSurface,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        centerTitle: false,
+      ),
+
       body: SafeArea(
+        top: false, // we already have an AppBar
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
@@ -249,7 +271,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _BottomNav(),
+      // NOTE: bottomNavigationBar removed as requested
     );
   }
 }
@@ -555,6 +577,11 @@ class _ListTileCard extends StatelessWidget {
   }
 }
 
+extension on SizedBox {
+  EdgeInsets get flatten => EdgeInsets.zero;
+  // helper to keep code compiles if you paste as-is
+}
+
 class _InsightCard extends StatelessWidget {
   final String emoji;
   final String text;
@@ -633,66 +660,20 @@ class _Badge extends StatelessWidget {
   }
 }
 
-class _BottomNav extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return Container(
-      decoration: BoxDecoration(
-        color: cs.surface,
-        border:
-            Border(top: BorderSide(color: cs.outlineVariant.withOpacity(.15))),
-      ),
-      padding: const EdgeInsets.only(bottom: 8, top: 6),
-      child: const Row(
-        children: [
-          _NavBtn(labelKey: 'owner_nav_home', icon: '🏠', pop: true),
-          _NavBtn(labelKey: 'owner_nav_myapps', icon: '📱'),
-          _NavBtn(labelKey: 'owner_nav_profile', icon: '👤'),
-        ],
-      ),
-    );
-  }
-}
-
-class _NavBtn extends StatelessWidget {
-  final String labelKey;
-  final String icon;
-  final bool pop;
-  const _NavBtn({required this.labelKey, required this.icon, this.pop = false});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final cs = Theme.of(context).colorScheme;
-    final label = switch (labelKey) {
-      'owner_nav_home' => l10n.owner_nav_home,
-      'owner_nav_myapps' => l10n.owner_nav_myapps,
-      'owner_nav_profile' => l10n.owner_nav_profile,
-      _ => labelKey,
-    };
-    return Expanded(
-      child: InkWell(
-        onTap: () => pop ? Navigator.pop(context) : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(icon, style: const TextStyle(fontSize: 18)),
-              const SizedBox(height: 2),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: cs.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+// tiny helper for dynamic title in AppBar
+extension _L10nX on AppLocalizations {
+  String translate(String key) {
+    switch (key) {
+      case 'owner_proj_activities_title':
+        return owner_proj_activities_title;
+      case 'owner_proj_ecom_title':
+        return owner_proj_ecom_title;
+      case 'owner_proj_gym_title':
+        return owner_proj_gym_title;
+      case 'owner_proj_services_title':
+        return owner_proj_services_title;
+      default:
+        return key;
+    }
   }
 }

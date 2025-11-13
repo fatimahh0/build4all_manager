@@ -36,4 +36,10 @@ class OwnerRepositoryImpl implements IOwnerRepository {
     all.sort((a, b) => b.createdAt.compareTo(a.createdAt));
     return all.take(limit).toList();
   }
+
+    @override
+  Future<void> rebuildAppLink({required int ownerId, required int linkId}) {
+    return api.rebuildLink(linkId: linkId, ownerId: ownerId);
+  }
+
 }

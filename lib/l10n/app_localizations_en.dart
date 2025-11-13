@@ -840,4 +840,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get owner_proj_details_stat_days_hint => 'days avg. turnaround';
+
+  @override
+  String get owner_projects_subtitle => 'Manage your projects and app builds seamlessly';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get change_password => 'Change password';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get contact_us => 'Contact us';
+
+  @override
+  String get owner_profile_edit => 'Account';
+
+  @override
+  String get edit_profile => 'Edit profile';
+
+  @override
+  String get billing => 'Billing';
+
+  @override
+  String get copy => 'Copy';
 }

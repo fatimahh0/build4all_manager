@@ -1746,6 +1746,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'days avg. turnaround'**
   String get owner_proj_details_stat_days_hint;
+
+  /// No description provided for @owner_projects_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your projects and app builds seamlessly'**
+  String get owner_projects_subtitle;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// No description provided for @change_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get change_password;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @contact_us.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us'**
+  String get contact_us;
+
+  /// No description provided for @owner_profile_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get owner_profile_edit;
+
+  /// No description provided for @edit_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get edit_profile;
+
+  /// No description provided for @billing.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing'**
+  String get billing;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

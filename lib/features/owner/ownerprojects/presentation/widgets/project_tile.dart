@@ -1,20 +1,22 @@
-// lib/features/owner/ownerprojects/presentation/widgets/project_tile.dart
 import 'package:build4all_manager/features/owner/common/domain/entities/owner_project.dart';
+import 'package:build4all_manager/l10n/app_localizations.dart';
+import 'package:build4all_manager/shared/widgets/top_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:build4all_manager/l10n/app_localizations.dart';
 
 class ProjectTile extends StatelessWidget {
   final OwnerProject project;
   final String serverRootNoApi; // host without /api
+  final Future<void> Function(OwnerProject p)? onRebuild; // optional
 
   const ProjectTile({
     super.key,
     required this.project,
     required this.serverRootNoApi,
+    this.onRebuild,
   });
 
-  String _absUrl(String? maybe) {
+  String _abs(String? maybe) {
     if (maybe == null || maybe.isEmpty) return '';
     final s = maybe.trim();
     if (s.startsWith('http://') || s.startsWith('https://')) return s;
@@ -24,18 +26,67 @@ class ProjectTile extends StatelessWidget {
   }
 
   Future<void> _openApk(BuildContext context) async {
-    final urlStr = _absUrl(project.apkUrl);
+    final urlStr = _abs(project.apkUrl);
     if (urlStr.isEmpty) return;
     final uri = Uri.tryParse(urlStr);
     if (uri == null) return;
 
     if (!await canLaunchUrl(uri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Cannot open: $urlStr')),
+      showTopToast(
+        context,
+        'Cannot open: $urlStr',
+        type: ToastType.error,
+        haptics: true,
       );
       return;
     }
     await launchUrl(uri, mode: LaunchMode.externalApplication);
+    showTopToast(context, 'Download started', type: ToastType.success);
+  }
+
+  Widget _logoChip(BuildContext context, Color band) {
+    const double radius = 14.0;
+    const double size = 48.0;
+    final logo = project.logoUrl;
+    if (logo != null && logo.trim().isNotEmpty) {
+      final src = _abs(logo);
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: Container(
+          width: size,
+          height: size,
+          color: band.withOpacity(.05),
+          child: Image.network(
+            src,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => _initialAvatar(band),
+          ),
+        ),
+      );
+    }
+    return _initialAvatar(band);
+  }
+
+  Widget _initialAvatar(Color band) {
+    final text =
+        (project.appName.isNotEmpty ? project.appName : project.projectName)
+            .trim();
+    final initial = (text.isEmpty ? 'A' : text.characters.first.toUpperCase());
+    const double size = 48;
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: band.withOpacity(.12),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        initial,
+        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+      ),
+    );
   }
 
   @override
@@ -43,142 +94,230 @@ class ProjectTile extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context)!;
+
     final ready = project.isApkReady;
+    final band = ready ? cs.primary : cs.tertiary;
+    final statusLabel = project.status.isEmpty
+        ? (ready ? 'ACTIVE' : 'IN_PRODUCTION')
+        : project.status;
 
-    final Color band = ready ? cs.primary : cs.tertiary;
+    return LayoutBuilder(
+      builder: (context, c) {
+        final double w = c.maxWidth;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: cs.surface,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: cs.outlineVariant.withOpacity(.5)),
-        boxShadow: const [
-          BoxShadow(
-              color: Color(0x0F000000), blurRadius: 12, offset: Offset(0, 8)),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          // ---------- Banner (icon, title, slug) ----------
-          Container(
-            height: 86,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [band.withOpacity(.18), band.withOpacity(.06)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+        // Make banner a bit smaller on very narrow tiles
+        final double bannerH = w < 210
+            ? 68
+            : w < 260
+                ? 76
+                : w < 320
+                    ? 84
+                    : 92;
+
+        // If tile is very narrow, stack actions vertically
+        final bool compactActions = w < 260;
+
+        return Container(
+          decoration: BoxDecoration(
+            color: cs.surface,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: cs.outlineVariant.withOpacity(.5)),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x0F000000),
+                blurRadius: 12,
+                offset: Offset(0, 8),
               ),
-            ),
-            child: Row(
-              children: [
-                const SizedBox(width: 12),
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: band.withOpacity(.12),
-                    borderRadius: BorderRadius.circular(12),
+            ],
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              // ---------- Banner ----------
+              Container(
+                height: bannerH,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [band.withOpacity(.18), band.withOpacity(.06)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  alignment: Alignment.center,
-                  child: Icon(Icons.apps_rounded, color: band, size: 26),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
+                child: Row(
+                  children: [
+                    const SizedBox(width: 12),
+                    _logoChip(context, band),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _TitleBlock(
+                        appName: (project.appName.isNotEmpty
+                            ? project.appName
+                            : project.projectName),
+                        slug: project.slug,
+                        statusLabel: statusLabel,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                  ],
+                ),
+              ),
+
+              // ---------- Body ----------
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        project.projectName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: tt.titleSmall
-                            ?.copyWith(fontWeight: FontWeight.w800),
+                      _StatusPill(
+                        ready: ready,
+                        text: ready
+                            ? l10n.owner_projects_ready
+                            : l10n.owner_projects_building,
+                        color: ready ? cs.primary : cs.tertiary,
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        project.slug,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: tt.bodySmall
-                            ?.copyWith(color: cs.onSurface.withOpacity(.65)),
+                      const Spacer(),
+                      _ActionsRow(
+                        compact: compactActions,
+                        ready: ready,
+                        onOpen: () => _openApk(context),
+                        onRebuild: (onRebuild == null)
+                            ? null
+                            : () async {
+                                await onRebuild!(project);
+                                if (context.mounted) {
+                                  showTopToast(
+                                    context,
+                                    'Rebuild queued',
+                                    type: ToastType.info,
+                                  );
+                                }
+                              },
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
-              ],
-            ),
-          ),
-
-          // ---------- Body ----------
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _StatusPill(
-                    ready: ready,
-                    text: ready
-                        ? l10n.owner_projects_ready
-                        : l10n.owner_projects_building,
-                    color: ready ? cs.primary : cs.tertiary,
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      if (ready)
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () => _openApk(context),
-                            icon: const Icon(Icons.download_rounded, size: 18),
-                            label: Text(l10n.owner_projects_openInBrowser,
-                                maxLines: 1),
-                            style: TextButton.styleFrom(
-                              foregroundColor: cs.primary,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 8),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              minimumSize: Size.zero,
-                            ),
-                          ),
-                        )
-                      else
-                        Expanded(
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              ),
-                              const SizedBox(width: 8),
-                              Flexible(
-                                child: Text(
-                                  '',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: tt.labelMedium?.copyWith(
-                                    color: cs.onSurfaceVariant,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
               ),
-            ),
+            ],
           ),
-        ],
+        );
+      },
+    );
+  }
+}
+
+class _TitleBlock extends StatelessWidget {
+  final String appName;
+  final String slug;
+  final String statusLabel;
+
+  const _TitleBlock({
+    required this.appName,
+    required this.slug,
+    required this.statusLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          appName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: tt.titleSmall?.copyWith(fontWeight: FontWeight.w900),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          '$slug · $statusLabel',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: tt.bodySmall?.copyWith(color: cs.onSurface.withOpacity(.65)),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionsRow extends StatelessWidget {
+  final bool compact; // vertical on tiny widths
+  final bool ready;
+  final VoidCallback? onOpen;
+  final VoidCallback? onRebuild;
+
+  const _ActionsRow({
+    required this.compact,
+    required this.ready,
+    required this.onOpen,
+    required this.onRebuild,
+  });
+
+  Widget _openBtn(BuildContext context, {required bool stretch}) {
+    final cs = Theme.of(context).colorScheme;
+
+    final btn = TextButton.icon(
+      onPressed: ready ? onOpen : null,
+      icon: const Icon(Icons.download_rounded, size: 18),
+      label: const Text('Open', maxLines: 1),
+      style: TextButton.styleFrom(
+        foregroundColor: cs.primary,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minimumSize: Size.zero,
       ),
+    );
+
+    if (stretch) {
+      return SizedBox(width: double.infinity, child: btn);
+    }
+    return Expanded(child: btn);
+  }
+
+  Widget _rebuildBtn(BuildContext context, {required bool stretch}) {
+    final btn = OutlinedButton.icon(
+      onPressed: onRebuild,
+      icon: const Icon(Icons.build_rounded, size: 18),
+      label: const Text('Rebuild', maxLines: 1),
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        minimumSize: Size.zero,
+      ),
+    );
+
+    if (stretch) {
+      return SizedBox(width: double.infinity, child: btn);
+    }
+    return Expanded(child: btn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!compact) {
+      // Horizontal layout → safe Row
+      return Row(
+        children: [
+          _openBtn(context, stretch: false),
+          const SizedBox(width: 8),
+          _rebuildBtn(context, stretch: false),
+        ],
+      );
+    }
+
+    // Vertical layout → no Expanded
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _openBtn(context, stretch: true),
+        const SizedBox(height: 8),
+        _rebuildBtn(context, stretch: true),
+      ],
     );
   }
 }
@@ -187,8 +326,12 @@ class _StatusPill extends StatelessWidget {
   final bool ready;
   final String text;
   final Color color;
-  const _StatusPill(
-      {required this.ready, required this.text, required this.color});
+
+  const _StatusPill({
+    required this.ready,
+    required this.text,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -202,15 +345,18 @@ class _StatusPill extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(ready ? Icons.check_circle_rounded : Icons.hourglass_top_rounded,
-              size: 16, color: color),
+          Icon(
+            ready ? Icons.check_circle_rounded : Icons.hourglass_top_rounded,
+            size: 16,
+            color: color,
+          ),
           const SizedBox(width: 6),
           Text(
             text,
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: color, fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w800,
+                ),
           ),
         ],
       ),

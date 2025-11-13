@@ -840,4 +840,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get owner_proj_details_stat_days_hint => 'الأيام';
+
+  @override
+  String get owner_projects_subtitle => 'Manage your projects and app builds seamlessly';
+
+  @override
+  String get copied => 'تم النسخ';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get security => 'الأمان';
+
+  @override
+  String get change_password => 'تغيير كلمة السر';
+
+  @override
+  String get support => 'الدعم';
+
+  @override
+  String get contact_us => 'تواصل معنا';
+
+  @override
+  String get owner_profile_edit => 'الحساب';
+
+  @override
+  String get edit_profile => 'تعديل الملف';
+
+  @override
+  String get billing => 'الفوترة';
+
+  @override
+  String get copy => 'نسخ';
 }

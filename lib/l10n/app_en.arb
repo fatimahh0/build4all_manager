@@ -380,7 +380,20 @@
   "owner_proj_details_stat_reviews_hint": "reviews",
   "owner_proj_details_stat_active_hint": "active deployments",
   "owner_proj_details_stat_days_hint": "days avg. turnaround",
-  "owner_projects_subtitle": "Manage your projects and app builds seamlessly"
+  "owner_projects_subtitle": "Manage your projects and app builds seamlessly",
+  
+  "copied": "Copied",
+  "logout_confirm": "Do you want to log out?",
+  "logged_out": "Logged out",
+  "settings": "Settings",
+  "security": "Security",
+  "change_password": "Change password",
+  "support": "Support",
+  "contact_us": "Contact us",
+  "owner_profile_edit": "Account",
+  "edit_profile": "Edit profile",
+  "billing": "Billing",
+  "copy": "Copy"
 
   
   

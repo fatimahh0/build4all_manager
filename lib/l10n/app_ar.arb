@@ -292,6 +292,18 @@
   "owner_proj_details_services_i2": "الفوترة التلقائية تقلّل التأخير 43٪.",
   "owner_proj_details_stat_reviews_hint": "المراجعات",
   "owner_proj_details_stat_active_hint": "النشطات",
-  "owner_proj_details_stat_days_hint": "الأيام"
+  "owner_proj_details_stat_days_hint": "الأيام",
+   "copied": "تم النسخ",
+  "logout_confirm": "هل تريد تسجيل الخروج؟",
+  "logged_out": "تم تسجيل الخروج",
+  "settings": "الإعدادات",
+  "security": "الأمان",
+  "change_password": "تغيير كلمة السر",
+  "support": "الدعم",
+  "contact_us": "تواصل معنا",
+  "owner_profile_edit": "الحساب",
+  "edit_profile": "تعديل الملف",
+  "billing": "الفوترة",
+  "copy": "نسخ"
 
 }

@@ -1,7 +1,7 @@
+// lib/features/owner/ownerprofile/presentation/widgets/profile_info_card.dart
 import 'package:build4all_manager/features/owner/ownerprofile/domain/entities/owner_profile.dart';
-import 'package:flutter/material.dart';
-
 import 'package:build4all_manager/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 
 class ProfileInfoCard extends StatelessWidget {
   final OwnerProfile p;
@@ -13,21 +13,25 @@ class ProfileInfoCard extends StatelessWidget {
     final tt = Theme.of(context).textTheme;
     final l10n = AppLocalizations.of(context)!;
 
-    Widget row(String label, String value, {IconData? icon}) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: Row(
-          children: [
-            if (icon != null) Icon(icon, size: 18, color: cs.primary),
-            if (icon != null) const SizedBox(width: 8),
-            Expanded(
-                child: Text(label,
-                    style:
-                        tt.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
-            const SizedBox(width: 8),
-            Flexible(child: Text(value, textAlign: TextAlign.right)),
-          ],
+    Widget row({
+      required IconData icon,
+      required String label,
+      required String value,
+      Color? tint,
+      VoidCallback? onTap,
+    }) {
+      final color = tint ?? cs.primary;
+      return ListTile(
+        onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        leading: CircleAvatar(
+          radius: 18,
+          backgroundColor: color.withOpacity(.12),
+          child: Icon(icon, color: color),
         ),
+        title: Text(label, style: tt.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+        subtitle: Text(value.isEmpty ? '—' : value,
+            maxLines: 1, overflow: TextOverflow.ellipsis),
       );
     }
 
@@ -36,21 +40,41 @@ class ProfileInfoCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: cs.outline.withOpacity(.25)),
+        side: BorderSide(color: cs.outlineVariant.withOpacity(.6)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            row(l10n.owner_profile_username, p.username,
-                icon: Icons.alternate_email),
-            const Divider(height: 20),
-            row(l10n.owner_profile_name, p.fullName.isEmpty ? '—' : p.fullName,
-                icon: Icons.person_outline),
-            const Divider(height: 20),
-            row(l10n.owner_profile_email, p.email, icon: Icons.mail_outline),
-          ],
-        ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
+            child: Row(
+              children: [
+                Text(
+                  l10n.owner_nav_profile,
+                  style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+                ),
+              ],
+            ),
+          ),
+          const Divider(height: 8),
+          row(
+            icon: Icons.alternate_email_rounded,
+            label: l10n.owner_profile_username,
+            value: p.username,
+          ),
+          const Divider(indent: 72, endIndent: 12),
+          row(
+            icon: Icons.person_outline_rounded,
+            label: l10n.owner_profile_name,
+            value: p.fullName,
+          ),
+          const Divider(indent: 72, endIndent: 12),
+          row(
+            icon: Icons.mail_outline_rounded,
+            label: l10n.owner_profile_email,
+            value: p.email,
+          ),
+          const SizedBox(height: 8),
+        ],
       ),
     );
   }

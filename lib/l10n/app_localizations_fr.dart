@@ -539,7 +539,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get logout_confirm => 'Voulez-vous vous déconnecter ?';
 
   @override
-  String get logged_out => 'Déconnexion réussie';
+  String get logged_out => 'Déconnecté';
 
   @override
   String get cancel => 'Annuler';
@@ -840,4 +840,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get owner_proj_details_stat_days_hint => 'jours en moyenne';
+
+  @override
+  String get owner_projects_subtitle => 'Manage your projects and app builds seamlessly';
+
+  @override
+  String get copied => 'Copié';
+
+  @override
+  String get settings => 'Paramètres';
+
+  @override
+  String get security => 'Sécurité';
+
+  @override
+  String get change_password => 'Changer le mot de passe';
+
+  @override
+  String get support => 'Assistance';
+
+  @override
+  String get contact_us => 'Contactez-nous';
+
+  @override
+  String get owner_profile_edit => 'Compte';
+
+  @override
+  String get edit_profile => 'Modifier le profil';
+
+  @override
+  String get billing => 'Facturation';
+
+  @override
+  String get copy => 'Copier';
 }
