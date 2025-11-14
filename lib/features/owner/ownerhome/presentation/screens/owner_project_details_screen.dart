@@ -1,6 +1,7 @@
 import 'package:build4all_manager/features/owner/ownerhome/presentation/specs/project_details_specs.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
 import 'package:build4all_manager/shared/themes/app_theme.dart';
+import 'package:build4all_manager/shared/themes/theme_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
@@ -26,6 +27,8 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     final spec = themedSpecFor(context, tpl.kind);
+    final tint = tpl.tint ?? _projectTint(tpl.kind, cs);
+    final projectTitle = _projectTitle(tpl, l10n); // ✅ use name, not desc
 
     final pagePad = width >= 480
         ? const EdgeInsets.symmetric(horizontal: 20, vertical: 16)
@@ -52,7 +55,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          spec.headline(l10n),
+          projectTitle, // ✅ show project name here
           style: GoogleFonts.inter(fontWeight: FontWeight.w700),
         ),
       ),
@@ -72,7 +75,10 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(16, 22, 16, 16),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [spec.headerStart, spec.headerEnd],
+                    colors: [
+                      tint,
+                      tint.withOpacity(.9),
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -92,8 +98,10 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(radiusMd),
                         ),
                         alignment: Alignment.center,
-                        child: Text(spec.emoji,
-                            style: const TextStyle(fontSize: 24)),
+                        child: Text(
+                          spec.emoji,
+                          style: const TextStyle(fontSize: 24),
+                        ),
                       ),
                       const SizedBox(height: 14),
                       Text(
@@ -162,7 +170,11 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                       );
                     }
                   },
-                  child: _CreateCtaCard(spec: spec, radius: radiusLg),
+                  child: _CreateCtaCard(
+                    spec: spec,
+                    radius: radiusLg,
+                    tint: tint,
+                  ),
                 ),
               ),
             ),
@@ -186,8 +198,8 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                   children: spec.highlights(l10n).map((txt) {
                     return _ChipPill(
                       text: txt,
-                      bg: spec.chipBg,
-                      fg: spec.accent,
+                      bg: tint.withOpacity(.10),
+                      fg: tint,
                     );
                   }).toList(),
                 ),
@@ -262,7 +274,7 @@ class OwnerProjectDetailsScreen extends StatelessWidget {
                     return _InsightCard(
                       emoji: i.emoji,
                       text: i.text,
-                      bubble: spec.accent,
+                      bubble: tint,
                       radius: radiusMd,
                     );
                   }).toList(),
@@ -306,6 +318,37 @@ String? _prefillName(String id) {
       return 'My Services App';
     default:
       return null;
+  }
+}
+
+Color _projectTint(String kind, ColorScheme cs) {
+  switch (kind) {
+    case 'activities':
+      return ProjectPalette.activities;
+    case 'ecommerce':
+      return ProjectPalette.ecommerce;
+    case 'gym':
+      return ProjectPalette.gym;
+    case 'services':
+      return ProjectPalette.services;
+    default:
+      return cs.primary;
+  }
+}
+
+/// ✅ Get the localized project **name** based on tpl.titleKey
+String _projectTitle(ProjectTemplate tpl, AppLocalizations l10n) {
+  switch (tpl.titleKey) {
+    case 'owner_proj_activities_title':
+      return l10n.owner_proj_activities_title;
+    case 'owner_proj_ecom_title':
+      return l10n.owner_proj_ecom_title;
+    case 'owner_proj_gym_title':
+      return l10n.owner_proj_gym_title;
+    case 'owner_proj_services_title':
+      return l10n.owner_proj_services_title;
+    default:
+      return tpl.titleKey; // fallback (just in case)
   }
 }
 
@@ -438,21 +481,30 @@ class _MetricItem extends StatelessWidget {
 class _CreateCtaCard extends StatelessWidget {
   final ThemedProjectDetailsSpec spec;
   final double radius;
-  const _CreateCtaCard({required this.spec, required this.radius});
+  final Color tint;
+
+  const _CreateCtaCard({
+    required this.spec,
+    required this.radius,
+    required this.tint,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [spec.accent, spec.createEnd],
+          colors: [
+            tint,
+            tint.withOpacity(.88),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(radius),
         boxShadow: [
           BoxShadow(
-            color: spec.accent.withOpacity(.28),
+            color: tint.withOpacity(.28),
             blurRadius: 26,
             offset: const Offset(0, 16),
           )
@@ -461,7 +513,7 @@ class _CreateCtaCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: Row(
         children: [
-          _Badge(text: '✨'),
+          const _Badge(text: '✨'),
           const SizedBox(width: 12),
           Expanded(
             child: DefaultTextStyle(
@@ -470,10 +522,13 @@ class _CreateCtaCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      AppLocalizations.of(context)!
-                          .owner_proj_details_create_title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w800, fontSize: 15)),
+                    AppLocalizations.of(context)!
+                        .owner_proj_details_create_title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Text(
                     AppLocalizations.of(context)!
@@ -487,7 +542,7 @@ class _CreateCtaCard extends StatelessWidget {
               ),
             ),
           ),
-          _Badge(text: '➜', size: 32, fontSize: 18, opacity: .16),
+          const _Badge(text: '➜', size: 32, fontSize: 18, opacity: .16),
         ],
       ),
     );
@@ -504,11 +559,18 @@ class _ChipPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-      decoration:
-          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(14)),
-      child: Text(text,
-          style:
-              TextStyle(color: fg, fontSize: 12, fontWeight: FontWeight.w600)),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: fg,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 }
@@ -532,17 +594,25 @@ class _MiniScreenCard extends StatelessWidget {
     return Container(
       width: 168,
       padding: const EdgeInsets.all(16),
-      decoration:
-          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(radius)),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(radius),
+      ),
       child: DefaultTextStyle(
         style: tt.bodySmall!.copyWith(color: cs.onSurface.withOpacity(.85)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
-                style: tt.bodyMedium?.copyWith(fontWeight: FontWeight.w800)),
+            Text(
+              title,
+              style: tt.bodyMedium?.copyWith(fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 8),
-            Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis),
+            Text(
+              subtitle,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
           ],
         ),
       ),
@@ -568,7 +638,10 @@ class _ListTileCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(radius),
         boxShadow: ux.cardShadow,
       ),
-      child: Text(text, style: TextStyle(color: cs.onSurface.withOpacity(.9))),
+      child: Text(
+        text,
+        style: TextStyle(color: cs.onSurface.withOpacity(.9)),
+      ),
     );
   }
 }
@@ -605,16 +678,22 @@ class _InsightCard extends StatelessWidget {
             width: 36,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: bubble, borderRadius: BorderRadius.circular(12)),
-            child: Text(emoji,
-                style: const TextStyle(fontSize: 18, color: Colors.white)),
+              color: bubble,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              emoji,
+              style: const TextStyle(fontSize: 18, color: Colors.white),
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               text,
-              style:
-                  TextStyle(fontWeight: FontWeight.w600, color: cs.onSurface),
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: cs.onSurface,
+              ),
             ),
           ),
         ],
@@ -645,8 +724,10 @@ class _Badge extends StatelessWidget {
         color: Colors.white.withOpacity(opacity),
         borderRadius: BorderRadius.circular(16),
       ),
-      child:
-          Text(text, style: TextStyle(fontSize: fontSize, color: Colors.white)),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: fontSize, color: Colors.white),
+      ),
     );
   }
 }

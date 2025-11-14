@@ -109,7 +109,7 @@
   "owner_projects_title": "Projets",
   "owner_requests_title": "Demandes",
   "owner_profile_title": "Profil",
-  "owner_home_hello": "👋 Salut, Propriétaire",
+  "owner_home_hello": "👋 Salut, ",
   "owner_home_subtitle": "Gérez vos apps facilement",
   "owner_home_requestApp": "Demander mon app",
   "owner_home_myProjects": "Mes projets actifs",
@@ -197,7 +197,7 @@
   "owner_home_recentRequests": "Demandes récentes",
   "owner_home_viewAll": "Tout voir",
   "owner_home_noRecent": "Aucune demande récente",
-  "owner_home_hello": "Salut, Propriétaire 👋",
+  "owner_home_hello": "👋Salut, ",
   "owner_home_subtitle": "Prêt à lancer votre prochain build ?",
   "owner_home_requestApp": "Demander mon app",
 

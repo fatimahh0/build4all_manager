@@ -1,3 +1,4 @@
+//import 'package:build4all_manager/features/owner/ownerhome/data/static_project_models.dart';
 import 'package:build4all_manager/features/owner/ownerhome/data/static_project_models.dart';
 import 'package:build4all_manager/features/owner/ownerhome/presentation/screens/owner_project_details_screen.dart';
 import 'package:build4all_manager/features/owner/ownerrequests/presentation/screens/owner_requests_screen.dart';
@@ -88,9 +89,9 @@ final router = GoRouter(
       path: '/owner/project/:id',
       builder: (context, state) {
         final idStr = state.pathParameters['id']!;
-        final id = int.tryParse(idStr) ?? projectTemplates.first.id; 
+        final id = int.tryParse(idStr) ?? projectTemplates.first.id;
         final tpl = projectTemplates.firstWhere(
-          (t) => t.id == id, // <-- compare int to int
+          (t) => t.id == id,
           orElse: () => projectTemplates.first,
         );
         return _OwnerProjectDetailsBuilder(tpl: tpl);
@@ -188,7 +189,37 @@ Future<int?> _loadOwnerIdFromJwt() async {
   }
 }
 
-/// Loads ownerId then mounts OwnerEntry
+/// ✅ NEW: load ownerId + ownerName from JWT
+/// ✅ NEW: load ownerId + ownerName from JWT
+Future<(int?, String?)> _loadOwnerProfileFromJwt() async {
+  try {
+    final store = JwtLocalDataSource();
+    final (token, _) = await store.read();
+    if (token.isEmpty) return (null, null);
+
+    // This is nullable: Map<String, dynamic>?
+    final Map<String, dynamic>? claims = JwtClaims.decode(token);
+
+    final id = JwtClaims.extractInt(
+      claims,
+      ['id', 'ownerId', 'adminId', 'sub'],
+    );
+
+    // 👇 all access is now null-safe with `?`
+    final rawName =
+        (claims?['name'] ?? claims?['fullName'] ?? claims?['username'])
+            ?.toString()
+            .trim();
+
+    final name = (rawName == null || rawName.isEmpty) ? null : rawName;
+
+    return (id, name);
+  } catch (_) {
+    return (null, null);
+  }
+}
+
+/// Loads ownerId + ownerName then mounts OwnerEntry
 class _OwnerEntryLoader extends StatelessWidget {
   final int initialIndex; // 0: Home, 1: Projects, 2: Profile
   const _OwnerEntryLoader({super.key, this.initialIndex = 0});
@@ -196,23 +227,27 @@ class _OwnerEntryLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return FutureBuilder<int?>(
-      future: _loadOwnerIdFromJwt(),
+    return FutureBuilder<(int?, String?)>(
+      future: _loadOwnerProfileFromJwt(),
       builder: (context, snap) {
         if (snap.connectionState != ConnectionState.done) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
-        final ownerId = snap.data;
+
+        final (ownerId, ownerName) = snap.data ?? (null, null);
+
         if (ownerId == null) {
           WidgetsBinding.instance
               .addPostFrameCallback((_) => context.go('/login'));
           return Scaffold(body: Center(child: Text(l10n.owner_nav_profile)));
         }
+
         final Dio dio = DioClient.ensure();
         return OwnerEntry(
           ownerId: ownerId,
+          ownerName: ownerName,
           dio: dio,
           backendMenuType: 'bottom',
           initialIndex: initialIndex,
@@ -247,7 +282,7 @@ class _OwnerProjectsBuilder extends StatelessWidget {
   }
 }
 
-/// ✅ New: resolve ownerId then build the Project Details screen
+/// ✅ resolve ownerId then build the Project Details screen
 class _OwnerProjectDetailsBuilder extends StatelessWidget {
   final ProjectTemplate tpl;
   const _OwnerProjectDetailsBuilder({super.key, required this.tpl});
@@ -278,6 +313,7 @@ class _OwnerProjectDetailsBuilder extends StatelessWidget {
 class OwnerEntry extends StatelessWidget {
   final String? backendMenuType; // "bottom" | "top" | "drawer"
   final int ownerId;
+  final String? ownerName; // 👈 NEW
   final Dio dio;
   final int initialIndex;
 
@@ -286,6 +322,7 @@ class OwnerEntry extends StatelessWidget {
     required this.ownerId,
     required this.dio,
     this.backendMenuType,
+    this.ownerName,
     this.initialIndex = 0,
   });
 
@@ -298,12 +335,16 @@ class OwnerEntry extends StatelessWidget {
         icon: Icons.home_outlined,
         selectedIcon: Icons.home_rounded,
         label: l10n.owner_nav_home,
-        page: OwnerHomeScreen(ownerId: ownerId, dio: dio),
+        page: OwnerHomeScreen(
+          ownerId: ownerId,
+          dio: dio,
+          ownerName: ownerName, // 👈 pass it
+        ),
       ),
       OwnerDestination(
         icon: Icons.apps_outlined,
         selectedIcon: Icons.apps_rounded,
-        label: l10n.owner_nav_projects, // clean & simple
+        label: l10n.owner_nav_projects,
         page: OwnerProjectsScreen(ownerId: ownerId, dio: dio),
       ),
       OwnerDestination(

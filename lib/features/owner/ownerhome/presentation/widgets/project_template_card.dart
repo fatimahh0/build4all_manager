@@ -1,5 +1,5 @@
+import 'package:build4all_manager/shared/themes/theme_palette.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:build4all_manager/l10n/app_localizations.dart';
 import '../../data/static_project_models.dart';
 
@@ -33,6 +33,16 @@ class ProjectTemplateCard extends StatelessWidget {
     final ctaText =
         isAvailable ? l10n.translate(tpl.ctaKey) : l10n.owner_proj_comingSoon;
 
+    // 🔹 Make button size slightly adapt on very small screens (if needed later)
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isCompact = screenWidth < 380;
+
+    final buttonPadding = EdgeInsets.symmetric(
+      horizontal: isCompact ? 8 : 10,
+      vertical: isCompact ? 2 : 4,
+    );
+    final minButtonHeight = isCompact ? 30.0 : 34.0;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -41,7 +51,10 @@ class ProjectTemplateCard extends StatelessWidget {
         border: Border.all(color: borderColor),
         boxShadow: const [
           BoxShadow(
-              color: Color(0x0F000000), blurRadius: 10, offset: Offset(0, 6)),
+            color: Color(0x0F000000),
+            blurRadius: 10,
+            offset: Offset(0, 6),
+          ),
         ],
       ),
       child: Column(
@@ -68,19 +81,26 @@ class ProjectTemplateCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
+
+          // 🔹 Smaller, compact, always clickable button (even for Coming soon)
           Align(
             alignment: Alignment.bottomLeft,
-            child: OutlinedButton(
-              onPressed: onOpen, // details screen will gate the CTA
-              style: OutlinedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                shape: const StadiumBorder(),
-                side: BorderSide(color: chipFg),
-                foregroundColor: chipFg,
-                backgroundColor: chipBg,
+            child: TextButton(
+              onPressed: onOpen, // ✅ ALWAYS open details
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: Size(0, minButtonHeight),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                foregroundColor:
+                    isAvailable ? tint : cs.onSurface.withOpacity(.45),
+                textStyle: tt.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              child: Text('$ctaText →'),
+              child: Padding(
+                padding: buttonPadding,
+                child: Text('$ctaText →'),
+              ),
             ),
           ),
         ],
@@ -91,13 +111,13 @@ class ProjectTemplateCard extends StatelessWidget {
   Color _pickTintFor(String id, ColorScheme cs) {
     switch (id) {
       case 'activities':
-        return cs.primary;
+        return ProjectPalette.activities;
       case 'ecommerce':
-        return cs.secondary;
+        return ProjectPalette.ecommerce;
       case 'gym':
-        return cs.tertiary;
+        return ProjectPalette.gym;
       case 'services':
-        return cs.primaryContainer;
+        return ProjectPalette.services;
       default:
         return cs.primary;
     }
@@ -108,8 +128,11 @@ class _IconBadge extends StatelessWidget {
   final IconData icon;
   final Color tint;
   final bool dimmed;
-  const _IconBadge(
-      {required this.icon, required this.tint, this.dimmed = false});
+  const _IconBadge({
+    required this.icon,
+    required this.tint,
+    this.dimmed = false,
+  });
 
   @override
   Widget build(BuildContext context) {

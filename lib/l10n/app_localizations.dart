@@ -778,7 +778,7 @@ abstract class AppLocalizations {
   /// No description provided for @owner_nav_projects.
   ///
   /// In en, this message translates to:
-  /// **'Projects'**
+  /// **'My Apps'**
   String get owner_nav_projects;
 
   /// No description provided for @owner_nav_requests.
@@ -820,7 +820,7 @@ abstract class AppLocalizations {
   /// No description provided for @owner_home_hello.
   ///
   /// In en, this message translates to:
-  /// **'Hi, Owner 👋'**
+  /// **'👋Hi,  '**
   String get owner_home_hello;
 
   /// No description provided for @owner_home_subtitle.

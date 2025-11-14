@@ -77,3 +77,11 @@ class ThemeCatalog {
   static ThemePalette byId(String id) =>
       all.firstWhere((p) => p.id == id, orElse: () => emerald);
 }
+
+// 🔹 Marketing colors for the 4 project types
+class ProjectPalette {
+  static const activities = Color(0xFF6366F1); // purple
+  static const ecommerce = Color(0xFFFF8A4A); // orange
+  static const gym = Color(0xFF10B981); // green
+  static const services = Color(0xFF3B82F6); // blue
+}

@@ -115,6 +115,7 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
       },
       builder: (context, s) {
         final tt = Theme.of(context).textTheme;
+        final radiusMd = ux.radiusMd;
 
         // hero
         final hero = Container(
@@ -187,18 +188,51 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // 🔹 Project dropdown with rounded, nicer style
                         DropdownButtonFormField<Project?>(
                           value: s.selected,
                           isExpanded: true,
-                          decoration: const InputDecoration(
-                                  border: OutlineInputBorder())
-                              .copyWith(labelText: l10n.owner_request_project),
+                          decoration: InputDecoration(
+                            labelText: l10n.owner_request_project,
+                            filled: true,
+                            fillColor: cs.surfaceContainerLowest,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 12,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(radiusMd),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(radiusMd),
+                              borderSide: BorderSide(
+                                color: cs.outline.withOpacity(.35),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(radiusMd),
+                              borderSide: BorderSide(
+                                color: cs.primary,
+                                width: 1.6,
+                              ),
+                            ),
+                          ),
+                          style: tt.bodyMedium,
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: cs.onSurface.withOpacity(.75),
+                          ),
+                          borderRadius: BorderRadius.circular(radiusMd + 4),
                           items: s.projects
-                              .map((p) => DropdownMenuItem<Project?>(
-                                    value: p,
-                                    child: Text(p.name,
-                                        overflow: TextOverflow.ellipsis),
-                                  ))
+                              .map(
+                                (p) => DropdownMenuItem<Project?>(
+                                  value: p,
+                                  child: Text(
+                                    p.name,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              )
                               .toList(),
                           onChanged:
                               context.read<OwnerRequestsCubit>().selectProject,
@@ -250,12 +284,16 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
                             ),
                             const SizedBox(width: 12),
                             Expanded(
-                                child: _UploadPathPreview(
-                                    path: s.logoFilePath, url: s.logoUrl)),
+                              child: _UploadPathPreview(
+                                path: s.logoFilePath,
+                                url: s.logoUrl,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 12),
 
+                        // 🔹 Theme dropdown with same rounded style
                         _ThemePicker(
                           themes: s.themes,
                           selectedId: s.selectedThemeId,
@@ -288,11 +326,16 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
                             onPressed: () async {
                               final uri = Uri.parse(s.builtApkUrl!);
                               if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri,
-                                    mode: LaunchMode.externalApplication);
+                                await launchUrl(
+                                  uri,
+                                  mode: LaunchMode.externalApplication,
+                                );
                               } else {
-                                showTopToast(context, l10n.common_download,
-                                    type: ToastType.info);
+                                showTopToast(
+                                  context,
+                                  l10n.common_download,
+                                  type: ToastType.info,
+                                );
                               }
                             },
                             type: AppButtonType.secondary,
@@ -323,18 +366,22 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        flex: 2,
-                        child: ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [form])),
+                      flex: 2,
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [form],
+                      ),
+                    ),
                     const SizedBox(width: 16),
                     Expanded(
-                        flex: 3,
-                        child: ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [requests])),
+                      flex: 3,
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [requests],
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -350,10 +397,24 @@ class _OwnerRequestViewState extends State<_OwnerRequestView> {
 
         return Scaffold(
           backgroundColor: cs.background,
+          appBar: AppBar(
+            backgroundColor: cs.surface,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              onPressed: () =>
+                  Navigator.of(context).pop(), // 🔙 back to details
+            ),
+            title: Text(
+              '', // you can swap to l10n if you add a key
+              style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
           body: SafeArea(
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
               slivers: [
                 SliverToBoxAdapter(child: hero),
                 SliverToBoxAdapter(child: content),
@@ -398,6 +459,7 @@ class _ThemePicker extends StatelessWidget {
   final int? selectedId;
   final ValueChanged<int?> onChanged;
   final String label;
+
   const _ThemePicker({
     required this.themes,
     required this.selectedId,
@@ -407,11 +469,17 @@ class _ThemePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final cs = Theme.of(context).colorScheme;
+    final ux = Theme.of(context).extension<UiTokens>()!;
+    final tt = Theme.of(context).textTheme;
+    final radiusMd = ux.radiusMd;
+
     final items = <DropdownMenuItem<int?>>[
       DropdownMenuItem<int?>(
-          value: null,
-          child:
-              Text(AppLocalizations.of(context)!.owner_request_theme_default)),
+        value: null,
+        child: Text(l10n.owner_request_theme_default),
+      ),
       ...themes.map((t) {
         final nav = (t.menuType ?? '').isEmpty ? '' : ' – ${t.menuType}';
         final color = _primaryColorOf(t);
@@ -422,14 +490,20 @@ class _ThemePicker extends StatelessWidget {
             children: [
               if (color != null)
                 Container(
-                    width: 10,
-                    height: 10,
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration:
-                        BoxDecoration(color: color, shape: BoxShape.circle)),
+                  width: 10,
+                  height: 10,
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
+                ),
               Flexible(
-                  child:
-                      Text('${t.name}$nav', overflow: TextOverflow.ellipsis)),
+                child: Text(
+                  '${t.name}$nav',
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         );
@@ -439,8 +513,37 @@ class _ThemePicker extends StatelessWidget {
     return DropdownButtonFormField<int?>(
       value: selectedId,
       isExpanded: true,
-      decoration: const InputDecoration(border: OutlineInputBorder())
-          .copyWith(labelText: label),
+      decoration: InputDecoration(
+        labelText: label,
+        filled: true,
+        fillColor: cs.surfaceContainerLowest,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 12,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radiusMd),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radiusMd),
+          borderSide: BorderSide(
+            color: cs.outline.withOpacity(.35),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radiusMd),
+          borderSide: BorderSide(
+            color: cs.primary,
+            width: 1.6,
+          ),
+        ),
+      ),
+      style: tt.bodyMedium,
+      icon: Icon(
+        Icons.keyboard_arrow_down_rounded,
+        color: cs.onSurface.withOpacity(.75),
+      ),
+      borderRadius: BorderRadius.circular(radiusMd + 4),
       items: items,
       onChanged: onChanged,
     );
@@ -489,14 +592,17 @@ class _RequestsList extends StatelessWidget {
             width: 38,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: cs.primary.withOpacity(.10),
-                borderRadius: BorderRadius.circular(12)),
+              color: cs.primary.withOpacity(.10),
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: Icon(Icons.description_outlined, color: cs.primary),
           ),
-          title: Text(r.appName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: tt.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
+          title: Text(
+            r.appName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: tt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          ),
           subtitle: Text('${r.status} • ${_fmt(r.createdAt)}'),
           trailing: _StatusChip(status: r.status),
         );
@@ -539,11 +645,18 @@ class _StatusChip extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration:
-          BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
-      child: Text(norm,
-          style:
-              TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 12)),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        norm,
+        style: TextStyle(
+          color: fg,
+          fontWeight: FontWeight.w700,
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }
@@ -565,7 +678,12 @@ class _EmptyBox extends StatelessWidget {
         border: Border.all(color: cs.outline.withOpacity(.3)),
         boxShadow: ux.cardShadow,
       ),
-      child: Center(child: Text(text, textAlign: TextAlign.center)),
+      child: Center(
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
@@ -599,8 +717,10 @@ class _SectionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
-                style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            Text(
+              title,
+              style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 12),
             child,
           ],

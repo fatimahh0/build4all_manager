@@ -110,7 +110,7 @@
   "owner_projects_title": "المشاريع",
   "owner_requests_title": "الطلبات",
   "owner_profile_title": "الملف الشخصي",
-  "owner_home_hello": "👋 أهلاً، صاحب التطبيق",
+  "owner_home_hello": "👋 أهلاً، ",
   "owner_home_subtitle": "إدارة تطبيقاتك بسهولة",
   "owner_home_requestApp": "اطلب تطبيقي",
   "owner_home_myProjects": "مشاريعي النشطة",
@@ -198,7 +198,7 @@
   "owner_home_recentRequests": "الطلبات الأخيرة",
   "owner_home_viewAll": "عرض الكل",
   "owner_home_noRecent": "لا توجد طلبات حديثة",
-  "owner_home_hello": "مرحبًا، المالك 👋",
+  "owner_home_hello": "مرحبًا،  👋",
   "owner_home_subtitle": "جاهز لإطلاق نسختك التالية؟",
   "owner_home_requestApp": "اطلب تطبيقي",
 

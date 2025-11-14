@@ -97,13 +97,13 @@ class _OwnerProfileView extends StatelessWidget {
 
     if (confirm != true) return;
 
-    // Clear stored JWT
     final store = JwtLocalDataSource();
     await store.clear();
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.logged_out ?? 'Logged out')));
+        SnackBar(content: Text(l10n.logged_out ?? 'Logged out')),
+      );
       context.go('/login'); // replace stack
     }
   }
@@ -138,8 +138,9 @@ class _OwnerProfileView extends StatelessWidget {
         final p = s.profile;
         if (p == null) {
           return Scaffold(
-              appBar: appBar,
-              body: Center(child: Text(l10n.owner_nav_profile)));
+            appBar: appBar,
+            body: Center(child: Text(l10n.owner_nav_profile)),
+          );
         }
 
         return Scaffold(
@@ -148,40 +149,50 @@ class _OwnerProfileView extends StatelessWidget {
             onRefresh: () async =>
                 context.read<OwnerProfileBloc>().add(OwnerProfileRefreshed()),
             child: LayoutBuilder(
-              builder: (context, c) {
-                final bool wide = c.maxWidth >= 860;
-                final EdgeInsets pagePad = EdgeInsets.symmetric(
-                    horizontal: wide ? 24 : 12, vertical: 12);
+              builder: (context, constraints) {
+                final bool wide = constraints.maxWidth >= 720;
+                const double maxCardWidth = 480;
 
                 return SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Padding(
-                    padding: pagePad,
-                    child: Column(
-                      children: [
-                        // ===== Header (cover + avatar + quick actions) =====
-                        ProfileHeader(p: p),
-
-                        const SizedBox(height: 16),
-
-                        // ===== Content grid (adaptive) =====
-                        Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
-                              width: _cardWidth(c.maxWidth, min: 320, max: 680),
+                              width: wide ? maxCardWidth : double.infinity,
+                              child: ProfileHeader(p: p),
+                            ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: wide ? maxCardWidth : double.infinity,
                               child: ProfileInfoCard(p: p),
                             ),
+                            const SizedBox(height: 20),
                             SizedBox(
-                              width: _cardWidth(c.maxWidth, min: 320, max: 680),
-                              child: _SettingsCard(
-                                  onLogout: () => _logoutFlow(context)),
+                              width: wide ? maxCardWidth : double.infinity,
+                              child: FilledButton.icon(
+                                onPressed: () => _logoutFlow(context),
+                                icon: const Icon(Icons.logout_rounded),
+                                label: Text(l10n.logout ?? 'Logout'),
+                                style: FilledButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 24),
-                      ],
+                      ),
                     ),
                   ),
                 );
@@ -191,14 +202,6 @@ class _OwnerProfileView extends StatelessWidget {
         );
       },
     );
-  }
-
-  double _cardWidth(double maxWidth,
-      {required double min, required double max}) {
-    // Simple responsive: two columns on wide, one on narrow
-    if (maxWidth >= 980) return max; // wide card
-    if (maxWidth >= 720) return (maxWidth - 16 /*wrap gap*/) / 2;
-    return maxWidth - 24; // page padding fallback
   }
 }
 
@@ -223,96 +226,6 @@ class _ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.logout_rounded, color: cs.onSurface),
         ),
       ],
-    );
-  }
-}
-
-class _SettingsCard extends StatelessWidget {
-  final VoidCallback onLogout;
-  const _SettingsCard({required this.onLogout});
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final tt = Theme.of(context).textTheme;
-    final l10n = AppLocalizations.of(context)!;
-
-    Widget tile({
-      required IconData icon,
-      required String label,
-      String? caption,
-      Color? tint,
-      VoidCallback? onTap,
-      Widget? trailing,
-    }) {
-      final color = tint ?? cs.primary;
-      return ListTile(
-        onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        leading: CircleAvatar(
-          radius: 18,
-          backgroundColor: color.withOpacity(.12),
-          child: Icon(icon, color: color),
-        ),
-        title: Text(label,
-            style: tt.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-        subtitle: caption == null
-            ? null
-            : Text(caption,
-                style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant)),
-        trailing: trailing ?? const Icon(Icons.chevron_right_rounded),
-      );
-    }
-
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: cs.outlineVariant.withOpacity(.6)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Column(
-          children: [
-           
-            /*       tile(
-              icon: Icons.person_outline_rounded,
-              label: l10n.owner_profile_edit ?? 'Account',
-              caption: l10n.owner_profile_name,
-              onTap: () {
-                // TODO: navigate to account edit    
-              },
-            ),
-            tile(
-              icon: Icons.lock_outline_rounded,
-              label: l10n.security ?? 'Security',
-              caption: l10n.change_password ?? 'Change password',
-              onTap: () {
-                // TODO: navigate to security
-              },
-            ),
-            tile(
-              icon: Icons.help_outline_rounded,
-              label: l10n.support ?? 'Support',
-              caption: l10n.contact_us ?? 'Contact us',
-              onTap: () {
-                // TODO: support action
-              },
-            ), */
-            const Divider(height: 8),
-            tile(
-              icon: Icons.logout_rounded,
-              label: l10n.logout ?? 'Logout',
-              caption: l10n.logout_confirm ?? 'Sign out from this device',
-              tint: cs.error,
-              trailing: const Icon(Icons.exit_to_app_rounded),
-              onTap: onLogout,
-            ),
-            const SizedBox(height: 6),
-          ],
-        ),
-      ),
     );
   }
 }

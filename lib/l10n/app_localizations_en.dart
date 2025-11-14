@@ -350,7 +350,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_nav_home => 'Home';
 
   @override
-  String get owner_nav_projects => 'Projects';
+  String get owner_nav_projects => 'My Apps';
 
   @override
   String get owner_nav_requests => 'Requests';
@@ -371,7 +371,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get owner_profile_title => 'Owner Profile';
 
   @override
-  String get owner_home_hello => 'Hi, Owner 👋';
+  String get owner_home_hello => '👋Hi,  ';
 
   @override
   String get owner_home_subtitle => 'Ready to launch your next app build?';

@@ -371,7 +371,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get owner_profile_title => 'Profil du propriétaire';
 
   @override
-  String get owner_home_hello => 'Salut, Propriétaire 👋';
+  String get owner_home_hello => '👋Salut, ';
 
   @override
   String get owner_home_subtitle => 'Prêt à lancer votre prochain build ?';

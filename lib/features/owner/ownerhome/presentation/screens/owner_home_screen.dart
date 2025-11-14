@@ -26,7 +26,14 @@ import '../widgets/project_template_card.dart';
 class OwnerHomeScreen extends StatelessWidget {
   final int ownerId;
   final Dio dio;
-  const OwnerHomeScreen({super.key, required this.ownerId, required this.dio});
+  final String? ownerName; // 👈 NEW
+
+  const OwnerHomeScreen({
+    super.key,
+    required this.ownerId,
+    required this.dio,
+    this.ownerName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +50,36 @@ class OwnerHomeScreen extends StatelessWidget {
         getAppConfig: GetAppConfigUc(generalRepo),
         getAvailableKinds: getAvailableKinds,
       )..add(OwnerHomeStarted(ownerId)),
-      child: const _HomeScaffold(),
+      child: _HomeScaffold(
+        ownerName: ownerName,
+      ),
     );
   }
 }
 
 class _HomeScaffold extends StatelessWidget {
-  const _HomeScaffold();
+  final String? ownerName;
+
+  const _HomeScaffold({this.ownerName});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: cs.background,
-      body: const SafeArea(child: _HomeBody()),
+      body: SafeArea(
+        child: _HomeBody(
+          ownerName: ownerName,
+        ),
+      ),
     );
   }
 }
 
 class _HomeBody extends StatelessWidget {
-  const _HomeBody();
+  final String? ownerName;
+
+  const _HomeBody({this.ownerName});
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +92,11 @@ class _HomeBody extends StatelessWidget {
     final pagePad = w >= 480
         ? const EdgeInsets.symmetric(horizontal: 20, vertical: 16)
         : ux.pagePad;
+
+    // 👇 greeting text with fallback
+    final String greeting = (ownerName == null || ownerName!.trim().isEmpty)
+        ? l10n.owner_home_hello
+        : '${l10n.owner_home_hello} $ownerName';
 
     return Padding(
       padding: pagePad,
@@ -100,8 +122,9 @@ class _HomeBody extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // small subtitle above name – you can put "Owner Hub" or leave empty
                             Text(
-                              'OWNER HUB',
+                              '', // you can change to 'Owner Hub' if you want
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: tt.labelSmall?.copyWith(
@@ -114,19 +137,13 @@ class _HomeBody extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    l10n.owner_home_hello,
+                                    greeting, // 👈 uses ownerName now
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: tt.headlineSmall?.copyWith(
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                ),
-                                CircleAvatar(
-                                  radius: w >= 420 ? 22 : 20,
-                                  backgroundColor: cs.primary,
-                                  child: const Icon(Icons.person,
-                                      color: Colors.white),
                                 ),
                               ],
                             ),
@@ -165,7 +182,7 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-                // grid
+                // ----- Projects grid -----
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: ux.radiusMd),
                   sliver: SliverLayoutBuilder(
@@ -193,9 +210,12 @@ class _HomeBody extends StatelessWidget {
                             return ProjectTemplateCard(
                               tpl: tpl,
                               isAvailable: isAvailable,
+                              // ✅ always open details (even if Coming soon)
                               onOpen: () => context.push(
                                 '/owner/project/${tpl.id}',
-                                extra: {'canRequest': isAvailable},
+                                extra: {
+                                  'canRequest': isAvailable, // true or false
+                                },
                               ),
                             );
                           },

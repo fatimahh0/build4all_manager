@@ -371,7 +371,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get owner_profile_title => 'ملف المالك';
 
   @override
-  String get owner_home_hello => 'مرحبًا، المالك 👋';
+  String get owner_home_hello => 'مرحبًا،  👋';
 
   @override
   String get owner_home_subtitle => 'جاهز لإطلاق نسختك التالية؟';
